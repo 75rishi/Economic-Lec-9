@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurangzeb Quiz Application</title>
+    <title> Economic Quiz Application</title>
     <style>
         /* General Reset and Base Styles */
         * {
@@ -542,7 +542,7 @@
             <div id="timerBar"><div id="timerBarFill"></div></div>
         </div>
         <div class="container" id="quizContainer">
-            <h1> Economic lec 10 </h1>
+            <h1> economic lec 9 </h1>
             <div id="score"></div>
             <div class="progress">
                 <div class="progress-bar" id="progressBar"></div>
@@ -579,934 +579,906 @@
 
     <script>
         const questions = [
-    {
-        "q": "बैंक दर क्या है?",
-        "q_en": "What is the Bank Rate?",
-        "options": ["वह दर जिस पर RBI बैंकों को ब्याज देता है", "वह दर जिस पर RBI बैंकों के बिल ऑफ एक्सचेंज को बट्टा करती है", "वह दर जिस पर बैंक ग्राहकों को ऋण देते हैं", "वह दर जिस पर RBI सरकार को ऋण देता है"],
-        "options_en": ["The rate at which RBI pays interest to banks", "The rate at which RBI discounts banks' bills of exchange", "The rate at which banks lend to customers", "The rate at which RBI lends to the government"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, बैंक दर वह बट्टा दर है जिस पर RBI बैंकों के बिल ऑफ एक्सचेंज और अन्य वाणिज्यिक पत्रों को बट्टा करती है।",
-        "explanation_en": "According to the notes, the Bank Rate is the discount rate at which RBI discounts banks' bills of exchange and other commercial papers."
-    },
-    {
-        "q": "बट्टा दर का क्या अर्थ है?",
-        "q_en": "What is the meaning of Discount Rate?",
-        "options": ["वह दर जिस पर बैंक ग्राहकों को ब्याज देता है", "वह दर जिस पर व्यापारी अंकित मूल्य पर छूट देता है", "वह दर जिस पर RBI ब्याज मुक्त ऋण देता है", "वह दर जिस पर बैंक अपने खातों को समायोजित करता है"],
-        "options_en": ["The rate at which banks pay interest to customers", "The rate at which a trader offers a discount on the marked price", "The rate at which RBI provides interest-free loans", "The rate at which banks adjust their accounts"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि बट्टा दर वह छूट है जो व्यापारी अंकित मूल्य या विक्रय मूल्य पर देता है, जिसे व्यापारिक बट्टा कहा जाता है।",
-        "explanation_en": "The notes state that the discount rate is the discount offered by a trader on the marked price or sale price, known as a trade discount."
-    },
-    {
-        "q": "रेपो दर क्या है?",
-        "q_en": "What is the Repo Rate?",
-        "options": ["वह दर जिस पर RBI बैंकों से ऋण लेता है", "वह दर जिस पर RBI बैंकों को प्रतिभूतियों के बदले ऋण देता है", "वह दर जिस पर बैंक ग्राहकों से ऋण लेते हैं", "वह दर जिस पर RBI ब्याज मुक्त ऋण देता है"],
-        "options_en": ["The price at which RBI borrows from banks", "The rate at which RBI lends to banks against securities", "The rate at which banks borrow from customers", "The rate at which RBI provides interest-free loans"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर वह ब्याज दर है जिस पर RBI बैंकों को सरकार द्वारा मान्यता प्राप्त प्रतिभूतियों के बदले ऋण देता है।",
-        "explanation_en": "According to the notes, the Repo Rate is the interest rate at which RBI lends to banks against government-approved securities."
-    },
-    {
-        "q": "रिवर्स रेपो दर का क्या कार्य है?",
-        "q_en": "What is the function of Reverse Repo Rate?",
-        "options": ["बैंकों को ऋण देने के लिए", "RBI द्वारा बैंकों से ऋण लेने के लिए", "ग्राहकों को ब्याज देने के लिए", "CRR को नियंत्रित करने के लिए"],
-        "options_en": ["To lend to banks", "For RBI to borrow from banks", "To pay interest to customers", "To control CRR"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर वह दर है जिस पर RBI बैंकों से ऋण लेता है और बदले में प्रतिभूतियां सौंपता है।",
-        "explanation_en": "The notes mention that the Reverse Repo Rate is the rate at which RBI borrows from banks and provides securities in return."
-    },
-    {
-        "q": "स्थायी जमा सुविधा (SDF) कब शुरू की गई?",
-        "q_en": "When was the Standing Deposit Facility (SDF) introduced?",
-        "options": ["अप्रैल 2020", "अप्रैल 2021", "अप्रैल 2022", "अप्रैल 2023"],
-        "options_en": ["April 2020", "April 2021", "April 2022", "April 2023"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, SDF की शुरुआत 8 अप्रैल, 2022 को की गई थी।",
-        "explanation_en": "According to the notes, the SDF was introduced on April 8, 2022."
-    },
-    {
-        "q": "बिल ऑफ एक्सचेंज का उपयोग किस लिए किया जाता है?",
-        "q_en": "What is the use of a Bill of Exchange?",
-        "options": ["ब्याज दर को नियंत्रित करने के लिए", "व्यापारिक लेन-देन में भुगतान के लिए", "RBI को ऋण देने के लिए", "ग्राहकों को ब्याज देने के लिए"],
-        "options_en": ["To control interest rates", "For payments in commercial transactions", "To lend to RBI", "To pay interest to customers"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि बिल ऑफ एक्सचेंज और अन्य वाणिज्यिक पत्रों का उपयोग व्यापारिक लेन-देन में भुगतान के लिए होता है।",
-        "explanation_en": "The notes state that bills of exchange and other commercial papers are used for payments in commercial transactions."
-    },
-    {
-        "q": "रेपो दर में वृद्धि का क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of an increase in Repo Rate?",
-        "options": ["मुद्रा आपूर्ति बढ़ती है", "मुद्रा आपूर्ति कम होती है", "ब्याज दर कम होती है", "मुद्रास्फीति बढ़ती है"],
-        "options_en": ["Money supply increases", "Money supply decreases", "Interest rate decreases", "Inflation increases"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे ऋण लेने की क्षमता कम होती है और मुद्रा आपूर्ति कम होती है।",
-        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, reducing borrowing capacity and decreasing money supply."
-    },
-    {
-        "q": "रेपो सुविधा की शुरुआत कब हुई?",
-        "q_en": "When was the Repo Facility introduced?",
-        "options": ["1998", "1999", "2000", "2001"],
-        "options_en": ["1998", "1999", "2000", "2001"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा को 1999 में पायलट आधार पर शुरू किया गया और 2000 से पूर्णरूप से लागू किया गया।",
-        "explanation_en": "The notes mention that the Repo Facility was introduced on a pilot basis in 1999 and fully implemented from 2000."
-    },
-    {
-        "q": "रेपो प्रक्रिया में कौन सी प्रतिभूतियां मान्य होती हैं?",
-        "q_en": "Which securities are valid in the Repo process?",
-        "options": ["केंद्र सरकार की प्रतिभूतियां", "राज्य सरकार की प्रतिभूतियां", "अंतरराष्ट्रीय प्रतिभूतियां", "उपरोक्त सभी"],
-        "options_en": ["Central government securities", "State government securities", "International securities", "All of the above"],
-        "answer": 3,
-        "explanation": "नोट्स के अनुसार, रेपो प्रक्रिया में केंद्र सरकार, राज्य सरकार, निगम, और अंतरराष्ट्रीय प्रतिभूतियां जो सरकार द्वारा मान्यता प्राप्त हैं, शामिल होती हैं।",
-        "explanation_en": "According to the notes, the Repo process includes central government, state government, corporate, and international securities approved by the government."
-    },
-    {
-        "q": "ओवरनाइट रेपो का उपयोग किस लिए किया जाता है?",
-        "q_en": "What is the use of Overnight Repo?",
-        "options": ["दीर्घकालिक ऋण के लिए", "CRR और SLR की मासिक औसत बनाए रखने के लिए", "मुद्रास्फीति बढ़ाने के लिए", "ब्याज दर को स्थिर करने के लिए"],
-        "options_en": ["For long-term loans", "To maintain the monthly average of CRR and SLR", "To increase inflation", "To stabilize interest rates"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि ओवरनाइट रेपो का उपयोग बैंकों द्वारा CRR और SLR की मासिक औसत बनाए रखने के लिए किया जाता है।",
-        "explanation_en": "The notes state that Overnight Repo is used by banks to maintain the monthly average of CRR and SLR."
-    },
-    {
-        "q": "बैंक दर का उपयोग वर्तमान में किस रूप में किया जाता है?",
-        "q_en": "How is the Bank Rate currently used?",
-        "options": ["मौद्रिक नीति के नियंत्रण के लिए", "संदर्भ दर (Reference Rate) के रूप में", "ब्याज दर को बढ़ाने के लिए", "मुद्रा आपूर्ति को कम करने के लिए"],
-        "options_en": ["To control monetary policy", "As a reference rate", "To increase interest rates", "To reduce money supply"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, वर्तमान में RBI बैंक दर का उपयोग मौद्रिक नीति में नहीं, बल्कि केवल संदर्भ दर के रूप में करता है।",
-        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate, not in monetary policy."
-    },
-    {
-        "q": "रेपो सुविधा की नीलामी कहाँ होती है?",
-        "q_en": "Where is the auction of the Repo Facility conducted?",
-        "options": ["RBI के ई-कुबेर प्लेटफॉर्म पर", "स्टॉक एक्सचेंज पर", "वाणिज्यिक बैंकों में", "सरकारी कार्यालयों में"],
-        "options_en": ["On RBI’s e-Kuber platform", "On the stock exchange", "In commercial banks", "In government offices"],
-        "answer": 0,
-        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा की नीलामी RBI के ई-कुबेर प्लेटफॉर्म पर होती है।",
-        "explanation_en": "The notes mention that the auction of the Repo Facility is conducted on RBI’s e-Kuber platform."
-    },
-    {
-        "q": "रिवर्स रेपो दर का उपयोग किसके नियंत्रण के लिए किया जाता है?",
-        "q_en": "What is the Reverse Repo Rate used to control?",
-        "options": ["मुद्रा आपूर्ति को बढ़ाने के लिए", "मुद्रास्फीति को नियंत्रित करने के लिए", "ब्याज दर को कम करने के लिए", "CRR को बढ़ाने के लिए"],
-        "options_en": ["To increase money supply", "To control inflation", "To reduce interest rates", "To increase CRR"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रिवर्स रेपो दर का उपयोग RBI द्वारा मुद्रास्फीति को नियंत्रित करने के लिए किया जाता है।",
-        "explanation_en": "According to the notes, the Reverse Repo Rate is used by RBI to control inflation."
-    },
-    {
-        "q": "प्राथमिक डीलर कौन हो सकते हैं?",
-        "q_en": "Who can be Primary Dealers?",
-        "options": ["केवल वाणिज्यिक बैंक", "गैर-बैंकिंग वित्तीय संस्थाएँ, निवेश बैंक आदि", "केवल सरकारी संस्थाएँ", "केवल RBI कर्मचारी"],
-        "options_en": ["Only commercial banks", "Non-banking financial institutions, investment banks, etc.", "Only government institutions", "Only RBI employees"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि प्राथमिक डीलर में गैर-बैंकिंग वित्तीय संस्थाएँ, निवेश बैंक आदि शामिल हैं, जिनके पास सिडबी जनरल लेजर खाता और RBI में चालू खाता होता है।",
-        "explanation_en": "The notes state that Primary Dealers include non-banking financial institutions, investment banks, etc., which have a SIDBI general ledger account and a current account with RBI."
-    },
-    {
-        "q": "रेपो सुविधा की सिफारिश किस समिति ने की थी?",
-        "q_en": "Which committee recommended the Repo Facility?",
-        "options": ["ऊर्जित पटेल समिति", "नरसिम्हन समिति", "रघुराम राजन समिति", "बिमल जालान समिति"],
-        "options_en": ["Urjit Patel Committee", "Narasimhan Committee", "Raghuram Rajan Committee", "Bimal Jalan Committee"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो सुविधा की सिफारिश नरसिम्हन समिति (1998) ने की थी।",
-        "explanation_en": "According to the notes, the Repo Facility was recommended by the Narasimhan Committee (1998)."
-    },
-    {
-        "q": "SDF का पूर्ण रूप क्या है?",
-        "q_en": "What is the full form of SDF?",
-        "options": ["स्टैंडिंग डिपॉजिट फंड", "स्थायी जमा सुविधा", "स्टेट डेवलपमेंट फंड", "सिक्योर डिपॉजिट फंड"],
-        "options_en": ["Standing Deposit Fund", "Standing Deposit Facility", "State Development Fund", "Secure Deposit Fund"],
-        "answer": 1,
-        "explanation": "नोट्स में SDF को स्थायी जमा सुविधा के रूप में परिभाषित किया गया है।",
-        "explanation_en": "The notes define SDF as the Standing Deposit Facility."
-    },
-    {
-        "q": "रेपो दर को किसके रूप में परिभाषित किया गया है?",
-        "q_en": "How is the Repo Rate defined?",
-        "options": ["ब्याज दर", "बट्टा दर", "संदर्भ दर", "जमा दर"],
-        "options_en": ["Interest rate", "Discount rate", "Reference rate", "Deposit rate"],
-        "answer": 0,
-        "explanation": "नोट्स के अनुसार, रेपो दर एक ब्याज दर है।",
-        "explanation_en": "According to the notes, the Repo Rate is an interest rate."
-    },
-    {
-        "q": "वाणिज्यिक पत्रों का उपयोग भारत में कितना होता है?",
-        "q_en": "How much are commercial papers used in India?",
-        "options": ["बहुत अधिक", "बहुत कम", "मध्यम स्तर पर", "बिल्कुल नहीं"],
-        "options_en": ["Very high", "Very low", "Moderate level", "Not at all"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग बहुत कम होता है।",
-        "explanation_en": "The notes state that the use of commercial papers in the Indian market is very low."
-    },
-    {
-        "q": "रेपो सुविधा का उपयोग कौन कर सकता है?",
-        "q_en": "Who can avail of the Repo Facility?",
-        "options": ["केवल RBI", "बैंक और प्राथमिक डीलर", "केवल सरकारी संस्थाएँ", "केवल ग्राहक"],
-        "options_en": ["Only RBI", "Banks and Primary Dealers", "Only government institutions", "Only customers"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो सुविधा का लाभ बैंक और प्राथमिक डीलर ले सकते हैं।",
-        "explanation_en": "According to the notes, banks and Primary Dealers can avail of the Repo Facility."
-    },
-    {
-        "q": "रिवर्स रेपो दर की नीलामी कहाँ होती है?",
-        "q_en": "Where is the auction of the Reverse Repo Rate conducted?",
-        "options": ["स्टॉक एक्सचेंज पर", "RBI के ई-कुबेर प्लेटफॉर्म पर", "वाणिज्यिक बैंकों में", "सरकारी कार्यालयों में"],
-        "options_en": ["On the stock exchange", "On RBI’s e-Kuber platform", "In commercial banks", "In government offices"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर की नीलामी RBI के ई-कुबेर प्लेटफॉर्म पर होती है।",
-        "explanation_en": "The notes mention that the auction of the Reverse Repo Rate is conducted on RBI’s e-Kuber platform."
-    },
-    {
-        "q": "बैंक दर को दीर्घकालिक सुविधा क्यों कहा जाता है?",
-        "q_en": "Why is the Bank Rate called a long-term facility?",
-        "options": ["क्योंकि यह केवल एक वर्ष के लिए लागू होती है", "क्योंकि यह बिल ऑफ एक्सचेंज की परिपक्वता अवधि पर आधारित है", "क्योंकि यह केवल अल्पकालिक ऋणों के लिए है", "क्योंकि यह ग्राहकों को दी जाती है"],
-        "options_en": ["Because it is applicable only for one year", "Because it is based on the maturity period of bills of exchange", "Because it is only for short-term loans", "Because it is given to customers"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि बैंक दर दीर्घकालिक सुविधा है क्योंकि यह बिल ऑफ एक्सचेंज और वाणिज्यिक पत्रों की परिपक्वता अवधि के आधार पर काम करती है।",
-        "explanation_en": "The notes state that the Bank Rate is a long-term facility because it operates based on the maturity period of bills of exchange and commercial papers."
-    },
-    {
-        "q": "रेपो दर बढ़ने से क्या होता है?",
-        "q_en": "What happens when the Repo Rate increases?",
-        "options": ["ब्याज दर कम होती है", "मुद्रा आपूर्ति बढ़ती है", "माँग कम होती है", "मुद्रास्फीति बढ़ती है"],
-        "options_en": ["Interest rate decreases", "Money supply increases", "Demand decreases", "Inflation increases"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे ऋण लेने की क्षमता कम होती है, मुद्रा आपूर्ति कम होती है, और परिणामस्वरूप माँग कम होती है।",
-        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, reducing borrowing capacity, decreasing money supply, and consequently reducing demand."
-    },
-    {
-        "q": "रिवर्स रेपो दर बढ़ने का क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of an increase in Reverse Repo Rate?",
-        "options": ["बैंक RBI को कम धन जमा करते हैं", "मुद्रा आपूर्ति बढ़ती है", "मुद्रास्फीति नियंत्रित होती है", "ब्याज दर कम होती है"],
-        "options_en": ["Banks deposit less money with RBI", "Money supply increases", "Inflation is controlled", "Interest rate decreases"],
-        "answer": 2,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर बढ़ने से बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है और मुद्रास्फीति नियंत्रित होती है।",
-        "explanation_en": "The notes mention that an increase in the Reverse Repo Rate leads banks to deposit more money with RBI, reducing money supply and controlling inflation."
-    },
-    {
-        "q": "रेपो प्रक्रिया में प्रतिभूतियों को पुनर्खरीद करने का वादा कौन करता है?",
-        "q_en": "Who promises to repurchase securities in the Repo process?",
-        "options": ["RBI", "बैंक", "ग्राहक", "सरकार"],
-        "options_en": ["RBI", "Banks", "Customers", "Government"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो प्रक्रिया में बैंक प्रतिभूतियों को पुनर्खरीद करने का वादा करते हैं।",
-        "explanation_en": "According to the notes, in the Repo process, banks promise to repurchase securities."
-    },
-    {
-        "q": "SDF की शुरुआत क्यों की गई?",
-        "q_en": "Why was SDF introduced?",
-        "options": ["बैंकों को अधिक ब्याज देने के लिए", "प्रतिभूतियों की कमी को दूर करने के लिए", "CRR को कम करने के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
-        "options_en": ["To pay more interest to banks", "To address the shortage of securities", "To reduce CRR", "To increase money supply"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि कोविड के दौरान प्रतिभूतियों की कमी के कारण रिवर्स रेपो सुविधा प्रभावित हुई, इसलिए अप्रैल 2022 में SDF शुरू की गई।",
-        "explanation_en": "The notes state that due to a shortage of securities during COVID, the Reverse Repo facility was affected, so SDF was introduced in April 2022."
-    },
-    {
-        "q": "रेपो दर को तरलता समायोजन सुविधा (LAF) का हिस्सा क्यों माना जाता है?",
-        "q_en": "Why is the Repo Rate considered a part of the Liquidity Adjustment Facility (LAF)?",
-        "options": ["क्योंकि यह दीर्घकालिक ऋण देता है", "क्योंकि यह अल्पकालिक तरलता आवश्यकताओं को पूरा करता है", "क्योंकि यह ब्याज मुक्त ऋण देता है", "क्योंकि यह केवल सरकारी बैंकों के लिए है"],
-        "options_en": ["Because it provides long-term loans", "Because it meets short-term liquidity requirements", "Because it provides interest-free loans", "Because it is only for government banks"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा LAF के रूप में बैंकों की अल्पकालिक तरलता आवश्यकताओं को पूरा करती है।",
-        "explanation_en": "The notes mention that the Repo facility, as part of LAF, meets the short-term liquidity requirements of banks."
-    },
-    {
-        "q": "बैंक दर के अप्रभावी होने का मुख्य कारण क्या है?",
-        "q_en": "What is the main reason for the ineffectiveness of the Bank Rate?",
-        "options": ["ब्याज दर का अधिक होना", "वाणिज्यिक पत्रों का कम उपयोग", "RBI की नीतियों में बदलाव", "CRR और SLR की कमी"],
-        "options_en": ["High interest rates", "Low use of commercial papers", "Changes in RBI policies", "Shortage of CRR and SLR"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग बहुत कम होने के कारण बैंक दर अप्रभावी रहता है।",
-        "explanation_en": "According to the notes, the Bank Rate remains ineffective due to the low use of commercial papers in the Indian market."
-    },
-    {
-        "q": "रेपो सुविधा की नीलामी के लिए RBI क्या करता है?",
-        "q_en": "What does RBI do for the auction of the Repo Facility?",
-        "options": ["पूर्व सूचना जारी करता है", "ब्याज दर को स्थिर करता है", "प्रतिभूतियों को बेचता है", "CRR को कम करता है"],
-        "options_en": ["Issues prior notice", "Stabilizes interest rates", "Sells securities", "Reduces CRR"],
-        "answer": 0,
-        "explanation": "नोट्स में कहा गया है कि RBI रेपो सुविधा की नीलामी के लिए पूर्व सूचना जारी करता है।",
-        "explanation_en": "The notes state that RBI issues prior notice for the auction of the Repo Facility."
-    },
-    {
-        "q": "रेपो दर कम करने का क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of reducing the Repo Rate?",
-        "options": ["ब्याज दर बढ़ती है", "मुद्रा आपूर्ति कम होती है", "ऋण सस्ते होते हैं", "मुद्रास्फीति नियंत्रित होती है"],
-        "options_en": ["Interest rate increases", "Money supply decreases", "Loans become cheaper", "Inflation is controlled"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण की आपूर्ति बढ़ती है, जिससे ऋण सस्ते होते हैं।",
-        "explanation_en": "According to the notes, reducing the Repo Rate increases loan supply, making loans cheaper."
-    },
-    {
-        "q": "रिवर्स रेपो दर को किसके विपरीत माना जाता है?",
-        "q_en": "What is the Reverse Repo Rate considered opposite to?",
-        "options": ["बैंक दर", "रेपो दर", "CRR", "SLR"],
-        "options_en": ["Bank Rate", "Repo Rate", "CRR", "SLR"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर रेपो दर के विपरीत काम करता है।",
-        "explanation_en": "The notes mention that the Reverse Repo Rate works opposite to the Repo Rate."
-    },
-    {
-        "q": "रेपो सुविधा का उपयोग बैंकों द्वारा किसके लिए किया जाता है?",
-        "q_en": "What is the Repo Facility used by banks for?",
-        "options": ["दीर्घकालिक निवेश के लिए", "अल्पकालिक तरलता आवश्यकताओं के लिए", "ब्याज दर को बढ़ाने के लिए", "मुद्रास्फीति को बढ़ाने के लिए"],
-        "options_en": ["For long-term investments", "For short-term liquidity requirements", "To increase interest rates", "To increase inflation"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, RBI वाणिज्यिक बैंकों को उनकी अल्पकालिक तरलता आवश्यकताओं के लिए रेपो सुविधा प्रदान करता है।",
-        "explanation_en": "According to the notes, RBI provides the Repo Facility to commercial banks for their short-term liquidity requirements."
-    },
-    {
-        "q": "SDF के तहत बैंक क्या कर सकते हैं?",
-        "q_en": "What can banks do under SDF?",
-        "options": ["RBI से ऋण ले सकते हैं", "RBI में अतिरिक्त राशि जमा कर सकते हैं", "प्रतिभूतियों को बेच सकते हैं", "CRR को कम कर सकते हैं"],
-        "options_en": ["Borrow from RBI", "Deposit excess funds with RBI", "Sell securities", "Reduce CRR"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं और उस पर ब्याज प्राप्त कर सकते हैं।",
-        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI and earn interest on them."
-    },
-    {
-        "q": "रेपो दर को मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण क्यों माना जाता है?",
-        "q_en": "Why is the Repo Rate considered the most important tool of monetary policy?",
-        "options": ["क्योंकि यह दीर्घकालिक ऋण देता है", "क्योंकि यह मुद्रास्फीति को नियंत्रित करता है", "क्योंकि यह CRR को प्रभावित करता है", "क्योंकि यह ब्याज मुक्त ऋण देता है"],
-        "options_en": ["Because it provides long-term loans", "Because it controls inflation", "Because it affects CRR", "Because it provides interest-free loans"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रेपो दर वर्तमान में मुद्रास्फीति के नियंत्रण के लिए मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण है।",
-        "explanation_en": "The notes mention that the Repo Rate is currently the most important tool of monetary policy for controlling inflation."
-    },
-    {
-        "q": "बैंक दर को दंडात्मक दर क्यों माना जाता है?",
-        "q_en": "Why is the Bank Rate considered a penal rate?",
-        "options": ["क्योंकि यह ब्याज मुक्त होती है", "क्योंकि RBI मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ग्राहकों पर लागू होती है"],
-        "options_en": ["Because it is interest-free", "Because RBI assumes banks are unable to maintain CRR and SLR", "Because it applies only to government banks", "Because it applies to customers"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, RBI यह मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं, इसलिए उन्हें बैंक दर पर उच्च दर से धन लेना पड़ता है।",
-        "explanation_en": "According to the notes, RBI assumes that banks are unable to maintain CRR and SNR, so they have to borrow at a higher rate under the Bank Rate."
-    },
-    {
-        "q": "रेपो सुविधा की शुरुआत किस समिति की सिफारिश पर हुई?",
-        "q_en": "Which committee’s recommendation led to the introduction of the Repo Facility?",
-        "options": ["ऊर्जित पटेल समिति", "नरसिम्हन समिति", "रघुराम राजन समिति", "बिमल जालान समिति"],
-        "options_en": ["Urjit Patel Committee", "Narasimhan Committee", "Raghuram Rajan Committee", "Bimal Jalan Committee"],
-        "answer": 1,
-        "explanation": "नोट्स में स्पष्ट है कि रेपो सुविधा की शुरुआत नरसिम्हन समिति (1998) की सिफारिश पर हुई थी।",
-        "explanation_en": "The notes clearly state that the Repo Facility was introduced based on the recommendation of the Narasimhan Committee (1998)."
-    },
-    {
-        "q": "रेपो दर में कमी से क्या होता है?",
-        "q_en": "What happens when the Repo Rate is reduced?",
-        "options": ["ब्याज दर बढ़ती है", "मुद्रा आपूर्ति बढ़ती है", "मुद्रास्फीति नियंत्रित होती है", "माँग कम होती है"],
-        "options_en": ["Interest rate increases", "Money supply increases", "Inflation is controlled", "Demand decreases"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, जिससे मुद्रा की आपूर्ति बढ़ती है।",
-        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increasing the money supply."
-    },
-    {
-        "q": "रिवर्स रेपो दर की नीलामी का उद्देश्य क्या है?",
-        "q_en": "What is the purpose of the Reverse Repo Rate auction?",
-        "options": ["बैंकों को अधिक ऋण देने के लिए", "मुद्रा आपूर्ति को कम करने के लिए", "CRR को बढ़ाने के लिए", "प्रतिभूतियों को खरीदने के लिए"],
-        "options_en": ["To lend more to banks", "To reduce money supply", "To increase CRR", "To purchase securities"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि रिवर्स रेपो दर की नीलामी से बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है।",
-        "explanation_en": "The notes state that the Reverse Repo Rate auction leads banks to deposit more money with RBI, reducing the money supply."
-    },
-    {
-        "q": "रेपो सुविधा में कौन सी अवधि सबसे अधिक प्रचलित है?",
-        "q_en": "Which duration is most prevalent in the Repo Facility?",
-        "options": ["7 दिन", "14 दिन", "ओवरनाइट", "28 दिन"],
-        "options_en": ["7 days", "14 days", "Overnight", "28 days"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, भारत में ज्यादातर ओवरनाइट रेपो का उपयोग किया जाता है।",
-        "explanation_en": "According to the notes, Overnight Repo is mostly used in India."
-    },
-    {
-        "q": "SDF के तहत बैंकों को क्या लाभ मिलता है?",
-        "q_en": "What benefit do banks get under SDF?",
-        "options": ["ब्याज मुक्त ऋण", "अतिरिक्त राशि पर ब्याज", "CRR में छूट", "दीर्घकालिक ऋण"],
-        "options_en": ["Interest-free loans", "Interest on excess funds", "Exemption from CRR", "Long-term loans"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं और उस पर ब्याज प्राप्त कर सकते हैं।",
-        "explanation_en": "The notes mention that under SDF, banks can deposit their excess funds with RBI and earn interest on them."
-    },
-    {
-        "q": "रेपो दर का उपयोग किस स्थिति में किया जाता है?",
-        "q_en": "In which situation is the Repo Rate used?",
-        "options": ["मुद्रास्फीति बढ़ाने के लिए", "अवस्फीति की स्थिति में", "CRR को कम करने के लिए", "SLR को बढ़ाने के लिए"],
-        "options_en": ["To increase inflation", "In a deflationary situation", "To reduce CRR", "To increase SLR"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से मुद्रा आपूर्ति बढ़ती है, जो अवस्फीति की स्थिति में लागू होता है।",
-        "explanation_en": "According to the notes, reducing the Repo Rate increases money supply, which is applicable in a deflationary situation."
-    },
-    {
-        "q": "बैंक दर का उपयोग मौद्रिक नीति में क्यों नहीं किया जाता?",
-        "q_en": "Why is the Bank Rate not used in monetary policy?",
-        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि वाणिज्यिक पत्रों का उपयोग कम है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होता है", "क्योंकि यह दीर्घकालिक नहीं है"],
-        "options_en": ["Because it is interest-free", "Because the use of commercial papers is low", "Because it applies only to government banks", "Because it is not long-term"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग कम होने के कारण बैंक दर मौद्रिक नीति में प्रभावी नहीं है।",
-        "explanation_en": "The notes state that due to the low use of commercial papers in the Indian market, the Bank Rate is not effective in monetary policy."
-    },
-    {
-        "q": "रेपो दर का बैंकों के MCLR पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of Repo Rate on banks’ MCLR?",
-        "options": ["MCLR कम होता है", "MCLR बढ़ता है", "MCLR अपरिवर्तित रहता है", "MCLR समाप्त हो जाता है"],
-        "options_en": ["MCLR decreases", "MCLR increases", "MCLR remains unchanged", "MCLR is eliminated"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर में वृद्धि से बैंकों की ब्याज दर (MCLR) बढ़ती है।",
-        "explanation_en": "According to the notes, an increase in the Repo Rate increases banks’ interest rate (MCLR)."
-    },
-    {
-        "q": "रिवर्स रेपो दर का उपयोग किसके लिए किया जाता है?",
-        "q_en": "What is the Reverse Repo Rate used for?",
-        "options": ["बैंकों को ऋण देने के लिए", "मुद्रा आपूर्ति को कम करने के लिए", "CRR को बढ़ाने के लिए", "SLR को कम करने के लिए"],
-        "options_en": ["To lend to banks", "To reduce money supply", "To increase CRR", "To reduce SLR"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर का उपयोग मुद्रा आपूर्ति कम करने और मुद्रास्फीति को नियंत्रित करने के लिए किया जाता है।",
-        "explanation_en": "The notes mention that the Reverse Repo Rate is used to reduce money supply and control inflation."
-    },
-    {
-        "q": "रेपो सुविधा को पूर्णरूप से कब लागू किया गया?",
-        "q_en": "When was the Repo Facility fully implemented?",
-        "options": ["1998", "1999", "2000", "2001"],
-        "options_en": ["1998", "1999", "2000", "2001"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, रेपो सुविधा को 1999 में पायलट आधार पर शुरू किया गया और 2000 में पूर्णरूप से लागू किया गया।",
-        "explanation_en": "According to the notes, the Repo Facility was introduced on a pilot basis in 1999 and fully implemented in 2000."
-    },
-    {
-        "q": "SDF का उपयोग बैंकों द्वारा किसके लिए किया जाता है?",
-        "q_en": "What is SDF used for by banks?",
-        "options": ["दीर्घकालिक निवेश के लिए", "अतिरिक्त राशि जमा करने के लिए", "ब्याज मुक्त ऋण लेने के लिए", "CRR को बढ़ाने के लिए"],
-        "options_en": ["For long-term investments", "To deposit excess funds", "To borrow interest-free loans", "To increase CRR"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं।",
-        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI."
-    },
-    {
-        "q": "बैंक दर और रेपो दर में क्या अंतर है?",
-        "q_en": "What is the difference between Bank Rate and Repo Rate?",
-        "options": ["बैंक दर अल्पकालिक है, रेपो दर दीर्घकालिक", "बैंक दर बट्टा दर है, रेपो दर ब्याज दर है", "बैंक दर प्रतिभूतियों पर आधारित है, रेपो दर नहीं", "बैंक दर बैंकों से ऋण लेने के लिए है"],
-        "options_en": ["Bank Rate is short-term, Repo Rate is long-term", "Bank Rate is a discount rate, Repo Rate is an interest rate", "Bank Rate is based on securities, Repo Rate is not", "Bank Rate is for borrowing from banks"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, बैंक दर बिल ऑफ एक्सचेंज को बट्टा करने की दर (डिस्काउंट रेट) है, जबकि रेपो दर प्रतिभूतियों के बदले ऋण देने की ब्याज दर है।",
-        "explanation_en": "According to the notes, the Bank Rate is the discount rate for bills of exchange, while the Repo Rate is the interest rate for lending against securities."
-    },
-    {
-        "q": "रेपो दर और रिवर्स रेपो दर में कौन सी दर अधिक होती है?",
-        "q_en": "Which rate is higher: Repo Rate or Reverse Repo Rate?",
-        "options": ["रेपो दर", "रिवर्स रेपो दर", "दोनों बराबर होती हैं", "स्थिति पर निर्भर करता है"],
-        "options_en": ["Repo Rate", "Reverse Repo Rate", "Both are equal", "Depends on the situation"],
-        "answer": 0,
-        "explanation": "नोट्स में स्पष्ट नहीं है, लेकिन सामान्यतः रेपो दर रिवर्स रेपो दर से अधिक होती है क्योंकि RBI बैंकों को ऋण देने के लिए रेपो दर का उपयोग करता है, जबकि रिवर्स रेपो दर बैंकों से ऋण लेने के लिए है।",
-        "explanation_en": "The notes are not explicit, but generally, the Repo Rate is higher than the Reverse Repo Rate because RBI uses the Repo Rate to lend to banks, while the Reverse Repo Rate is for borrowing from banks."
-    },
-    {
-        "q": "रेपो सुविधा में प्रतिभूतियों का पुनर्खरीद कौन करता है?",
-        "q_en": "Who repurchases the securities in the Repo Facility?",
-        "options": ["RBI", "बैंक", "सरकार", "प्राथमिक डीलर"],
-        "options_en": ["RBI", "Banks", "Government", "Primary Dealers"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि रेपो प्रक्रिया में बैंक प्रतिभूतियों को पुनर्खरीद करने का वादा करते हैं, जो इसे रेपो (रिपर्चेसिंग ऑप्शन) बनाता है।",
-        "explanation_en": "The notes state that in the Repo process, banks promise to repurchase securities, which makes it a repurchase option (Repo)."
-    },
-    {
-        "q": "SDF और रिवर्स रेपो दर में मुख्य अंतर क्या है?",
-        "q_en": "What is the main difference between SDF and Reverse Repo Rate?",
-        "options": ["SDF में प्रतिभूतियों की आवश्यकता नहीं होती", "SDF दीर्घकालिक है", "SDF केवल सरकारी बैंकों के लिए है", "SDF ब्याज मुक्त है"],
-        "options_en": ["SDF does not require securities", "SDF is long-term", "SDF is only for government banks", "SDF is interest-free"],
-        "answer": 0,
-        "explanation": "नोट्स के अनुसार, SDF में बैंक अपनी अतिरिक्त राशि बिना प्रतिभूतियों के RBI में जमा कर सकते हैं, जबकि रिवर्स रेपो में प्रतिभूतियां सौंपनी पड़ती हैं।",
-        "explanation_en": "According to the notes, under SDF, banks can deposit their excess funds with RBI without securities, whereas Reverse Repo requires securities to be provided."
-    },
-    {
-        "q": "रेपो दर का उपयोग किस स्थिति में नहीं किया जाता?",
-        "q_en": "In which situation is the Repo Rate not used?",
-        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "अवस्फीति की स्थिति में", "बैंकों की दीर्घकालिक तरलता के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
-        "options_en": ["To control inflation", "In a deflationary situation", "For banks’ long-term liquidity", "To increase money supply"],
-        "answer": 2,
-        "explanation": "नोट्स में उल्लेख है कि रेपो दर का उपयोग बैंकों की अल्पकालिक तरलता आवश्यकताओं के लिए किया जाता है, न कि दीर्घकालिक तरलता के लिए।",
-        "explanation_en": "The notes mention that the Repo Rate is used for banks’ short-term liquidity requirements, not for long-term liquidity."
-    },
-    {
-        "q": "बैंक दर को संदर्भ दर क्यों कहा जाता है?",
-        "q_en": "Why is the Bank Rate called a reference rate?",
-        "options": ["क्योंकि यह मौद्रिक नीति का मुख्य उपकरण है", "क्योंकि यह वर्तमान में मौद्रिक नीति में उपयोग नहीं होती", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ब्याज मुक्त होती है"],
-        "options_en": ["Because it is the main tool of monetary policy", "Because it is not currently used in monetary policy", "Because it applies only to government banks", "Because it is interest-free"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, RBI वर्तमान में बैंक दर का उपयोग मौद्रिक नीति में नहीं करता, बल्कि इसे केवल संदर्भ दर के रूप में उपयोग करता है।",
-        "explanation_en": "According to the notes, RBI currently does not use the Bank Rate in monetary policy but uses it only as a reference rate."
-    },
-    {
-        "q": "रेपो सुविधा में ओवरनाइट रेपो का उपयोग क्यों किया जाता है?",
-        "q_en": "Why is Overnight Repo used in the Repo Facility?",
-        "options": ["दीर्घकालिक निवेश के लिए", "CRR और SLR की मासिक औसत बनाए रखने के लिए", "मुद्रास्फीति को बढ़ाने के लिए", "ब्याज दर को कम करने के लिए"],
-        "options_en": ["For long-term investments", "To maintain the monthly average of CRR and SLR", "To increase inflation", "To reduce interest rates"],
-        "answer": 1,
-        "explanation": "नोट्स में स्पष्ट है कि ओवरनाइट रेपो का उपयोग बैंकों द्वारा CRR और SLR की मासिक औसत बनाए रखने के लिए किया जाता है।",
-        "explanation_en": "The notes clearly state that Overnight Repo is used by banks to maintain the monthly average of CRR and SLR."
-    },
-    {
-        "q": "रिवर्स रेपो दर की जगह SDF का उपयोग क्यों शुरू किया गया?",
-        "q_en": "Why was SDF introduced in place of Reverse Repo Rate?",
-        "options": ["ब्याज दर को बढ़ाने के लिए", "प्रतिभूतियों की कमी के कारण", "CRR को कम करने के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
-        "options_en": ["To increase interest rates", "Due to a shortage of securities", "To reduce CRR", "To increase money supply"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि कोविड के दौरान प्रतिभूतियों की कमी के कारण रिवर्स रेपो सुविधा प्रभावित हुई, इसलिए SDF शुरू की गई।",
-        "explanation_en": "The notes mention that due to a shortage of securities during COVID, the Reverse Repo facility was affected, so SDF was introduced."
-    },
-    {
-        "q": "रेपो दर को ब्याज दर क्यों कहा जाता है?",
-        "q_en": "Why is the Repo Rate called an interest rate?",
-        "options": ["क्योंकि यह बट्टा दर है", "क्योंकि यह प्रतिभूतियों के बदले ऋण पर लागू होती है", "क्योंकि यह ब्याज मुक्त होती है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है"],
-        "options_en": ["Because it is a discount rate", "Because it applies to loans against securities", "Because it is interest-free", "Because it applies only to government banks"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर वह ब्याज दर है जिस पर RBI बैंकों को प्रतिभूतियों के बदले ऋण देता है।",
-        "explanation_en": "According to the notes, the Repo Rate is the interest rate at which RBI lends to banks against securities."
-    },
-    {
-        "q": "रेपो सुविधा का उपयोग कौन नहीं कर सकता?",
-        "q_en": "Who cannot use the Repo Facility?",
-        "options": ["वाणिज्यिक बैंक", "प्राथमिक डीलर", "सामान्य ग्राहक", "गैर-बैंकिंग वित्तीय संस्थाएँ"],
-        "options_en": ["Commercial banks", "Primary Dealers", "General customers", "Non-banking financial institutions"],
-        "answer": 2,
-        "explanation": "नोट्स में कहा गया है कि रेपो सुविधा का लाभ केवल बैंक और प्राथमिक डीलर ले सकते हैं, सामान्य ग्राहक नहीं।",
-        "explanation_en": "The notes state that only banks and Primary Dealers can avail of the Repo Facility, not general customers."
-    },
-    {
-        "q": "यदि रेपो दर बढ़ती है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
-        "q_en": "If the Repo Rate increases, what will be the effect on banks’ lending capacity?",
-        "options": ["बढ़ेगी", "कम होगी", "अपरिवर्तित रहेगी", "पूरी तरह समाप्त हो जाएगी"],
-        "options_en": ["It will increase", "It will decrease", "It will remain unchanged", "It will be completely eliminated"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे बैंकों को RBI से ऋण लेना महंगा पड़ता है, और उनकी ऋण देने की क्षमता कम होती है।",
-        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, making borrowing from RBI more expensive for banks, reducing their lending capacity."
-    },
-    {
-        "q": "यदि रिवर्स रेपो दर बढ़ाई जाती है, तो बाजार में मुद्रा आपूर्ति पर क्या प्रभाव पड़ेगा?",
-        "q_en": "If the Reverse Repo Rate is increased, what will be the effect on money supply in the market?",
-        "options": ["बढ़ेगी", "कम होगी", "अपरिवर्तित रहेगी", "दोगुनी हो जाएगी"],
-        "options_en": ["It will increase", "It will decrease", "It will remain unchanged", "It will double"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि रिवर्स रेपो दर बढ़ने से बैंक RBI को अधिक धन जमा करते हैं, जिससे बाजार में मुद्रा आपूर्ति कम होती है।",
-        "explanation_en": "The notes state that an increase in the Reverse Repo Rate leads banks to deposit more money with RBI, reducing the money supply in the market."
-    },
-    {
-        "q": "यदि RBI बैंक दर का उपयोग मौद्रिक नीति में नहीं करता, तो इसका उपयोग किस रूप में होता है?",
-        "q_en": "If RBI does not use the Bank Rate in monetary policy, how is it used?",
-        "options": ["ब्याज दर को नियंत्रित करने के लिए", "संदर्भ दर के रूप में", "CRR को बढ़ाने के लिए", "SLR को कम करने के लिए"],
-        "options_en": ["To control interest rates", "As a reference rate", "To increase CRR", "To reduce SLR"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, RBI वर्तमान में बैंक दर का उपयोग केवल संदर्भ दर के रूप में करता है, न कि मौद्रिक नीति के लिए।",
-        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate, not for monetary policy."
-    },
-    {
-        "q": "यदि कोई व्यापारी बिल ऑफ एक्सचेंज को बैंक में जमा करता है, तो बैंक उसे कितना भुगतान करता है?",
-        "q_en": "If a trader deposits a Bill of Exchange in the bank, how much does the bank pay?",
-        "options": ["अंकित मूल्य", "अंकित मूल्य पर बट्टा दर घटाने के बाद", "ब्याज सहित अंकित मूल्य", "अंकित मूल्य का दोगुना"],
-        "options_en": ["Face value", "Face value after deducting the discount rate", "Face value with interest", "Double the face value"],
-        "answer": 1,
-        "explanation": "नोट्स में उदाहरण दिया गया है कि यदि व्यापारी बिल ऑफ एक्सचेंज जमा करता है, तो बैंक उसे बट्टा दर (उदाहरण: 10%) घटाकर भुगतान करता है, जैसे 1000 - 10% = 900।",
-        "explanation_en": "The notes provide an example that if a trader deposits a Bill of Exchange, the bank pays after deducting the discount rate (e.g., 10%), such as 1000 - 10% = 900."
-    },
-    {
-        "q": "यदि RBI रेपो दर को कम करता है, तो इसका अर्थव्यवस्था पर क्या प्रभाव पड़ेगा?",
-        "q_en": "If RBI reduces the Repo Rate, what will be the effect on the economy?",
-        "options": ["मुद्रास्फीति बढ़ेगी", "मुद्रास्फीति कम होगी", "ब्याज दर बढ़ेगी", "CRR कम होगा"],
-        "options_en": ["Inflation will increase", "Inflation will decrease", "Interest rate will increase", "CRR will decrease"],
-        "answer": 0,
-        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, मुद्रा आपूर्ति बढ़ती है, और माँग बढ़ने से मुद्रास्फीति बढ़ सकती है।",
-        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increases money supply, and increased demand may lead to higher inflation."
-    },
-    {
-        "q": "यदि कोई बैंक SDF का उपयोग करता है, तो उसे क्या करना होगा?",
-        "q_en": "If a bank uses SDF, what does it have to do?",
-        "options": ["प्रतिभूतियां जमा करनी होंगी", "अतिरिक्त राशि RBI में जमा करनी होगी", "CRR को बढ़ाना होगा", "SLR को कम करना होगा"],
-        "options_en": ["Deposit securities", "Deposit excess funds with RBI", "Increase CRR", "Reduce SLR"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं और उस पर ब्याज प्राप्त कर सकते हैं।",
-        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI and earn interest on them."
-    },
-    {
-        "q": "रेपो दर बढ़ने से बैंकों का MCLR क्यों बढ़ता है?",
-        "q_en": "Why does banks’ MCLR increase when the Repo Rate increases?",
-        "options": ["क्योंकि RBI ब्याज मुक्त ऋण देता है", "क्योंकि बैंकों को RBI से ऋण लेना महंगा पड़ता है", "क्योंकि CRR कम हो जाता है", "क्योंकि SLR बढ़ जाता है"],
-        "options_en": ["Because RBI provides interest-free loans", "Because borrowing from RBI becomes more expensive for banks", "Because CRR decreases", "Because SLR increases"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से बैंकों को RBI से ऋण लेना महंगा पड़ता है, जिसके कारण वे अपनी ब्याज दर (MCLR) बढ़ाते हैं।",
-        "explanation_en": "According to the notes, an increase in the Repo Rate makes borrowing from RBI more expensive for banks, causing them to increase their interest rate (MCLR)."
-    },
-    {
-        "q": "यदि RBI रिवर्स रेपो दर को बढ़ाता है, तो बैंकों का व्यवहार क्या होगा?",
-        "q_en": "If RBI increases the Reverse Repo Rate, what will be the behavior of banks?",
-        "options": ["वे अधिक ऋण देंगे", "वे RBI को अधिक धन जमा करेंगे", "वे CRR को कम करेंगे", "वे SLR को बढ़ाएंगे"],
-        "options_en": ["They will lend more", "They will deposit more money with RBI", "They will reduce CRR", "They will increase SLR"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर बढ़ने पर बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है।",
-        "explanation_en": "The notes mention that when the Reverse Repo Rate increases, banks deposit more money with RBI, reducing the money supply."
-    },
-    {
-        "q": "रेपो सुविधा का उपयोग दीर्घकालिक तरलता के लिए क्यों नहीं किया जाता?",
-        "q_en": "Why is the Repo Facility not used for long-term liquidity?",
-        "options": ["क्योंकि यह केवल सरकारी बैंकों के लिए है", "क्योंकि यह अल्पकालिक तरलता के लिए डिज़ाइन किया गया है", "क्योंकि यह ब्याज मुक्त है", "क्योंकि यह CRR को प्रभावित करता है"],
-        "options_en": ["Because it is only for government banks", "Because it is designed for short-term liquidity", "Because it is interest-free", "Because it affects CRR"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो सुविधा का उपयोग बैंकों की अल्पकालिक तरलता आवश्यकताओं के लिए किया जाता है।",
-        "explanation_en": "According to the notes, the Repo Facility is used for banks’ short-term liquidity requirements."
-    },
-    {
-        "q": "यदि RBI रेपो दर को स्थिर रखता है, तो मुद्रास्फीति पर क्या प्रभाव पड़ेगा?",
-        "q_en": "If RBI keeps the Repo Rate stable, what will be the effect on inflation?",
-        "options": ["बढ़ेगी", "कम होगी", "अपरिवर्तित रहेगी", "पूरी तरह समाप्त हो जाएगी"],
-        "options_en": ["It will increase", "It will decrease", "It will remain unchanged", "It will be completely eliminated"],
-        "answer": 2,
-        "explanation": "नोट्स के आधार पर, यदि रेपो दर स्थिर रहती है, तो ब्याज दर और मुद्रा आपूर्ति में कोई बदलाव नहीं होगा, जिससे मुद्रास्फीति अपरिवर्तित रहेगी।",
-        "explanation_en": "Based on the notes, if the Repo Rate remains stable, there will be no change in interest rates or money supply, so inflation will remain unchanged."
-    },
-    {
-        "q": "बैंक दर को दंडात्मक दर क्यों माना जाता है?",
-        "q_en": "Why is the Bank Rate considered a penal rate?",
-        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि यह CRR और SLR न बनाए रखने पर लागू होती है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ग्राहकों पर लागू होती है"],
-        "options_en": ["Because it is interest-free", "Because it applies when CRR and SLR are not maintained", "Because it applies only to government banks", "Because it applies to customers"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि RBI यह मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं, इसलिए उन्हें बैंक दर पर उच्च दर से धन लेना पड़ता है।",
-        "explanation_en": "The notes state that RBI assumes banks are unable to maintain CRR and SLR, so they have to borrow at a higher rate under the Bank Rate."
-    },
-    {
-        "q": "रेपो दर कम करने से अवस्फीति की स्थिति में क्या होगा?",
-        "q_en": "What will happen in a deflationary situation if the Repo Rate is reduced?",
-        "options": ["मुद्रा आपूर्ति कम होगी", "माँग बढ़ेगी", "ब्याज दर बढ़ेगी", "मुद्रास्फीति कम होगी"],
-        "options_en": ["Money supply will decrease", "Demand will increase", "Interest rate will increase", "Inflation will decrease"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, मुद्रा आपूर्ति बढ़ती है, और माँग बढ़ती है, जो अवस्फीति की स्थिति में उपयोगी है।",
-        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increases money supply, and boosts demand, which is useful in a deflationary situation."
-    },
-    {
-        "q": "यदि कोई बैंक SDF का उपयोग नहीं करता, तो उसे क्या करना होगा?",
-        "q_en": "If a bank does not use SDF, what will it have to do?",
-        "options": ["रिवर्स रेपो दर का उपयोग करना होगा", "CRR को बढ़ाना होगा", "SLR को कम करना होगा", "ब्याज दर को बढ़ाना होगा"],
-        "options_en": ["Use the Reverse Repo Rate", "Increase CRR", "Reduce SLR", "Increase interest rates"],
-        "answer": 0,
-        "explanation": "नोट्स में उल्लेख है कि SDF की शुरुआत रिवर्स रेपो दर की जगह हुई, लेकिन यदि बैंक SDF का उपयोग नहीं करता, तो वह रिवर्स रेपो दर का उपयोग कर सकता है।",
-        "explanation_en": "The notes mention that SDF was introduced in place of the Reverse Repo Rate, but if a bank does not use SDF, it can use the Reverse Repo Rate."
-    },
-    {
-        "q": "रेपो दर का बैंकों के स्वास्थ्य पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of the Repo Rate on the health of banks?",
-        "options": ["कोई प्रभाव नहीं पड़ता", "उच्च रेपो दर से बैंक कमजोर हो सकते हैं", "उच्च रेपो दर से बैंक मजबूत हो जाते हैं", "रेपो दर कम होने से बैंक कमजोर हो जाते हैं"],
-        "options_en": ["No effect", "High Repo Rate can weaken banks", "High Repo Rate strengthens banks", "Low Repo Rate weakens banks"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, उच्च रेपो दर से बैंकों को RBI से महंगा ऋण लेना पड़ता है, जिससे उनकी ऋण देने की क्षमता कम होती है और उनका स्वास्थ्य प्रभावित हो सकता है।",
-        "explanation_en": "According to the notes, a high Repo Rate makes borrowing from RBI more expensive for banks, reducing their lending capacity and potentially affecting their health."
-    },
-    {
-        "q": "यदि RBI रिवर्स रेपो दर को कम करता है, तो बैंकों का व्यवहार क्या होगा?",
-        "q_en": "If RBI reduces the Reverse Repo Rate, what will be the behavior of banks?",
-        "options": ["वे RBI को अधिक धन जमा करेंगे", "वे RBI को कम धन जमा करेंगे", "वे CRR को बढ़ाएंगे", "वे SLR को कम करेंगे"],
-        "options_en": ["They will deposit more money with RBI", "They will deposit less money with RBI", "They will increase CRR", "They will reduce SLR"],
-        "answer": 1,
-        "explanation": "नोट्स के आधार पर, रिवर्स रेपो दर कम होने से बैंकों को RBI में धन जमा करने का प्रोत्साहन कम मिलता है, जिससे वे कम धन जमा करते हैं।",
-        "explanation_en": "Based on the notes, a reduction in the Reverse Repo Rate reduces the incentive for banks to deposit money with RBI, leading them to deposit less."
-    },
-    {
-        "q": "रेपो दर और बैंक दर में से कौन सी दर मौद्रिक नीति का मुख्य उपकरण है?",
-        "q_en": "Which rate is the main tool of monetary policy: Repo Rate or Bank Rate?",
-        "options": ["बैंक दर", "रेपो दर", "दोनों", "कोई नहीं"],
-        "options_en": ["Bank Rate", "Repo Rate", "Both", "None"],
-        "answer": 1,
-        "explanation": "नोट्स में स्पष्ट है कि वर्तमान में रेपो दर मुद्रास्फीति नियंत्रण के लिए मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण है, जबकि बैंक दर केवल संदर्भ दर के रूप में उपयोग होती है।",
-        "explanation_en": "The notes clearly state that the Repo Rate is currently the most important tool of monetary policy for controlling inflation, while the Bank Rate is used only as a reference rate."
-    },
-    {
-        "q": "SDF की शुरुआत से रिवर्स रेपो दर की सुविधा पर क्या प्रभाव पड़ा?",
-        "q_en": "What was the effect of introducing SDF on the Reverse Repo Rate facility?",
-        "options": ["रिवर्स रेपो दर समाप्त हो गई", "रिवर्स रेपो दर अक्रियाशील हो गई", "रिवर्स रेपो दर बढ़ गई", "रिवर्स रेपो दर कम हो गई"],
-        "options_en": ["Reverse Repo Rate was eliminated", "Reverse Repo Rate became inactive", "Reverse Repo Rate increased", "Reverse Repo Rate decreased"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि वर्तमान में रिवर्स रेपो दर सुविधा अक्रियाशील है और इसके स्थान पर SDF का उपयोग किया जा रहा है।",
-        "explanation_en": "The notes state that the Reverse Repo Rate facility is currently inactive, and SDF is being used in its place."
-    },
-    {
-        "q": "रेपो दर में वृद्धि से बैंकों की ब्याज दर (MCLR) पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of an increase in Repo Rate on banks’ interest rate (MCLR)?",
-        "options": ["MCLR कम हो जाता है", "MCLR बढ़ जाता है", "MCLR अपरिवर्तित रहता है", "MCLR समाप्त हो जाता है"],
-        "options_en": ["MCLR decreases", "MCLR increases", "MCLR remains unchanged", "MCLR is eliminated"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर में वृद्धि से बैंकों को RBI से ऋण लेना महंगा पड़ता है, जिसके कारण वे अपनी MCLR आधारित ब्याज दर बढ़ाते हैं।",
-        "explanation_en": "According to the notes, an increase in the Repo Rate makes borrowing from RBI more expensive for banks, causing them to increase their MCLR-based interest rates."
-    },
-    {
-        "q": "रेपो सुविधा में ओवरनाइट रेपो का उपयोग क्यों प्रचलित है?",
-        "q_en": "Why is the use of Overnight Repo prevalent in the Repo Facility?",
-        "options": ["क्योंकि यह दीर्घकालिक तरलता प्रदान करता है", "क्योंकि यह CRR और SLR की मासिक औसत बनाए रखने में मदद करता है", "क्योंकि यह ब्याज मुक्त है", "क्योंकि यह केवल सरकारी बैंकों के लिए है"],
-        "options_en": ["Because it provides long-term liquidity", "Because it helps maintain the monthly average of CRR and SLR", "Because it is interest-free", "Because it is only for government banks"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि ओवरनाइट रेपो का उपयोग बैंकों द्वारा CRR और SLR की मासिक औसत बनाए रखने के लिए किया जाता है।",
-        "explanation_en": "The notes mention that Overnight Repo is used by banks to maintain the monthly average of CRR and SLR."
-    },
-    {
-        "q": "बैंक दर के दंडात्मक होने का क्या कारण है?",
-        "q_en": "What is the reason for the Bank Rate being penal?",
-        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि यह CRR और SLR न बनाए रखने पर लागू होती है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ग्राहकों पर लागू होती है"],
-        "options_en": ["Because it is interest-free", "Because it applies when CRR and SLR are not maintained", "Because it applies only to government banks", "Because it applies to customers"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, RBI यह मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं, इसलिए उन्हें बैंक दर पर उच्च दर से धन लेना पड़ता है।",
-        "explanation_en": "According to the notes, RBI assumes banks are unable to maintain CRR and SLR, so they have to borrow at a higher rate under the Bank Rate."
-    },
-    {
-        "q": "रेपो सुविधा की शुरुआत का मुख्य कारण क्या था?",
-        "q_en": "What was the main reason for introducing the Repo Facility?",
-        "options": ["CRR और SLR को समाप्त करने के लिए", "मुद्रास्फीति को नियंत्रित करने के लिए प्रभावी उपकरण प्रदान करने के लिए", "बैंकों को ब्याज मुक्त ऋण देने के लिए", "वाणिज्यिक पत्रों को बढ़ावा देने के लिए"],
-        "options_en": ["To eliminate CRR and SLR", "To provide an effective tool to control inflation", "To provide interest-free loans to banks", "To promote commercial papers"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि CRR और SLR मुद्रास्फीति नियंत्रण में प्रभावी नहीं थे, इसलिए नरसिम्हन समिति ने LAF के रूप में रेपो सुविधा की सिफारिश की।",
-        "explanation_en": "The notes state that CRR and SLR were not effective in controlling inflation, so the Narasimhan Committee recommended the Repo Facility as part of LAF."
-    },
-    
     
     {
-        "q": "SDF की शुरुआत का मुख्य कारण क्या था?",
-        "q_en": "What was the main reason for introducing SDF?",
-        "options": ["बैंकों को ब्याज मुक्त ऋण देने के लिए", "प्रतिभूतियों की कमी को दूर करने के लिए", "CRR को समाप्त करने के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
-        "options_en": ["To provide interest-free loans to banks", "To address the shortage of securities", "To eliminate CRR", "To increase money supply"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि कोविड के दौरान प्रतिभूतियों की कमी के कारण रिवर्स रेपो सुविधा प्रभावित हुई, इसलिए अप्रैल 2022 में SDF शुरू की गई।",
-        "explanation_en": "The notes state that due to a shortage of securities during COVID, the Reverse Repo facility was affected, so SDF was introduced in April 2022."
+        "q": "RBI की मौद्रिक नीति का मुख्य उद्देश्य क्या है?",
+        "q_en": "What is the primary objective of RBI's monetary policy?",
+        "options": ["केवल मूल्य स्थिरता", "केवल आर्थिक विकास", "मूल्य स्थिरता और आर्थिक विकास दोनों", "केवल ब्याज दर नियंत्रण"],
+        "options_en": ["Only price stability", "Only economic growth", "Both price stability and economic growth", "Only interest rate control"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, RBI की मौद्रिक नीति का उद्देश्य अर्थव्यवस्था में मूल्य स्थिरता बनाए रखने के साथ-साथ आर्थिक विकास को ध्यान में रखना है।",
+        "explanation_en": "As per the notes, the objective of RBI’s monetary policy is to maintain price stability while keeping economic growth in view."
     },
     {
-        "q": "रेपो दर का उपयोग बैंकों की किस आवश्यकता के लिए किया जाता है?",
-        "q_en": "What requirement of banks is the Repo Rate used for?",
-        "options": ["दीर्घकालिक निवेश", "अल्पकालिक तरलता", "ब्याज मुक्त ऋण", "SLR को बढ़ाने के लिए"],
-        "options_en": ["Long-term investment", "Short-term liquidity", "Interest-free loans", "To increase SLR"],
+        "q": "RBI मौद्रिक नीति के लिए कितने प्रकार के विधियों का उपयोग करता है?",
+        "q_en": "How many types of methods does RBI use for monetary policy?",
+        "options": ["एक", "दो", "तीन", "चार"],
+        "options_en": ["One", "Two", "Three", "Four"],
         "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर का उपयोग बैंकों की अल्पकालिक तरलता आवश्यकताओं को पूरा करने के लिए किया जाता है।",
-        "explanation_en": "According to the notes, the Repo Rate is used to meet the short-term liquidity requirements of banks."
+        "explanation": "नोट्स में उल्लेख है कि RBI मौद्रिक नीति के लिए दो विधियों का उपयोग करता है: मात्रात्मक और गुणात्मक।",
+        "explanation_en": "The notes mention that RBI uses two methods for monetary policy: quantitative and qualitative."
     },
     {
-        "q": "रिवर्स रेपो दर को कम करने से बैंकों की जमा राशि पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of reducing the Reverse Repo Rate on banks’ deposits?",
-        "options": ["जमा राशि बढ़ती है", "जमा राशि कम होती है", "जमा राशि अपरिवर्तित रहती है", "जमा राशि दोगुनी हो जाती है"],
-        "options_en": ["Deposits increase", "Deposits decrease", "Deposits remain unchanged", "Deposits double"],
+        "q": "मात्रात्मक विधि का उद्देश्य क्या है?",
+        "q_en": "What is the objective of the quantitative method?",
+        "options": ["मुद्रा आपूर्ति की दिशा नियंत्रित करना", "मुद्रा आपूर्ति की कुल मात्रा नियंत्रित करना", "ब्याज दर को स्थिर करना", "सरकारी प्रतिभूतियों की खरीद"],
+        "options_en": ["Control the direction of money supply", "Control the total amount of money supply", "Stabilize interest rates", "Purchase of government securities"],
         "answer": 1,
-        "explanation": "नोट्स के आधार पर, रिवर्स रेपो दर कम होने से बैंकों को RBI में धन जमा करने का प्रोत्साहन कम मिलता है, जिससे उनकी जमा राशि कम होती है।",
-        "explanation_en": "Based on the notes, a reduction in the Reverse Repo Rate reduces the incentive for banks to deposit money with RBI, leading to a decrease in their deposits."
+        "explanation": "नोट्स के अनुसार, मात्रात्मक विधि के तहत RBI मुद्रा आपूर्ति की कुल मात्रा को नियंत्रित करता है।",
+        "explanation_en": "As per the notes, the quantitative method aims to control the total amount of money supply."
     },
     {
-        "q": "बैंक दर का उपयोग किस स्थिति में किया जाता है?",
-        "q_en": "In which situation is the Bank Rate used?",
-        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "CRR और SLR न बनाए रखने की स्थिति में", "अवस्फीति को बढ़ाने के लिए", "ब्याज दर को कम करने के लिए"],
-        "options_en": ["To control inflation", "When CRR and SLR are not maintained", "To increase deflation", "To reduce interest rates"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, बैंक दर का उपयोग तब किया जाता है जब बैंक CRR और SLR बनाए रखने में असमर्थ होते हैं, और इसे दंडात्मक दर के रूप में लागू किया जाता है।",
-        "explanation_en": "According to the notes, the Bank Rate is used when banks are unable to maintain CRR and SLR, and it is applied as a penal rate."
-    },
-    {
-        "q": "रेपो सुविधा की नीलामी का समय क्या है?",
-        "q_en": "What is the timing of the Repo Facility auction?",
-        "options": ["प्रतिदिन सुबह", "प्रति सप्ताह", "प्रति माह", "वर्ष में एक बार"],
-        "options_en": ["Daily morning", "Weekly", "Monthly", "Once a year"],
+        "q": "गुणात्मक विधि को क्या कहा जाता है?",
+        "q_en": "What is the qualitative method also known as?",
+        "options": ["चयनात्मक साख नियंत्रण", "नकद आरक्षित अनुपात", "वैधानिक तरलता अनुपात", "मुद्रा गुणक"],
+        "options_en": ["Selective credit control", "Cash Reserve Ratio", "Statutory Liquidity Ratio", "Money multiplier"],
         "answer": 0,
-        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा की नीलामी प्रतिदिन सुबह RBI के ई-कुबेर प्लेटफॉर्म पर होती है।",
-        "explanation_en": "The notes mention that the Repo Facility auction is conducted daily in the morning on RBI’s e-Kuber platform."
+        "explanation": "नोट्स में कहा गया है कि गुणात्मक विधि को चयनात्मक साख नियंत्रण भी कहते हैं।",
+        "explanation_en": "The notes state that the qualitative method is also called selective credit control."
     },
     {
-        "q": "रेपो दर और रिवर्स रेपो दर के बीच का अंतर कितना होता है?",
-        "q_en": "What is the difference between the Repo Rate and the Reverse Repo Rate?",
-        "options": ["0.25%", "0.50%", "1.00%", "स्थिति पर निर्भर करता है"],
-        "options_en": ["0.25%", "0.50%", "1.00%", "Depends on the situation"],
+        "q": "NDTL का पूरा नाम क्या है?",
+        "q_en": "What is the full form of NDTL?",
+        "options": ["Net Demand and Time Liabilities", "National Demand and Total Liabilities", "Net Deposit and Time Loans", "National Deposit and Term Liabilities"],
+        "options_en": ["Net Demand and Time Liabilities", "National Demand and Total Liabilities", "Net Deposit and Time Loans", "National Deposit and Term Liabilities"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, NDTL का अर्थ है शुद्ध मांग और समय देयताएँ।",
+        "explanation_en": "According to the notes, NDTL stands for Net Demand and Time Liabilities."
+    },
+    {
+        "q": "NDTL का उपयोग RBI द्वारा किन अनुपातों को लागू करने के लिए किया जाता है?",
+        "q_en": "NDTL is used by RBI to implement which ratios?",
+        "options": ["CRR और SLR", "CRR और ब्याज दर", "SLR और मुद्रा गुणक", "मुद्रा गुणक और ब्याज दर"],
+        "options_en": ["CRR and SLR", "CRR and interest rate", "SLR and money multiplier", "Money multiplier and interest rate"],
+        "answer": 0,
+        "explanation": "नोट्स में उल्लेख है कि NDTL का उपयोग CRR और SLR को लागू करने के लिए किया जाता है।",
+        "explanation_en": "The notes mention that NDTL is used to implement CRR and SLR."
+    },
+    {
+        "q": "CRR का पूरा नाम क्या है?",
+        "q_en": "What is the full form of CRR?",
+        "options": ["Cash Reserve Ratio", "Credit Reserve Ratio", "Capital Reserve Ratio", "Currency Reserve Ratio"],
+        "options_en": ["Cash Reserve Ratio", "Credit Reserve Ratio", "Capital Reserve Ratio", "Currency Reserve Ratio"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR का अर्थ है नकद आरक्षित अनुपात।",
+        "explanation_en": "As per the notes, CRR stands for Cash Reserve Ratio."
+    },
+    {
+        "q": "बैंकों को CRR कितने समय के आधार पर बनाए रखना होता है?",
+        "q_en": "On what basis do banks have to maintain CRR?",
+        "options": ["मासिक", "त्रैमासिक", "वार्षिक", "साप्ताहिक"],
+        "options_en": ["Monthly", "Quarterly", "Annually", "Weekly"],
+        "answer": 0,
+        "explanation": "नोट्स में कहा गया है कि बैंकों को मासिक औसत के रूप में CRR बनाए रखना होता है।",
+        "explanation_en": "The notes state that banks must maintain CRR on a monthly average basis."
+    },
+    {
+        "q": "SLR का पूरा नाम क्या है?",
+        "q_en": "What is the full form of SLR?",
+        "options": ["Statutory Liquidity Ratio", "Standard Liquidity Ratio", "Systematic Loan Ratio", "Selective Liquidity Ratio"],
+        "options_en": ["Statutory Liquidity Ratio", "Standard Liquidity Ratio", "Systematic Loan Ratio", "Selective Liquidity Ratio"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, SLR का अर्थ है वैधानिक तरलता अनुपात।",
+        "explanation_en": "As per the notes, SLR stands for Statutory Liquidity Ratio."
+    },
+    {
+        "q": "SLR की अधिकतम सीमा क्या है?",
+        "q_en": "What is the maximum limit of SLR?",
+        "options": ["20%", "30%", "40%", "50%"],
+        "options_en": ["20%", "30%", "40%", "50%"],
+        "answer": 2,
+        "explanation": "नोट्स में उल्लेख है कि SLR की अधिकतम सीमा 40% है।",
+        "explanation_en": "The notes mention that the maximum limit of SLR is 40%."
+    },
+    {
+        "q": "CRR को बनाए रखने का आधार क्या है?",
+        "q_en": "What is the basis for maintaining CRR?",
+        "options": ["बैंक की पूँजी", "NDTL", "सरकारी प्रतिभूतियाँ", "मुद्रा गुणक"],
+        "options_en": ["Bank's capital", "NDTL", "Government securities", "Money multiplier"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, बैंकों को अपनी NDTL के आधार पर CRR बनाए रखना होता है।",
+        "explanation_en": "As per the notes, banks must maintain CRR based on their NDTL."
+    },
+    {
+        "q": "RBI CRR पर ब्याज देता है या नहीं?",
+        "q_en": "Does RBI pay interest on CRR?",
+        "options": ["हाँ", "नहीं", "कभी-कभी", "केवल विशेष परिस्थितियों में"],
+        "options_en": ["Yes", "No", "Sometimes", "Only in special circumstances"],
+        "answer": 1,
+        "explanation": "नोट्स में स्पष्ट उल्लेख है कि CRR पर RBI कोई ब्याज नहीं देता है।",
+        "explanation_en": "The notes clearly state that RBI does not pay interest on CRR."
+    },
+    {
+        "q": "मांग जमा का उदाहरण क्या है?",
+        "q_en": "What is an example of demand deposits?",
+        "options": ["सावधि जमा", "चालू खाता", "आवर्ती जमा", "जमा प्रमाणपत्र"],
+        "options_en": ["Fixed deposits", "Current account", "Recurring deposits", "Certificate of deposit"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि चालू खाता मांग जमा का उदाहरण है।",
+        "explanation_en": "The notes state that a current account is an example of demand deposits."
+    },
+    {
+        "q": "सावधि जमा का उदाहरण क्या है?",
+        "q_en": "What is an example of time deposits?",
+        "options": ["चालू खाता", "बचत खाता", "सावधि जमा", "डिमांड ड्राफ्ट"],
+        "options_en": ["Current account", "Savings account", "Fixed deposits", "Demand draft"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, सावधि जमा सावधि जमा का उदाहरण है।",
+        "explanation_en": "As per the notes, fixed deposits are an example of time deposits."
+    },
+    {
+        "q": "शुद्ध मांग और समय देयता की गणना कैसे की जाती है?",
+        "q_en": "How is Net Demand and Time Liabilities calculated?",
+        "options": ["कुल मांग और समय देयता + अंतर बैंक जमा", "कुल मांग और समय देयता - अंतर बैंक जमा", "कुल मांग और समय देयता × अंतर बैंक जमा", "कुल मांग और समय देयता ÷ अंतर बैंक जमा"],
+        "options_en": ["Total Demand and Time Liabilities + Interbank Deposits", "Total Demand and Time Liabilities - Interbank Deposits", "Total Demand and Time Liabilities × Interbank Deposits", "Total Demand and Time Liabilities ÷ Interbank Deposits"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि शुद्ध मांग और समय देयता = कुल मांग और समय देयता - अंतर बैंक जमा।",
+        "explanation_en": "The notes state that Net Demand and Time Liabilities = Total Demand and Time Liabilities - Interbank Deposits."
+    },
+    {
+        "q": "CRR को बनाए रखने का कानूनी आधार क्या है?",
+        "q_en": "What is the legal basis for maintaining CRR?",
+        "options": ["RBI अधिनियम 1934", "बैंकिंग अधिनियम 1949", "वित्त अधिनियम 1960", "मुद्रा अधिनियम 1970"],
+        "options_en": ["RBI Act 1934", "Banking Act 1949", "Finance Act 1960", "Currency Act 1970"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR को RBI अधिनियम 1934 के तहत बनाए रखना होता है।",
+        "explanation_en": "As per the notes, CRR must be maintained under the RBI Act 1934."
+    },
+    {
+        "q": "SLR को बनाए रखने का कानूनी आधार क्या है?",
+        "q_en": "What is the legal basis for maintaining SLR?",
+        "options": ["RBI अधिनियम 1934", "बैंकिंग अधिनियम 1949", "वित्त अधिनियम 1960", "मुद्रा अधिनियम 1970"],
+        "options_en": ["RBI Act 1934", "Banking Act 1949", "Finance Act 1960", "Currency Act 1970"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि SLR को बैंकिंग अधिनियम 1949 के तहत बनाए रखना होता है।",
+        "explanation_en": "The notes mention that SLR must be maintained under the Banking Act 1949."
+    },
+    {
+        "q": "बैंकों की पूँजी में क्या शामिल होता है?",
+        "q_en": "What is included in the capital of banks?",
+        "options": ["कर्ज + नकद आरक्षित अनुपात + वैधानिक तरलता अनुपात + निवेश", "जमा + नकद आरक्षित अनुपात", "कर्ज + जमा", "केवल निवेश"],
+        "options_en": ["Loans + Cash Reserve Ratio + Statutory Liquidity Ratio + Investments", "Deposits + Cash Reserve Ratio", "Loans + Deposits", "Only Investments"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, बैंकों की पूँजी में कर्ज, नकद आरक्षित अनुपात, वैधानिक तरलता अनुपात और निवेश शामिल होते हैं।",
+        "explanation_en": "As per the notes, the capital of banks includes loans, CRR, SLR, and investments."
+    },
+    {
+        "q": "बैंकों की देयता में क्या शामिल होता है?",
+        "q_en": "What is included in the liabilities of banks?",
+        "options": ["चालू खाता जमा + बचत खाता जमा + सावधि खाता जमा", "केवल चालू खाता जमा", "केवल सावधि खाता जमा", "केवल निवेश"],
+        "options_en": ["Current account deposits + Savings account deposits + Fixed deposits", "Only current account deposits", "Only fixed deposits", "Only investments"],
+        "answer": 0,
+        "explanation": "नोट्स में उल्लेख है कि बैंकों की देयता में चालू खाता जमा, बचत खाता जमा और सावधि खाता जमा शामिल होते हैं।",
+        "explanation_en": "The notes mention that the liabilities of banks include current account deposits, savings account deposits, and fixed deposits."
+    },
+    {
+        "q": "मुद्रा गुणक का अर्थ क्या है?",
+        "q_en": "What is the meaning of the money multiplier?",
+        "options": ["अर्थव्यवस्था में कुल मुद्रा आपूर्ति और उच्च शक्तिशाली मुद्रा का अनुपात", "बैंकों की कुल पूँजी", "बैंकों की कुल देयता", "RBI की ब्याज दर"],
+        "options_en": ["Ratio of total money supply to high-powered money in the economy", "Total capital of banks", "Total liabilities of banks", "RBI's interest rate"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, मुद्रा गुणक अर्थव्यवस्था में कुल मुद्रा आपूर्ति और उच्च शक्तिशाली मुद्रा के स्टॉक का अनुपात है।",
+        "explanation_en": "As per the notes, the money multiplier is the ratio of total money supply to the stock of high-powered money in the economy."
+    },
+    {
+        "q": "यदि RBI CRR को बढ़ाता है, तो इसका क्या प्रभाव पड़ता है?",
+        "q_en": "If RBI increases CRR, what is the effect?",
+        "options": ["बैंकों की ऋण देने की क्षमता बढ़ती है", "बैंकों की ऋण देने की क्षमता घटती है", "ब्याज दर घटती है", "मुद्रा आपूर्ति बढ़ती है"],
+        "options_en": ["Banks' lending capacity increases", "Banks' lending capacity decreases", "Interest rate decreases", "Money supply increases"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR बढ़ाने से बैंकों की ऋण देने की क्षमता घटती है, क्योंकि उन्हें अधिक राशि RBI के पास नकद रखनी पड़ती है।",
+        "explanation_en": "As per the notes, increasing CRR reduces banks’ lending capacity as they must hold more cash with RBI."
+    },
+    {
+        "q": "CRR बढ़ाने से बाजार में मुद्रा आपूर्ति पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of increasing CRR on the money supply in the market?",
+        "options": ["मुद्रा आपूर्ति बढ़ती है", "मुद्रा आपूर्ति घटती है", "कोई प्रभाव नहीं पड़ता", "मुद्रा आपूर्ति स्थिर रहती है"],
+        "options_en": ["Money supply increases", "Money supply decreases", "No effect", "Money supply remains stable"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि CRR बढ़ाने से बाजार में मुद्रा की आपूर्ति में कमी आती है।",
+        "explanation_en": "The notes state that increasing CRR reduces the money supply in the market."
+    },
+    {
+        "q": "CRR बढ़ाने से उपभोक्ता की क्रय शक्ति पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of increasing CRR on consumers’ purchasing power?",
+        "options": ["क्रय शक्ति बढ़ती है", "क्रय शक्ति घटती है", "क्रय शक्ति स्थिर रहती है", "कोई प्रभाव नहीं पड़ता"],
+        "options_en": ["Purchasing power increases", "Purchasing power decreases", "Purchasing power remains stable", "No effect"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR बढ़ाने से मुद्रा आपूर्ति कम होती है, जिससे उपभोक्ता की क्रय शक्ति कम हो जाती है।",
+        "explanation_en": "As per the notes, increasing CRR reduces money supply, leading to a decrease in consumers’ purchasing power."
+    },
+    {
+        "q": "CRR बढ़ाने से कीमतों पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of increasing CRR on prices?",
+        "options": ["कीमतें बढ़ती हैं", "कीमतें घटती हैं", "कीमतें स्थिर रहती हैं", "कोई प्रभाव नहीं पड़ता"],
+        "options_en": ["Prices increase", "Prices decrease", "Prices remain stable", "No effect"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि CRR बढ़ाने से समग्र मांग कम होती है, जिससे कीमतें और मुद्रास्फीति घटती है।",
+        "explanation_en": "The notes mention that increasing CRR reduces aggregate demand, leading to a decrease in prices and inflation."
+    },
+    {
+        "q": "SLR बढ़ाने से ब्याज दर पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of increasing SLR on interest rates?",
+        "options": ["ब्याज दर घटती है", "ब्याज दर बढ़ती है", "ब्याज दर स्थिर रहती है", "कोई प्रभाव नहीं पड़ता"],
+        "options_en": ["Interest rate decreases", "Interest rate increases", "Interest rate remains stable", "No effect"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, SLR बढ़ाने से ब्याज दर बढ़ती है, क्योंकि बैंकों की ऋण देने की क्षमता कम होती है।",
+        "explanation_en": "As per the notes, increasing SLR increases interest rates as banks’ lending capacity decreases."
+    },
+    {
+        "q": "SLR कम करने से क्या होता है?",
+        "q_en": "What happens when SLR is reduced?",
+        "options": ["ऋण की लागत बढ़ती है", "मुद्रा आपूर्ति घटती है", "ऋण सस्ते होते हैं", "मुद्रास्फीति घटती है"],
+        "options_en": ["Cost of loans increases", "Money supply decreases", "Loans become cheaper", "Inflation decreases"],
+        "answer": 2,
+        "explanation": "नोट्स में कहा गया है कि SLR कम करने से ऋण योग्य धन की आपूर्ति बढ़ती है, जिससे ऋण सस्ते होते हैं।",
+        "explanation_en": "The notes state that reducing SLR increases the supply of loanable funds, making loans cheaper."
+    },
+    {
+        "q": "SLR में बैंकों को क्या रखना होता है?",
+        "q_en": "What do banks have to hold under SLR?",
+        "options": ["केवल नकद", "नकद, सरकारी प्रतिभूतियाँ, स्वर्ण आदि", "केवल सरकारी प्रतिभूतियाँ", "केवल स्वर्ण"],
+        "options_en": ["Only cash", "Cash, government securities, gold, etc.", "Only government securities", "Only gold"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, SLR के तहत बैंकों को नकद, सरकारी प्रतिभूतियाँ, स्वर्ण आदि रखना होता है।",
+        "explanation_en": "As per the notes, under SLR, banks must hold cash, government securities, gold, etc."
+    },
+    {
+        "q": "CRR और SLR बैंकों की क्या दर्शाते हैं?",
+        "q_en": "What do CRR and SLR indicate about banks?",
+        "options": ["बैंकों की आय", "बैंकों का अच्छा स्वास्थ्य", "बैंकों का कुल निवेश", "बैंकों की कुल देयता"],
+        "options_en": ["Banks' income", "Good health of banks", "Total investments of banks", "Total liabilities of banks"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि CRR और SLR बैंकों की संपत्ति होती हैं और उनके अच्छे स्वास्थ्य को दर्शाती हैं।",
+        "explanation_en": "The notes state that CRR and SLR are assets of banks and indicate their good health."
+    },
+    {
+        "q": "मुद्रा गुणक क्या दर्शाता है?",
+        "q_en": "What does the money multiplier indicate?",
+        "options": ["बैंकों की पूँजी", "अर्थव्यवस्था में मुद्रा के प्रवाह की गति", "बैंकों की देयता", "RBI की ब्याज दर"],
+        "options_en": ["Banks' capital", "Velocity of money flow in the economy", "Banks' liabilities", "RBI's interest rate"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, मुद्रा गुणक अर्थव्यवस्था में मुद्रा के प्रवाह की गति को दर्शाता है।",
+        "explanation_en": "As per the notes, the money multiplier indicates the velocity of money flow in the economy."
+    },
+    {
+        "q": "मुद्रा गुणक में वृद्धि के लिए क्या करना होगा?",
+        "q_en": "What needs to be done to increase the money multiplier?",
+        "options": ["M3 को कम करना", "M0 को बढ़ाना", "M3 को बढ़ाना", "CRR को बढ़ाना"],
+        "options_en": ["Reduce M3", "Increase M0", "Increase M3", "Increase CRR"],
+        "answer": 2,
+        "explanation": "नोट्स में कहा गया है कि मुद्रा गुणक में वृद्धि होगी अगर M3 में वृद्धि की जाए।",
+        "explanation_en": "The notes state that the money multiplier will increase if M3 is increased."
+    },
+    {
+        "q": "यदि M0 को कम किया जाए, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If M0 is reduced, what will be the effect on the money multiplier?",
+        "options": ["मुद्रा गुणक घटेगा", "मुद्रा गुणक बढ़ेगा", "कोई प्रभाव नहीं पड़ेगा", "मुद्रा गुणक स्थिर रहेगा"],
+        "options_en": ["Money multiplier will decrease", "Money multiplier will increase", "No effect", "Money multiplier will remain stable"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, M0 को कम करने से मुद्रा गुणक में वृद्धि होगी।",
+        "explanation_en": "As per the notes, reducing M0 will increase the money multiplier."
+    },
+    {
+        "q": "बैंकों की जमा में वृद्धि से क्या होता है?",
+        "q_en": "What happens when bank deposits increase?",
+        "options": ["मुद्रा गुणक घटता है", "मुद्रा गुणक बढ़ता है", "ब्याज दर बढ़ती है", "मुद्रा आपूर्ति घटती है"],
+        "options_en": ["Money multiplier decreases", "Money multiplier increases", "Interest rate increases", "Money supply decreases"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि बैंकों की जमा में वृद्धि से अधिक ऋण सृजन होता है, जिससे मुद्रा गुणक बढ़ता है।",
+        "explanation_en": "The notes mention that an increase in bank deposits leads to more loan creation, increasing the money multiplier."
+    },
+    {
+        "q": "CRR या SLR में वृद्धि से मुद्रा गुणक पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of increasing CRR or SLR on the money multiplier?",
+        "options": ["मुद्रा गुणक बढ़ता है", "मुद्रा गुणक घटता है", "कोई प्रभाव नहीं पड़ता", "मुद्रा गुणक स्थिर रहता है"],
+        "options_en": ["Money multiplier increases", "Money multiplier decreases", "No effect", "Money multiplier remains stable"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR या SLR में वृद्धि से बैंकों की ऋण सृजन क्षमता कम होती है, जिससे मुद्रा गुणक घटता है।",
+        "explanation_en": "As per the notes, an increase in CRR or SLR reduces banks’ loan creation capacity, decreasing the money multiplier."
+    },
+    {
+        "q": "RBI द्वारा CRR का उपयोग किसके लिए किया जाता है?",
+        "q_en": "What is CRR used for by RBI?",
+        "options": ["बैंकों को ऋण देने के लिए", "मुद्रा आपूर्ति नियंत्रित करने के लिए", "ब्याज दर बढ़ाने के लिए", "सरकारी प्रतिभूतियाँ खरीदने के लिए"],
+        "options_en": ["To lend to banks", "To control money supply", "To increase interest rates", "To purchase government securities"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि CRR का उपयोग RBI द्वारा मुद्रा आपूर्ति को नियंत्रित करने के लिए किया जाता है।",
+        "explanation_en": "The notes state that CRR is used by RBI to control the money supply."
+    },
+    {
+        "q": "SLR कम करने का उपयोग कब किया जाता है?",
+        "q_en": "When is reducing SLR used?",
+        "options": ["मुद्रास्फीति बढ़ाने के लिए", "अवस्फीति की स्थिति में", "ब्याज दर बढ़ाने के लिए", "मुद्रा गुणक घटाने के लिए"],
+        "options_en": ["To increase inflation", "In deflationary situations", "To increase interest rates", "To decrease the money multiplier"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, SLR कम करने का उपयोग अवस्फीति की स्थिति में किया जाता है।",
+        "explanation_en": "As per the notes, reducing SLR is used in a deflationary situation."
+    },
+    {
+        "q": "मांग जमा में कौन सा खाता शामिल नहीं है?",
+        "q_en": "Which account is not included in demand deposits?",
+        "options": ["चालू खाता", "बचत खाता", "सावधि जमा", "डिमांड ड्राफ्ट"],
+        "options_en": ["Current account", "Savings account", "Fixed deposits", "Demand draft"],
+        "answer": 2,
+        "explanation": "नोट्स में कहा गया है कि मांग जमा में चालू खाता, बचत खाता, डिमांड ड्राफ्ट आदि शामिल हैं, लेकिन सावधि जमा नहीं।",
+        "explanation_en": "The notes state that demand deposits include current accounts, savings accounts, demand drafts, etc., but not fixed deposits."
+    },
+    {
+        "q": "सावधि जमा की विशेषता क्या है?",
+        "q_en": "What is the characteristic of time deposits?",
+        "options": ["बिना ब्याज के तुरंत निकासी", "निश्चित अवधि के लिए ब्याज के साथ", "केवल चालू खातों के लिए", "बिना किसी अवधि के"],
+        "options_en": ["Immediate withdrawal without interest", "Interest for a fixed period", "Only for current accounts", "Without any period"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, सावधि जमा निश्चित अवधि के लिए ब्याज प्रदान करते हैं।",
+        "explanation_en": "As per the notes, time deposits provide interest for a fixed period."
+    },
+    {
+        "q": "CRR की राशि का उपयोग RBI किस रूप में करता है?",
+        "q_en": "How does RBI use the CRR amount?",
+        "options": ["बैंकों को ऋण देने के लिए", "सरकारी प्रतिभूतियाँ खरीदने के लिए", "मुद्रा आपूर्ति बढ़ाने के लिए", "कोई उपयोग नहीं करता"],
+        "options_en": ["To lend to banks", "To purchase government securities", "To increase money supply", "Does not use it"],
+        "answer": 0,
+        "explanation": "नोट्स में उल्लेख है कि CRR की राशि का उपयोग RBI बैंकों को ऋण देने के लिए करता है।",
+        "explanation_en": "The notes mention that RBI uses the CRR amount to lend to banks."
+    },
+    {
+        "q": "मुद्रा गुणक का संबंध किससे है?",
+        "q_en": "The money multiplier is related to what?",
+        "options": ["बैंकों की पूँजी", "बैंकों की ऋण सृजन क्षमता", "बैंकों की ब्याज दर", "बैंकों की देयता"],
+        "options_en": ["Banks' capital", "Banks' loan creation capacity", "Banks' interest rate", "Banks' liabilities"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, मुद्रा गुणक बैंकों की जमा के आधार पर ऋण सृजन की क्षमता को दर्शाता है।",
+        "explanation_en": "As per the notes, the money multiplier indicates banks’ capacity to create loans based on deposits."
+    },
+    {
+        "q": "यदि बैंकों की जमा में कमी आती है, तो मुद्रा गुणक पर क्या प्रभाव पड़ता है?",
+        "q_en": "If bank deposits decrease, what is the effect on the money multiplier?",
+        "options": ["मुद्रा गुणक बढ़ता है", "मुद्रा गुणक घटता है", "कोई प्रभाव नहीं पड़ता", "मुद्रा गुणक स्थिर रहता है"],
+        "options_en": ["Money multiplier increases", "Money multiplier decreases", "No effect", "Money multiplier remains stable"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि बैंकों की जमा में वृद्धि से मुद्रा गुणक बढ़ता है, इसलिए कमी से यह घटेगा।",
+        "explanation_en": "The notes state that an increase in bank deposits increases the money multiplier, so a decrease will reduce it."
+    },
+    {
+        "q": "SLR की न्यूनतम सीमा क्या है?",
+        "q_en": "What is the minimum limit of SLR?",
+        "options": ["10%", "20%", "निर्धारित नहीं है", "40%"],
+        "options_en": ["10%", "20%", "Not specified", "40%"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, SLR की न्यूनतम सीमा निर्धारित नहीं की गई है।",
+        "explanation_en": "As per the notes, the minimum limit of SLR is not specified."
+    },
+    {
+        "q": "CRR की अधिकतम और न्यूनतम सीमा क्या है?",
+        "q_en": "What are the maximum and minimum limits of CRR?",
+        "options": ["10% और 5%", "कोई सीमा नहीं", "40% और 20%", "20% और 10%"],
+        "options_en": ["10% and 5%", "No limit", "40% and 20%", "20% and 10%"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि CRR की अधिकतम और न्यूनतम सीमा नहीं होती है।",
+        "explanation_en": "The notes mention that there are no maximum or minimum limits for CRR."
+    },
+    {
+        "q": "मौद्रिक नीति का उपयोग RBI किसके लिए करता है?",
+        "q_en": "What does RBI use monetary policy for?",
+        "options": ["केवल ब्याज दर नियंत्रण", "मुद्रा आपूर्ति प्रबंधन", "केवल सरकारी प्रतिभूतियाँ खरीदना", "केवल बैंकों की पूँजी बढ़ाना"],
+        "options_en": ["Only interest rate control", "Money supply management", "Only purchasing government securities", "Only increasing banks' capital"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, RBI मौद्रिक नीति के द्वारा अर्थव्यवस्था में मुद्रा आपूर्ति को प्रबंधित करता है।",
+        "explanation_en": "As per the notes, RBI uses monetary policy to manage the money supply in the economy."
+    },
+    {
+        "q": "मांग जमा की विशेषता क्या है?",
+        "q_en": "What is the characteristic of demand deposits?",
+        "options": ["निश्चित अवधि के लिए ब्याज", "बिना प्रतिबंध के निकासी", "केवल सरकारी प्रतिभूतियों में निवेश", "केवल सावधि जमा"],
+        "options_en": ["Interest for a fixed period", "Withdrawal without restrictions", "Only investment in government securities", "Only fixed deposits"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि मांग जमा में बिना किसी प्रतिबंध या शर्त के आसानी से पैसा निकाला जा सकता है।",
+        "explanation_en": "The notes state that demand deposits allow easy withdrawal without restrictions or conditions."
+    },
+    {
+        "q": "मुद्रा गुणक में कमी होने का एक कारण क्या हो सकता है?",
+        "q_en": "What could be a reason for a decrease in the money multiplier?",
+        "options": ["बैंकों की जमा में वृद्धि", "CRR में वृद्धि", "M3 में कमी", "M0 में वृद्धि"],
+        "options_en": ["Increase in bank deposits", "Increase in CRR", "Decrease in M3", "Increase in M0"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR में वृद्धि से बैंकों की ऋण सृजन क्षमता कम होती है, जिससे मुद्रा गुणक में कमी आती है।",
+        "explanation_en": "As per the notes, an increase in CRR reduces banks’ loan creation capacity, leading to a decrease in the money multiplier."
+    },
+    {
+        "q": "यदि RBI CRR को बढ़ाता है, लेकिन SLR को कम करता है, तो इसका संयुक्त प्रभाव क्या हो सकता है?",
+        "q_en": "If RBI increases CRR but reduces SLR, what could be the combined effect?",
+        "options": ["मुद्रा आपूर्ति बढ़ेगी", "मुद्रा आपूर्ति घटेगी", "मुद्रा आपूर्ति पर कोई प्रभाव नहीं पड़ेगा", "मुद्रा आपूर्ति स्थिर रहेगी"],
+        "options_en": ["Money supply will increase", "Money supply will decrease", "No effect on money supply", "Money supply will remain stable"],
+        "answer": 2,
+        "explanation": "CRR बढ़ाने से मुद्रा आपूर्ति कम होती है, लेकिन SLR कम करने से ऋण योग्य धन बढ़ता है। नोट्स में यह नहीं बताया गया कि इनका संयुक्त प्रभाव क्या होगा, लेकिन सामान्यतः ये प्रभाव एक-दूसरे को संतुलित कर सकते हैं।",
+        "explanation_en": "Increasing CRR reduces money supply, while reducing SLR increases loanable funds. The notes do not specify the combined effect, but generally, these effects may balance each other out."
+    },
+    {
+        "q": "यदि कोई बैंक अपनी NDTL का 100% CRR के रूप में रखता है, तो क्या होगा?",
+        "q_en": "If a bank holds 100% of its NDTL as CRR, what will happen?",
+        "options": ["बैंक अधिक ऋण दे सकेगा", "बैंक कोई ऋण नहीं दे सकेगा", "बैंक की ब्याज दर बढ़ेगी", "बैंक की जमा बढ़ेगी"],
+        "options_en": ["Bank can lend more", "Bank cannot lend at all", "Bank's interest rate will increase", "Bank's deposits will increase"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR के रूप में रखी गई राशि बैंकों को RBI के पास नकद रखनी होती है, जिसका उपयोग ऋण देने के लिए नहीं किया जा सकता। यदि 100% NDTL CRR में है, तो बैंक के पास ऋण देने के लिए कोई धन नहीं बचेगा।",
+        "explanation_en": "As per the notes, the CRR amount must be held as cash with RBI and cannot be used for lending. If 100% of NDTL is held as CRR, the bank will have no funds left to lend."
+    },
+    {
+        "q": "यदि SLR को 0% कर दिया जाए, तो इसका क्या प्रभाव होगा?",
+        "q_en": "If SLR is reduced to 0%, what will be the effect?",
+        "options": ["बैंकों की ऋण देने की क्षमता बढ़ेगी", "बैंकों की ऋण देने की क्षमता घटेगी", "मुद्रास्फीति घटेगी", "ब्याज दर बढ़ेगी"],
+        "options_en": ["Banks' lending capacity will increase", "Banks' lending capacity will decrease", "Inflation will decrease", "Interest rate will increase"],
+        "answer": 0,
+        "explanation": "नोट्स में कहा गया है कि SLR कम करने से ऋण योग्य धन की आपूर्ति बढ़ती है। यदि SLR 0% है, तो बैंकों को कोई राशि सरकारी प्रतिभूतियों आदि में रखने की आवश्यकता नहीं होगी, जिससे उनकी ऋण देने की क्षमता बढ़ेगी।",
+        "explanation_en": "The notes state that reducing SLR increases the supply of loanable funds. If SLR is 0%, banks will not need to hold any amount in government securities, increasing their lending capacity."
+    },
+    {
+        "q": "यदि CRR और SLR दोनों को बढ़ाया जाए, तो ब्याज दर पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If both CRR and SLR are increased, what will be the effect on interest rates?",
+        "options": ["ब्याज दर घटेगी", "ब्याज दर बढ़ेगी", "ब्याज दर स्थिर रहेगी", "कोई प्रभाव नहीं पड़ेगा"],
+        "options_en": ["Interest rate will decrease", "Interest rate will increase", "Interest rate will remain stable", "No effect"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR और SLR बढ़ाने से बैंकों की ऋण देने की क्षमता कम होती है, जिससे ब्याज दर बढ़ती है।",
+        "explanation_en": "As per the notes, increasing CRR and SLR reduces banks’ lending capacity, leading to an increase in interest rates."
+    },
+    {
+        "q": "यदि मांग जमा और सावधि जमा दोनों में वृद्धि होती है, लेकिन अंतर बैंक जमा स्थिर रहती है, तो NDTL पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If both demand and time deposits increase but interbank deposits remain constant, what will be the effect on NDTL?",
+        "options": ["NDTL बढ़ेगा", "NDTL घटेगा", "NDTL स्थिर रहेगा", "कोई प्रभाव नहीं पड़ेगा"],
+        "options_en": ["NDTL will increase", "NDTL will decrease", "NDTL will remain stable", "No effect"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, NDTL = कुल मांग और समय देयता - अंतर बैंक जमा। यदि मांग और सावधि जमा बढ़ते हैं और अंतर बैंक जमा स्थिर रहती है, तो NDTL बढ़ेगा।",
+        "explanation_en": "As per the notes, NDTL = Total Demand and Time Liabilities - Interbank Deposits. If demand and time deposits increase and interbank deposits remain constant, NDTL will increase."
+    },
+    {
+        "q": "यदि RBI CRR को 0% कर दे, तो इसका क्या प्रभाव होगा?",
+        "q_en": "If RBI reduces CRR to 0%, what will be the effect?",
+        "options": ["बैंकों की ऋण देने की क्षमता बढ़ेगी", "बैंकों की ऋण देने की क्षमता घटेगी", "मुद्रास्फीति घटेगी", "ब्याज दर बढ़ेगी"],
+        "options_en": ["Banks' lending capacity will increase", "Banks' lending capacity will decrease", "Inflation will decrease", "Interest rate will increase"],
+        "answer": 0,
+        "explanation": "नोट्स में कहा गया है कि CRR बढ़ाने से ऋण देने की क्षमता घटती है, इसलिए CRR को 0% करने से बैंकों को कोई राशि RBI के पास रखने की आवश्यकता नहीं होगी, जिससे उनकी ऋण देने की क्षमता बढ़ेगी।",
+        "explanation_en": "The notes state that increasing CRR reduces lending capacity, so reducing CRR to 0% means banks don’t need to hold any cash with RBI, increasing their lending capacity."
+    },
+    {
+        "q": "यदि मुद्रा गुणक बढ़ता है, तो इसका अर्थव्यवस्था पर क्या प्रभाव पड़ सकता है?",
+        "q_en": "If the money multiplier increases, what could be the effect on the economy?",
+        "options": ["केवल आर्थिक विकास", "केवल मुद्रास्फीति", "आर्थिक विकास और मुद्रास्फीति दोनों", "कोई प्रभाव नहीं"],
+        "options_en": ["Only economic growth", "Only inflation", "Both economic growth and inflation", "No effect"],
+        "answer": 2,
+        "explanation": "नोट्स में कहा गया है कि अधिक आर्थिक गतिविधियों से मुद्रा प्रवाह बढ़ता है, जिससे आर्थिक विकास होता है, लेकिन मांग बढ़ने से मुद्रास्फीति भी हो सकती है।",
+        "explanation_en": "The notes state that increased economic activities lead to higher money flow, promoting economic growth, but increased demand can also cause inflation."
+    },
+    {
+        "q": "यदि बैंकों की जमा में कमी आती है और CRR बढ़ता है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits decrease and CRR increases, what will be the effect on the money multiplier?",
+        "options": ["मुद्रा गुणक बढ़ेगा", "मुद्रा गुणक घटेगा", "मुद्रा गुणक स्थिर रहेगा", "कोई प्रभाव नहीं पड़ेगा"],
+        "options_en": ["Money multiplier will increase", "Money multiplier will decrease", "Money multiplier will remain stable", "No effect"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, जमा में कमी और CRR में वृद्धि दोनों से बैंकों की ऋण सृजन क्षमता कम होती है, जिससे मुद्रा गुणक घटेगा।",
+        "explanation_en": "As per the notes, both a decrease in deposits and an increase in CRR reduce banks’ loan creation capacity, decreasing the money multiplier."
+    },
+    {
+        "q": "यदि SLR को 40% से अधिक बढ़ाने की कोशिश की जाए, तो क्या होगा?",
+        "q_en": "If an attempt is made to increase SLR above 40%, what will happen?",
+        "options": ["यह कानूनी रूप से संभव नहीं है", "बैंकों की ऋण देने की क्षमता बढ़ेगी", "मुद्रा आपूर्ति बढ़ेगी", "ब्याज दर घटेगी"],
+        "options_en": ["It is not legally possible", "Banks' lending capacity will increase", "Money supply will increase", "Interest rate will decrease"],
+        "answer": 0,
+        "explanation": "नोट्स में कहा गया है कि SLR की अधिकतम सीमा 40% है, इसलिए इसे इससे अधिक बढ़ाना कानूनी रूप से संभव नहीं है।",
+        "explanation_en": "The notes state that the maximum limit of SLR is 40%, so increasing it beyond that is not legally possible."
+    },
+    {
+        "q": "यदि RBI CRR को कम करता है और SLR को बढ़ाता है, तो इसका संयुक्त प्रभाव क्या हो सकता है?",
+        "q_en": "If RBI reduces CRR and increases SLR, what could be the combined effect?",
+        "options": ["मुद्रा आपूर्ति बढ़ेगी", "मुद्रा आपूर्ति घटेगी", "मुद्रा आपूर्ति पर कोई प्रभाव नहीं पड़ेगा", "मुद्रा आपूर्ति स्थिर रहेगी"],
+        "options_en": ["Money supply will increase", "Money supply will decrease", "No effect on money supply", "Money supply will remain stable"],
+        "answer": 2,
+        "explanation": "CRR कम करने से मुद्रा आपूर्ति बढ़ती है, लेकिन SLR बढ़ाने से यह घटती है। नोट्स में इनका संयुक्त प्रभाव स्पष्ट नहीं है, लेकिन ये प्रभाव एक-दूसरे को संतुलित कर सकते हैं।",
+        "explanation_en": "Reducing CRR increases money supply, while increasing SLR reduces it. The notes do not specify the combined effect, but these may balance each other out."
+    },
+    {
+        "q": "यदि RBI को मुद्रास्फीति को नियंत्रित करना है, तो उसे क्या करना चाहिए?",
+        "q_en": "If RBI wants to control inflation, what should it do?",
+        "options": ["CRR और SLR को कम करना", "CRR और SLR को बढ़ाना", "केवल CRR को बढ़ाना", "केवल SLR को कम करना"],
+        "options_en": ["Reduce CRR and SLR", "Increase CRR and SLR", "Only increase CRR", "Only reduce SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR और SLR बढ़ाने से मुद्रा आपूर्ति और मांग कम होती है, जिससे मुद्रास्फीति नियंत्रित होती है।",
+        "explanation_en": "As per the notes, increasing CRR and SLR reduces money supply and demand, controlling inflation."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में अवस्फीति है, तो RBI को क्या करना चाहिए?",
+        "q_en": "If there is deflation in the economy, what should RBI do?",
+        "options": ["CRR और SLR को बढ़ाना", "CRR और SLR को कम करना", "केवल CRR को बढ़ाना", "केवल SLR को बढ़ाना"],
+        "options_en": ["Increase CRR and SLR", "Reduce CRR and SLR", "Only increase CRR", "Only increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि अवस्फीति की स्थिति में SLR को कम किया जाता है, और CRR कम करने से भी मुद्रा आपूर्ति बढ़ती है।",
+        "explanation_en": "The notes state that SLR is reduced in deflationary situations, and reducing CRR also increases money supply."
+    },
+    {
+        "q": "यदि कोई बैंक अपनी NDTL का 20% CRR और 20% SLR के रूप में रखता है, तो उसके पास कितना धन ऋण देने के लिए बचेगा?",
+        "q_en": "If a bank holds 20% of its NDTL as CRR and 20% as SLR, how much money will it have left for lending?",
+        "options": ["60%", "40%", "80%", "20%"],
+        "options_en": ["60%", "40%", "80%", "20%"],
+        "answer": 0,
+        "explanation": "नोट्स के आधार पर, CRR और SLR में रखी गई राशि बैंकों के पास ऋण देने के लिए उपलब्ध नहीं होती। यदि 20% CRR और 20% SLR में रखा जाता है, तो बचा हुआ 100% - (20% + 20%) = 60% धन ऋण देने के लिए उपलब्ध होगा।",
+        "explanation_en": "Based on the notes, the amount held in CRR and SLR is not available for lending. If 20% is held as CRR and 20% as SLR, the remaining 100% - (20% + 20%) = 60% is available for lending."
+    },
+    {
+        "q": "यदि RBI CRR को 5% से 10% करता है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI increases CRR from 5% to 10%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "दोगुनी हो जाएगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will double"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR बढ़ाने से बैंकों को अधिक राशि RBI के पास रखनी पड़ती है, जिससे उनकी ऋण देने की क्षमता घटती है।",
+        "explanation_en": "As per the notes, increasing CRR requires banks to hold more cash with RBI, reducing their lending capacity."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में मांग बढ़ रही है, तो RBI को क्या करना चाहिए?",
+        "q_en": "If demand is increasing in the economy, what should RBI do?",
+        "options": ["CRR और SLR को कम करना", "CRR और SLR को बढ़ाना", "केवल CRR को कम करना", "केवल SLR को कम करना"],
+        "options_en": ["Reduce CRR and SLR", "Increase CRR and SLR", "Only reduce CRR", "Only reduce SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, मांग बढ़ने से मुद्रास्फीति बढ़ सकती है, जिसे नियंत्रित करने के लिए RBI CRR और SLR बढ़ाकर मुद्रा आपूर्ति कम करता है।",
+        "explanation_en": "As per the notes, increasing demand can lead to inflation, which RBI controls by increasing CRR and SLR to reduce money supply."
+    },
+    {
+        "q": "यदि बैंकों की जमा में 10% की वृद्धि होती है, लेकिन CRR और SLR स्थिर रहते हैं, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits increase by 10% but CRR and SLR remain constant, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "दोगुना हो जाएगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will double"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, बैंकों की जमा में वृद्धि से अधिक ऋण सृजन होता है, जिससे मुद्रा गुणक बढ़ता है।",
+        "explanation_en": "As per the notes, an increase in bank deposits leads to more loan creation, increasing the money multiplier."
+    },
+    {
+        "q": "यदि RBI SLR को कम करता है, तो इसका अर्थव्यवस्था पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces SLR, what will be the effect on the economy?",
+        "options": ["मुद्रास्फीति घटेगी", "मुद्रा आपूर्ति बढ़ेगी", "ब्याज दर बढ़ेगी", "मांग घटेगी"],
+        "options_en": ["Inflation will decrease", "Money supply will increase", "Interest rate will increase", "Demand will decrease"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि SLR कम करने से ऋण योग्य धन की आपूर्ति बढ़ती है, जिससे मुद्रा आपूर्ति बढ़ती है।",
+        "explanation_en": "The notes state that reducing SLR increases the supply of loanable funds, leading to an increase in money supply."
+    },
+    {
+        "q": "यदि RBI CRR को 10% से 5% करता है, तो बैंकों के पास ऋण देने के लिए कितना अधिक धन उपलब्ध होगा?",
+        "q_en": "If RBI reduces CRR from 10% to 5%, how much more money will banks have available for lending?",
+        "options": ["5% of NDTL", "10% of NDTL", "15% of NDTL", "कोई अतिरिक्त धन नहीं"],
+        "options_en": ["5% of NDTL", "10% of NDTL", "15% of NDTL", "No additional funds"],
+        "answer": 0,
+        "explanation": "नोट्स के आधार पर, CRR में 10% से 5% की कमी से बैंकों को NDTL का 5% अतिरिक्त धन ऋण देने के लिए उपलब्ध होगा।",
+        "explanation_en": "Based on the notes, reducing CRR from 10% to 5% makes an additional 5% of NDTL available for lending."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में मुद्रास्फीति बढ़ रही है, तो RBI को मुद्रा गुणक को कैसे प्रभावित करना चाहिए?",
+        "q_en": "If inflation is rising in the economy, how should RBI affect the money multiplier?",
+        "options": ["बढ़ाना चाहिए", "घटाना चाहिए", "स्थिर रखना चाहिए", "कोई प्रभाव नहीं डालना चाहिए"],
+        "options_en": ["Should increase", "Should decrease", "Should keep stable", "Should not affect"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, मुद्रास्फीति को नियंत्रित करने के लिए RBI CRR या SLR बढ़ाकर मुद्रा गुणक को घटाता है।",
+        "explanation_en": "As per the notes, to control inflation, RBI increases CRR or SLR, reducing the money multiplier."
+    },
+    {
+        "q": "यदि RBI CRR को स्थिर रखता है, लेकिन SLR को 20% से 30% करता है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI keeps CRR constant but increases SLR from 20% to 30%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "दोगुनी हो जाएगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will double"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, SLR बढ़ाने से बैंकों को अधिक राशि सरकारी प्रतिभूतियों आदि में रखनी पड़ती है, जिससे उनकी ऋण देने की क्षमता घटती है।",
+        "explanation_en": "As per the notes, increasing SLR requires banks to hold more in government securities, reducing their lending capacity."
+    },
+    {
+        "q": "यदि बैंकों की जमा में कमी आती है और SLR भी कम हो जाता है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits decrease and SLR is also reduced, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "अनिश्चित रहेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
         "answer": 3,
-        "explanation": "नोट्स में स्पष्ट नहीं है, लेकिन रेपो दर और रिवर्स रेपो दर के बीच का अंतर RBI की नीतियों और आर्थिक स्थिति पर निर्भर करता है।",
-        "explanation_en": "The notes are not explicit, but the difference between the Repo Rate and the Reverse Repo Rate depends on RBI’s policies and economic conditions."
+        "explanation": "नोट्स के अनुसार, जमा में कमी से मुद्रा गुणक घटता है, लेकिन SLR कम करने से यह बढ़ सकता है। इनका संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "As per the notes, a decrease in deposits reduces the money multiplier, but reducing SLR can increase it. The combined effect is uncertain."
     },
     {
-        "q": "SDF का उपयोग किस स्थिति में सबसे अधिक प्रभावी है?",
-        "q_en": "In which situation is SDF most effective?",
-        "options": ["मुद्रास्फीति बढ़ाने के लिए", "प्रतिभूतियों की कमी की स्थिति में", "CRR को कम करने के लिए", "दीर्घकालिक तरलता के लिए"],
-        "options_en": ["To increase inflation", "In a shortage of securities", "To reduce CRR", "For long-term liquidity"],
+        "q": "यदि RBI चाहता है कि बैंकों की ऋण देने की क्षमता बढ़े, तो उसे क्या करना चाहिए?",
+        "q_en": "If RBI wants to increase banks’ lending capacity, what should it do?",
+        "options": ["CRR और SLR को बढ़ाना", "CRR और SLR को कम करना", "केवल CRR को बढ़ाना", "केवल SLR को बढ़ाना"],
+        "options_en": ["Increase CRR and SLR", "Reduce CRR and SLR", "Only increase CRR", "Only increase SLR"],
         "answer": 1,
-        "explanation": "नोट्स के अनुसार, SDF की शुरुआत प्रतिभूतियों की कमी को दूर करने के लिए की गई थी, जो इसे ऐसी स्थिति में सबसे प्रभावी बनाता है।",
-        "explanation_en": "According to the notes, SDF was introduced to address the shortage of securities, making it most effective in such a situation."
+        "explanation": "नोट्स के अनुसार, CRR और SLR कम करने से बैंकों के पास ऋण देने के लिए अधिक धन उपलब्ध होता है।",
+        "explanation_en": "As per the notes, reducing CRR and SLR makes more funds available for banks to lend."
     },
     {
-        "q": "रेपो सुविधा में प्रतिभूतियों की पुनर्खरीद की अवधि क्या होती है?",
-        "q_en": "What is the repurchase period of securities in the Repo Facility?",
-        "options": ["1 दिन से 14 दिन", "1 महीने से 1 वर्ष", "1 वर्ष से अधिक", "स्थिति पर निर्भर करता है"],
-        "options_en": ["1 day to 14 days", "1 month to 1 year", "More than 1 year", "Depends on the situation"],
+        "q": "यदि अर्थव्यवस्था में मांग कम है, तो RBI को क्या करना चाहिए?",
+        "q_en": "If demand in the economy is low, what should RBI do?",
+        "options": ["CRR और SLR को बढ़ाना", "CRR और SLR को कम करना", "केवल CRR को बढ़ाना", "केवल SLR को बढ़ाना"],
+        "options_en": ["Increase CRR and SLR", "Reduce CRR and SLR", "Only increase CRR", "Only increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, मांग कम होने पर RBI CRR और SLR कम करके मुद्रा आपूर्ति और मांग बढ़ाता है।",
+        "explanation_en": "As per the notes, when demand is low, RBI reduces CRR and SLR to increase money supply and demand."
+    },
+    {
+        "q": "यदि RBI CRR को 10% से 5% और SLR को 20% से 15% करता है, तो बैंकों की ऋण देने की क्षमता में कितनी वृद्धि होगी?",
+        "q_en": "If RBI reduces CRR from 10% to 5% and SLR from 20% to 15%, how much will banks’ lending capacity increase?",
+        "options": ["5%", "10%", "15%", "20%"],
+        "options_en": ["5%", "10%", "15%", "20%"],
+        "answer": 1,
+        "explanation": "नोट्स के आधार पर, CRR में 5% और SLR में 5% की कमी से बैंकों के पास कुल 10% अतिरिक्त धन ऋण देने के लिए उपलब्ध होगा।",
+        "explanation_en": "Based on the notes, a 5% reduction in CRR and a 5% reduction in SLR will make a total of 10% additional funds available for lending."
+    },
+    {
+        "q": "यदि RBI मुद्रा गुणक को बढ़ाना चाहता है, तो उसे क्या करना चाहिए?",
+        "q_en": "If RBI wants to increase the money multiplier, what should it do?",
+        "options": ["CRR और SLR को बढ़ाना", "CRR और SLR को कम करना", "केवल CRR को बढ़ाना", "केवल SLR को बढ़ाना"],
+        "options_en": ["Increase CRR and SLR", "Reduce CRR and SLR", "Only increase CRR", "Only increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में वृद्धि से मुद्रा गुणक घटता है, इसलिए इन्हें कम करने से मुद्रा गुणक बढ़ेगा।",
+        "explanation_en": "As per the notes, increasing CRR and SLR reduces the money multiplier, so reducing them will increase it."
+    },
+    {
+        "q": "यदि RBI CRR को 5% से 10% और SLR को 20% से 25% करता है, तो बैंकों की ऋण देने की क्षमता में कितनी कमी आएगी?",
+        "q_en": "If RBI increases CRR from 5% to 10% and SLR from 20% to 25%, how much will banks’ lending capacity decrease?",
+        "options": ["5%", "10%", "15%", "20%"],
+        "options_en": ["5%", "10%", "15%", "20%"],
+        "answer": 1,
+        "explanation": "नोट्स के आधार पर, CRR में 5% और SLR में 5% की वृद्धि से बैंकों के पास कुल 10% कम धन ऋण देने के लिए उपलब्ध होगा।",
+        "explanation_en": "Based on the notes, a 5% increase in CRR and a 5% increase in SLR will reduce the funds available for lending by a total of 10%."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में मुद्रा आपूर्ति को स्थिर रखना है, लेकिन ब्याज दर को बढ़ाना है, तो RBI को क्या करना चाहिए?",
+        "q_en": "If RBI wants to keep the money supply stable but increase interest rates, what should it do?",
+        "options": ["CRR को बढ़ाना और SLR को कम करना", "CRR को कम करना और SLR को बढ़ाना", "CRR और SLR दोनों को बढ़ाना", "CRR और SLR दोनों को कम करना"],
+        "options_en": ["Increase CRR and reduce SLR", "Reduce CRR and increase SLR", "Increase both CRR and SLR", "Reduce both CRR and SLR"],
         "answer": 0,
-        "explanation": "नोट्स में कहा गया है कि रेपो सुविधा में प्रतिभूतियों की पुनर्खरीद की अवधि आमतौर पर 1 दिन (ओवरनाइट) से 14 दिन तक होती है।",
-        "explanation_en": "The notes state that the repurchase period of securities in the Repo Facility is typically from 1 day (overnight) to 14 days."
+        "explanation": "नोट्स के अनुसार, CRR बढ़ाने से मुद्रा आपूर्ति कम होती है और ब्याज दर बढ़ती है, जबकि SLR कम करने से मुद्रा आपूर्ति बढ़ती है। यह संयोजन मुद्रा आपूर्ति को स्थिर रख सकता है और ब्याज दर बढ़ा सकता है।",
+        "explanation_en": "As per the notes, increasing CRR reduces money supply and increases interest rates, while reducing SLR increases money supply. This combination can keep money supply stable while increasing interest rates."
     },
     {
-        "q": "बैंक दर का उपयोग किसके लिए नहीं किया जाता?",
-        "q_en": "What is the Bank Rate not used for?",
-        "options": ["CRR और SLR न बनाए रखने पर दंड के लिए", "संदर्भ दर के रूप में", "मुद्रास्फीति को नियंत्रित करने के लिए", "बैंकों को ऋण देने के लिए"],
-        "options_en": ["As a penalty for not maintaining CRR and SLR", "As a reference rate", "To control inflation", "To lend to banks"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, बैंक दर का उपयोग वर्तमान में मौद्रिक नीति में मुद्रास्फीति को नियंत्रित करने के लिए नहीं किया जाता।",
-        "explanation_en": "According to the notes, the Bank Rate is not currently used in monetary policy to control inflation."
+        "q": "यदि बैंकों की जमा में 20% की वृद्धि होती है और CRR 5% से 10% हो जाता है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits increase by 20% and CRR increases from 5% to 10%, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "अनिश्चित रहेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, जमा में वृद्धि से मुद्रा गुणक बढ़ता है, लेकिन CRR में वृद्धि से यह घटता है। इनका संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "As per the notes, an increase in deposits increases the money multiplier, but an increase in CRR reduces it. The combined effect is uncertain."
     },
     {
-        "q": "रेपो दर में कमी से बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of a decrease in Repo Rate on banks’ lending capacity?",
-        "options": ["कम होती है", "बढ़ती है", "अपरिवर्तित रहती है", "पूरी तरह समाप्त हो जाती है"],
-        "options_en": ["It decreases", "It increases", "It remains unchanged", "It is completely eliminated"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर कम होने से बैंकों को RBI से सस्ता ऋण मिलता है, जिससे उनकी ऋण देने की क्षमता बढ़ती है।",
-        "explanation_en": "According to the notes, a decrease in the Repo Rate allows banks to borrow from RBI at a lower cost, increasing their lending capacity."
-    },
-    {
-        "q": "रिवर्स रेपो दर का उपयोग बैंकों द्वारा किसके लिए किया जाता है?",
-        "q_en": "What is the Reverse Repo Rate used for by banks?",
-        "options": ["ऋण लेने के लिए", "अतिरिक्त राशि जमा करने के लिए", "CRR को कम करने के लिए", "SLR को बढ़ाने के लिए"],
-        "options_en": ["To borrow loans", "To deposit excess funds", "To reduce CRR", "To increase SLR"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर का उपयोग बैंकों द्वारा अपनी अतिरिक्त राशि RBI में जमा करने और उस पर ब्याज प्राप्त करने के लिए किया जाता है।",
-        "explanation_en": "The notes mention that the Reverse Repo Rate is used by banks to deposit their excess funds with RBI and earn interest on them."
-    },
-    {
-        "q": "रेपो सुविधा का उपयोग किसके द्वारा नहीं किया जा सकता?",
-        "q_en": "Who cannot use the Repo Facility?",
-        "options": ["वाणिज्यिक बैंक", "प्राथमिक डीलर", "सामान्य ग्राहक", "गैर-बैंकिंग वित्तीय संस्थाएँ"],
-        "options_en": ["Commercial banks", "Primary Dealers", "General customers", "Non-banking financial institutions"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, रेपो सुविधा का उपयोग केवल बैंक और प्राथमिक डीलर कर सकते हैं, सामान्य ग्राहक नहीं।",
-        "explanation_en": "According to the notes, only banks and Primary Dealers can use the Repo Facility, not general customers."
-    },
-    {
-        "q": "SDF और रिवर्स रेपो दर में से कौन सी सुविधा प्रतिभूतियों की आवश्यकता नहीं रखती?",
-        "q_en": "Which facility does not require securities: SDF or Reverse Repo Rate?",
-        "options": ["रिवर्स रेपो दर", "SDF", "दोनों", "कोई नहीं"],
-        "options_en": ["Reverse Repo Rate", "SDF", "Both", "None"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि बिना प्रतिभूतियों के RBI में जमा कर सकते हैं, जबकि रिवर्स रेपो में प्रतिभूतियां सौंपनी पड़ती हैं।",
-        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI without securities, whereas Reverse Repo requires securities to be provided."
-    },
-    {
-        "q": "रेपो दर को मौद्रिक नीति का मुख्य उपकरण क्यों माना जाता है?",
-        "q_en": "Why is the Repo Rate considered the main tool of monetary policy?",
-        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि यह मुद्रास्फीति को नियंत्रित करता है", "क्योंकि यह CRR को समाप्त करता है", "क्योंकि यह दीर्घकालिक तरलता प्रदान करता है"],
-        "options_en": ["Because it is interest-free", "Because it controls inflation", "Because it eliminates CRR", "Because it provides long-term liquidity"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रेपो दर वर्तमान में मुद्रास्फीति के नियंत्रण के लिए मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण है।",
-        "explanation_en": "The notes mention that the Repo Rate is currently the most important tool of monetary policy for controlling inflation."
-    },
-    {
-        "q": "बैंक दर का उपयोग वर्तमान में किसके लिए होता है?",
-        "q_en": "What is the Bank Rate currently used for?",
-        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "संदर्भ दर के रूप में", "CRR को बढ़ाने के लिए", "SLR को कम करने के लिए"],
-        "options_en": ["To control inflation", "As a reference rate", "To increase CRR", "To reduce SLR"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, वर्तमान में RBI बैंक दर का उपयोग केवल संदर्भ दर के रूप में करता है, न कि मौद्रिक नीति के लिए।",
-        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate, not for monetary policy."
-    },
-    {
-        "q": "रेपो सुविधा की नीलामी में भाग लेने के लिए कौन पात्र है?",
-        "q_en": "Who is eligible to participate in the Repo Facility auction?",
-        "options": ["केवल RBI", "बैंक और प्राथमिक डीलर", "केवल सरकारी संस्थाएँ", "सामान्य ग्राहक"],
-        "options_en": ["Only RBI", "Banks and Primary Dealers", "Only government institutions", "General customers"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो सुविधा की नीलामी में बैंक और प्राथमिक डीलर भाग ले सकते हैं।",
-        "explanation_en": "According to the notes, banks and Primary Dealers can participate in the Repo Facility auction."
-    },
-    {
-        "q": "रिवर्स रेपो दर बढ़ने से बैंकों की जमा राशि पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of an increase in Reverse Repo Rate on banks’ deposits?",
-        "options": ["जमा राशि कम होती है", "जमा राशि बढ़ती है", "जमा राशि अपरिवर्तित रहती है", "जमा राशि समाप्त हो जाती है"],
-        "options_en": ["Deposits decrease", "Deposits increase", "Deposits remain unchanged", "Deposits are eliminated"],
-        "answer": 1,
-        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर बढ़ने से बैंक RBI को अधिक धन जमा करते हैं, जिससे उनकी जमा राशि बढ़ती है।",
-        "explanation_en": "The notes mention that an increase in the Reverse Repo Rate leads banks to deposit more money with RBI, increasing their deposits."
-    },
-    {
-        "q": "रेपो दर को कम करने से अर्थव्यवस्था में माँग पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of reducing the Repo Rate on demand in the economy?",
-        "options": ["माँग कम होती है", "माँग बढ़ती है", "माँग अपरिवर्तित रहती है", "माँग समाप्त हो जाती है"],
-        "options_en": ["Demand decreases", "Demand increases", "Demand remains unchanged", "Demand is eliminated"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, जिससे मुद्रा आपूर्ति और माँग बढ़ती है।",
-        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increasing money supply and demand."
-    },
-    {
-        "q": "SDF का उपयोग बैंकों द्वारा किस प्रकार की राशि के लिए किया जाता है?",
-        "q_en": "What type of funds is SDF used for by banks?",
-        "options": ["दीर्घकालिक निवेश", "अतिरिक्त राशि", "ब्याज मुक्त ऋण", "CRR को पूरा करने के लिए"],
-        "options_en": ["Long-term investment", "Excess funds", "Interest-free loans", "To meet CRR"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं।",
-        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI."
-    },
-    {
-        "q": "रेपो दर का उपयोग किसके नियंत्रण के लिए नहीं किया जाता?",
-        "q_en": "What is the Repo Rate not used to control?",
-        "options": ["मुद्रास्फीति", "मुद्रा आपूर्ति", "CRR", "ब्याज दर"],
-        "options_en": ["Inflation", "Money supply", "CRR", "Interest rates"],
-        "answer": 2,
-        "explanation": "नोट्स के अनुसार, रेपो दर का उपयोग मुद्रास्फीति, मुद्रा आपूर्ति और ब्याज दर को नियंत्रित करने के लिए किया जाता है, लेकिन CRR को नियंत्रित करने के लिए नहीं।",
-        "explanation_en": "According to the notes, the Repo Rate is used to control inflation, money supply, and interest rates, but not CRR."
-    },
-    {
-        "q": "बैंक दर को अप्रभावी क्यों माना जाता है?",
-        "q_en": "Why is the Bank Rate considered ineffective?",
-        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि वाणिज्यिक पत्रों का उपयोग कम है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह दीर्घकालिक है"],
-        "options_en": ["Because it is interest-free", "Because the use of commercial papers is low", "Because it applies only to government banks", "Because it is long-term"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग बहुत कम होने के कारण बैंक दर अप्रभावी रहता है।",
-        "explanation_en": "According to the notes, the Bank Rate remains ineffective due to the low use of commercial papers in the Indian market."
-    },
-    {
-        "q": "रेपो सुविधा में प्रतिभूतियों की पुनर्खरीद की जिम्मेदारी किसकी होती है?",
-        "q_en": "Who is responsible for repurchasing securities in the Repo Facility?",
-        "options": ["RBI", "बैंक", "सरकार", "प्राथमिक डीलर"],
-        "options_en": ["RBI", "Banks", "Government", "Primary Dealers"],
-        "answer": 1,
-        "explanation": "नोट्स में कहा गया है कि रेपो प्रक्रिया में बैंक प्रतिभूतियों को पुनर्खरीद करने का वादा करते हैं।",
-        "explanation_en": "The notes state that in the Repo process, banks promise to repurchase securities."
-    },
-    {
-        "q": "रिवर्स रेपो दर को बढ़ाने का मुख्य उद्देश्य क्या है?",
-        "q_en": "What is the main objective of increasing the Reverse Repo Rate?",
-        "options": ["मुद्रा आपूर्ति को बढ़ाना", "मुद्रास्फीति को नियंत्रित करना", "CRR को कम करना", "SLR को बढ़ाना"],
-        "options_en": ["To increase money supply", "To control inflation", "To reduce CRR", "To increase SLR"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रिवर्स रेपो दर बढ़ाने से बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है और मुद्रास्फीति नियंत्रित होती है।",
-        "explanation_en": "According to the notes, increasing the Reverse Repo Rate leads banks to deposit more money with RBI, reducing money supply and controlling inflation."
-    },
-    {
-        "q": "रेपो दर में वृद्धि से अर्थव्यवस्था में माँग पर क्या प्रभाव पड़ता है?",
-        "q_en": "What is the effect of an increase in Repo Rate on demand in the economy?",
-        "options": ["माँग बढ़ती है", "माँग कम होती है", "माँग अपरिवर्तित रहती है", "माँग दोगुनी हो जाती है"],
-        "options_en": ["Demand increases", "Demand decreases", "Demand remains unchanged", "Demand doubles"],
-        "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे ऋण लेने की क्षमता कम होती है और माँग कम होती है।",
-        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, reducing borrowing capacity and demand."
-    },
-    {
-        "q": "SDF की शुरुआत से पहले बैंकों को अतिरिक्त राशि जमा करने के लिए क्या करना पड़ता था?",
-        "q_en": "What did banks have to do to deposit excess funds before the introduction of SDF?",
-        "options": ["प्रतिभूतियां जमा करनी पड़ती थीं", "CRR को बढ़ाना पड़ता था", "SLR को कम करना पड़ता था", "ब्याज दर को बढ़ाना पड़ता था"],
-        "options_en": ["Deposit securities", "Increase CRR", "Reduce SLR", "Increase interest rates"],
+        "q": "यदि RBI CRR को 10% से 5% करता है और बैंकों की जमा में 10% की वृद्धि होती है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces CRR from 10% to 5% and bank deposits increase by 10%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
         "answer": 0,
-        "explanation": "नोट्स में उल्लेख है कि SDF से पहले बैंकों को अपनी अतिरिक्त राशि रिवर्स रेपो दर के तहत जमा करने के लिए प्रतिभूतियां सौंपनी पड़ती थीं।",
-        "explanation_en": "The notes mention that before SDF, banks had to provide securities to deposit their excess funds under the Reverse Repo Rate."
+        "explanation": "नोट्स के अनुसार, CRR कम करने से और जमा में वृद्धि से बैंकों के पास ऋण देने के लिए अधिक धन उपलब्ध होता है।",
+        "explanation_en": "As per the notes, reducing CRR and increasing deposits make more funds available for banks to lend."
     },
     {
-        "q": "रेपो दर और रिवर्स रेपो दर का संबंध मौद्रिक नीति से कैसे है?",
-        "q_en": "How are the Repo Rate and Reverse Repo Rate related to monetary policy?",
-        "options": ["वे CRR और SLR को नियंत्रित करते हैं", "वे मुद्रास्फीति और तरलता को नियंत्रित करते हैं", "वे ब्याज मुक्त ऋण प्रदान करते हैं", "वे दीर्घकालिक निवेश को बढ़ावा देते हैं"],
-        "options_en": ["They control CRR and SLR", "They control inflation and liquidity", "They provide interest-free loans", "They promote long-term investment"],
+        "q": "यदि RBI मुद्रास्फीति को नियंत्रित करने के लिए CRR बढ़ाता है, तो इसका उपभोक्ता की क्रय शक्ति पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI increases CRR to control inflation, what will be the effect on consumers’ purchasing power?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "कोई प्रभाव नहीं पड़ेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "No effect"],
         "answer": 1,
-        "explanation": "नोट्स के अनुसार, रेपो दर और रिवर्स रेपो दर का उपयोग RBI द्वारा मुद्रास्फीति और तरलता को नियंत्रित करने के लिए किया जाता है।",
-        "explanation_en": "According to the notes, the Repo Rate and Reverse Repo Rate are used by RBI to control inflation and liquidity."
+        "explanation": "नोट्स के अनुसार, CRR बढ़ाने से मुद्रा आपूर्ति कम होती है, जिससे उपभोक्ता की क्रय शक्ति घटती है।",
+        "explanation_en": "As per the notes, increasing CRR reduces money supply, decreasing consumers’ purchasing power."
     },
     {
-        "q": "बैंक दर का उपयोग किसके लिए होता है जब यह मौद्रिक नीति का हिस्सा नहीं है?",
-        "q_en": "What is the Bank Rate used for when it is not part of monetary policy?",
-        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "संदर्भ दर के रूप में", "CRR को कम करने के लिए", "SLR को बढ़ाने के लिए"],
-        "options_en": ["To control inflation", "As a reference rate", "To reduce CRR", "To increase SLR"],
+        "q": "यदि RBI SLR को 20% से 15% करता है और बैंकों की जमा में 10% की कमी आती है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces SLR from 20% to 15% and bank deposits decrease by 10%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, SLR कम करने से ऋण देने की क्षमता बढ़ती है, लेकिन जमा में कमी से यह घट सकती है। संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "As per the notes, reducing SLR increases lending capacity, but a decrease in deposits can reduce it. The combined effect is uncertain."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में आर्थिक विकास को बढ़ावा देना है, लेकिन मुद्रास्फीति को नियंत्रित करना है, तो RBI को क्या करना चाहिए?",
+        "q_en": "If RBI wants to promote economic growth but control inflation, what should it do?",
+        "options": ["CRR को बढ़ाना और SLR को कम करना", "CRR को कम करना और SLR को बढ़ाना", "CRR और SLR दोनों को कम करना", "CRR और SLR दोनों को बढ़ाना"],
+        "options_en": ["Increase CRR and reduce SLR", "Reduce CRR and increase SLR", "Reduce both CRR and SLR", "Increase both CRR and SLR"],
+        "answer": 0,
+        "explanation": "नोट्स के आधार पर, CRR बढ़ाने से मुद्रास्फीति नियंत्रित होती है, और SLR कम करने से ऋण योग्य धन बढ़ता है, जो आर्थिक विकास को बढ़ावा देता है।",
+        "explanation_en": "Based on the notes, increasing CRR controls inflation, and reducing SLR increases loanable funds, promoting economic growth."
+    },
+    {
+        "q": "यदि बैंकों की जमा में 20% की कमी आती है और CRR 10% से 5% हो जाता है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits decrease by 20% and CRR reduces from 10% to 5%, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "अनिश्चित रहेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, जमा में कमी से मुद्रा गुणक घटता है, लेकिन CRR कम करने से यह बढ़ सकता है। संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "As per the notes, a decrease in deposits reduces the money multiplier, but reducing CRR can increase it. The combined effect is uncertain."
+    },
+    {
+        "q": "यदि RBI CRR को स्थिर रखता है, लेकिन SLR को 25% से 30% करता है, तो मुद्रास्फीति पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI keeps CRR constant but increases SLR from 25% to 30%, what will be the effect on inflation?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
         "answer": 1,
-        "explanation": "नोट्स के अनुसार, वर्तमान में RBI बैंक दर का उपयोग केवल संदर्भ दर के रूप में करता है।",
-        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate."
+        "explanation": "नोट्स के अनुसार, SLR बढ़ाने से मुद्रा आपूर्ति कम होती है, जिससे समग्र मांग और मुद्रास्फीति घटती है।",
+        "explanation_en": "As per the notes, increasing SLR reduces money supply, leading to a decrease in aggregate demand and inflation."
+    },
+     {
+        "q": "यदि RBI मुद्रा गुणक को स्थिर रखना चाहता है, लेकिन बैंकों की ऋण देने की क्षमता को बढ़ाना चाहता है, तो उसे क्या करना चाहिए?",
+        "q_en": "If RBI wants to keep the money multiplier stable but increase banks’ lending capacity, what should it do?",
+        "options": ["CRR को कम करना और SLR को बढ़ाना", "CRR और SLR दोनों को कम करना", "CRR को बढ़ाना और SLR को कम करना", "CRR और SLR दोनों को बढ़ाना"],
+        "options_en": ["Reduce CRR and increase SLR", "Reduce both CRR and SLR", "Increase CRR and reduce SLR", "Increase both CRR and SLR"],
+        "answer": 1,
+        "explanation": "CRR और SLR दोनों को कम करने से बैंकों के पास ऋण देने के लिए अधिक धन उपलब्ध होता है, जिससे उनकी ऋण देने की क्षमता बढ़ती है। चूंकि जमा में कोई बदलाव नहीं है, इसलिए मुद्रा गुणक स्थिर रहेगा।",
+        "explanation_en": "Reducing both CRR and SLR increases the funds available for banks to lend, thereby boosting lending capacity. Since deposits remain unchanged, the money multiplier will stay stable."
+    },
+    {
+        "q": "यदि RBI CRR को 5% से 10% और SLR को 20% से 25% करता है, और बैंकों की जमा में 10% की वृद्धि होती है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI increases CRR from 5% to 10% and SLR from 20% to 25%, and bank deposits increase by 10%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 1,
+        "explanation": "CRR और SLR में वृद्धि का मतलब है कि बैंकों को जमा का अधिक हिस्सा रिज़र्व के रूप में रखना पड़ेगा, जिससे ऋण देने के लिए कम धन बचेगा। यद्यपि जमा में 10% वृद्धि से उपलब्ध धन बढ़ता है, लेकिन CRR और SLR में कुल 10% की वृद्धि इस लाभ को कम कर देगी और शुद्ध प्रभाव ऋण देने की क्षमता में कमी का होगा।",
+        "explanation_en": "Increasing CRR and SLR means banks must keep a larger portion of deposits as reserves, leaving less for lending. Although a 10% rise in deposits boosts available funds, the total 10% increase in CRR and SLR offsets this benefit, leading to a net decrease in lending capacity."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में मुद्रास्फीति बढ़ रही है और RBI CRR को 5% से 10% करता है, तो उपभोक्ता की क्रय शक्ति और कीमतों पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If inflation is rising and RBI increases CRR from 5% to 10%, what will be the effect on consumers’ purchasing power and prices?",
+        "options": ["क्रय शक्ति बढ़ेगी, कीमतें बढ़ेंगी", "क्रय शक्ति घटेगी, कीमतें घटेंगी", "क्रय शक्ति बढ़ेगी, कीमतें घटेंगी", "क्रय शक्ति घटेगी, कीमतें बढ़ेंगी"],
+        "options_en": ["Purchasing power will increase, prices will increase", "Purchasing power will decrease, prices will decrease", "Purchasing power will increase, prices will decrease", "Purchasing power will decrease, prices will increase"],
+        "answer": 1,
+        "explanation": "CRR बढ़ाने से मुद्रा आपूर्ति घटती है, जिससे उपभोक्ताओं की क्रय शक्ति और समग्र मांग कम होती है। इससे कीमतें और मुद्रास्फीति दोनों में कमी आती है।",
+        "explanation_en": "Raising CRR reduces money supply, which lowers consumers’ purchasing power and aggregate demand. This results in a decline in both prices and inflation."
+    },
+    {
+        "q": "यदि RBI CRR को 10% से 5% और SLR को 25% से 20% करता है, और बैंकों की जमा में 20% की कमी आती है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces CRR from 10% to 5% and SLR from 25% to 20%, and bank deposits decrease by 20%, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "अनिश्चित रहेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "CRR और SLR में कमी से मुद्रा गुणक बढ़ने की प्रवृत्ति होती है, जबकि जमा में कमी से यह घटने की प्रवृत्ति होती है। दोनों प्रभाव विपरीत हैं, इसलिए संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "Lower CRR and SLR tend to increase the money multiplier, while a fall in deposits tends to decrease it. Since these effects offset each other, the overall impact is uncertain."
+    },
+    {
+        "q": "यदि RBI मुद्रा आपूर्ति को स्थिर रखना चाहता है, लेकिन बैंकों की ऋण देने की क्षमता को कम करना चाहता है, तो उसे क्या करना चाहिए?",
+        "q_en": "If RBI wants to keep money supply stable but reduce banks’ lending capacity, what should it do?",
+        "options": ["CRR को कम करना और SLR को बढ़ाना", "CRR को बढ़ाना और SLR को कम करना", "CRR और SLR दोनों को बढ़ाना", "CRR और SLR दोनों को कम करना"],
+        "options_en": ["Reduce CRR and increase SLR", "Increase CRR and reduce SLR", "Increase both CRR and SLR", "Reduce both CRR and SLR"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR कम करने से मुद्रा आपूर्ति बढ़ती है, और SLR बढ़ाने से ऋण देने की क्षमता कम होती है। यह संयोजन मुद्रा आपूर्ति को स्थिर रख सकता है।",
+        "explanation_en": "As per the notes, reducing CRR increases money supply, and increasing SLR reduces lending capacity. This combination can keep money supply stable."
+    },
+    {
+        "q": "यदि बैंकों की जमा में 15% की वृद्धि होती है, CRR 5% से 10% और SLR 20% से 25% हो जाता है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits increase by 15%, CRR increases from 5% to 10%, and SLR from 20% to 25%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 1,
+        "explanation": "नोट्स के आधार पर, CRR और SLR में कुल 10% की वृद्धि (5% + 5%) से बैंकों की ऋण देने की क्षमता कम होगी, भले ही जमा में 15% की वृद्धि हो।",
+        "explanation_en": "Based on the notes, a total 10% increase in CRR and SLR (5% + 5%) will reduce banks’ lending capacity, even with a 15% increase in deposits."
+    },
+    {
+        "q": "यदि RBI CRR को 5% से 7% और SLR को 20% से 22% करता है, और बैंकों की जमा में 5% की कमी आती है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI increases CRR from 5% to 7% and SLR from 20% to 22%, and bank deposits decrease by 5%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में कुल 4% की वृद्धि (2% + 2%) और जमा में 5% की कमी से बैंकों की ऋण देने की क्षमता कम होगी।",
+        "explanation_en": "As per the notes, a total 4% increase in CRR and SLR (2% + 2%) and a 5% decrease in deposits will reduce banks’ lending capacity."
+    },
+    {
+        "q": "यदि RBI CRR को 8% से 6% और SLR को 25% से 20% करता है, और बैंकों की जमा में 10% की वृद्धि होती है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces CRR from 8% to 6% and SLR from 25% to 20%, and bank deposits increase by 10%, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "अनिश्चित रहेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में कमी (2% + 5%) और जमा में 10% की वृद्धि से बैंकों की ऋण सृजन क्षमता बढ़ती है, जिससे मुद्रा गुणक बढ़ेगा।",
+        "explanation_en": "As per the notes, a reduction in CRR and SLR (2% + 5%) and a 10% increase in deposits increase banks’ loan creation capacity, leading to an increase in the money multiplier."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में मंदी है और RBI CRR को 10% से 5% करता है, लेकिन SLR को 20% से 25% करता है, तो इसका अर्थव्यवस्था पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If the economy is in a recession and RBI reduces CRR from 10% to 5% but increases SLR from 20% to 25%, what will be the effect on the economy?",
+        "options": ["मुद्रा आपूर्ति बढ़ेगी", "मुद्रा आपूर्ति घटेगी", "मुद्रा आपूर्ति स्थिर रहेगी", "अनिश्चित रहेगा"],
+        "options_en": ["Money supply will increase", "Money supply will decrease", "Money supply will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, CRR कम करने से मुद्रा आपूर्ति बढ़ती है, लेकिन SLR बढ़ाने से यह घटती है। मंदी में इनका संयुक्त प्रभाव अनिश्चित हो सकता है।",
+        "explanation_en": "As per the notes, reducing CRR increases money supply, while increasing SLR reduces it. In a recession, the combined effect may be uncertain."
+    },
+    {
+        "q": "यदि बैंकों की जमा में 20% की वृद्धि होती है, और RBI CRR को 5% से 10% और SLR को 20% से 15% करता है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits increase by 20%, and RBI increases CRR from 5% to 10% and reduces SLR from 20% to 15%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR में 5% की वृद्धि ऋण देने की क्षमता को कम करती है, लेकिन SLR में 5% की कमी और जमा में 20% की वृद्धि से कुल मिलाकर ऋण देने की क्षमता बढ़ेगी।",
+        "explanation_en": "As per the notes, a 5% increase in CRR reduces lending capacity, but a 5% reduction in SLR and a 20% increase in deposits will overall increase lending capacity."
+    },
+    {
+        "q": "यदि RBI CRR को 6% से 4% और SLR को 22% से 20% करता है, और बैंकों की जमा में 15% की कमी आती है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces CRR from 6% to 4% and SLR from 22% to 20%, and bank deposits decrease by 15%, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "अनिश्चित रहेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में कमी से मुद्रा गुणक बढ़ता है, लेकिन जमा में कमी से यह घटता है। संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "As per the notes, reducing CRR and SLR increases the money multiplier, but a decrease in deposits reduces it. The combined effect is uncertain."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में उच्च मुद्रास्फीति है और RBI CRR को 5% से 7% और SLR को 20% से 25% करता है, तो उपभोक्ता की क्रय शक्ति पर क्या Cinco de Mayo प्रभाव पड़ेगा?",
+        "q_en": "If the economy faces high inflation and RBI increases CRR from 5% to 7% and SLR from 20% to 25%, what will be the effect on consumers’ purchasing power?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में वृद्धि से मुद्रा आपूर्ति कम होती है, जिससे उपभोक्ता की क्रय शक्ति घटती है, खासकर उच्च मुद्रास्फीति की स्थिति में।",
+        "explanation_en": "As per the notes, increasing CRR and SLR reduces money supply, decreasing consumers’ purchasing power, especially in a high inflation scenario."
+    },
+    {
+        "q": "यदि RBI मुद्रा आपूर्ति को बढ़ाना चाहता है, लेकिन ब्याज दर को स्थिर रखना चाहता है, तो उसे क्या करना चाहिए?",
+        "q_en": "If RBI wants to increase money supply but keep interest rates stable, what should it do?",
+        "options": ["CRR और SLR दोनों को कम करना", "CRR को बढ़ाना और SLR को कम करना", "CRR को कम करना और SLR को बढ़ाना", "CRR और SLR दोनों को बढ़ाना"],
+        "options_en": ["Reduce both CRR and SLR", "Increase CRR and reduce SLR", "Reduce CRR and increase SLR", "Increase both CRR and SLR"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR और SLR दोनों को कम करने से मुद्रा आपूर्ति बढ़ती है, और ब्याज दर पर न्यूनतम प्रभाव पड़ता है, जिससे इसे स्थिर रखने में मदद मिलती है।",
+        "explanation_en": "As per the notes, reducing both CRR and SLR increases money supply, with minimal impact on interest rates, helping to keep them stable."
+    },
+    {
+        "q": "यदि बैंकों की जमा में 10% की कमी आती है, और RBI CRR को 8% से 6% और SLR को 22% से 20% करता है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits decrease by 10%, and RBI reduces CRR from 8% to 6% and SLR from 22% to 20%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में कुल 4%m की कमी (2% + 2%) से ऋण देने की क्षमता बढ़ती है, जो जमा में 10% कमी के प्रभाव को संतुलित कर सकती है, जिससे कुल मिलाकर ऋण देने की क्षमता बढ़ेगी।",
+        "explanation_en": "As per the notes, a total 4% reduction in CRR and SLR (2% + 2%) increases lending capacity, which may offset the 10% decrease in deposits, overall increasing lending capacity."
+    },
+    {
+        "q": "यदि RBI CRR को 5% से 10% करता है और बैंकों की जमा में 20% की वृद्धि होती है, लेकिन SLR स्थिर रहता है, तो मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI increases CRR from 5% to 10% and bank deposits increase by 20%, but SLR remains stable, what will be the effect on the money multiplier?",
+        "options": ["बढ़ेगा", "घटेगा", "स्थिर रहेगा", "अनिश्चित रहेगा"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, CRR में वृद्धि से मुद्रा गुणक घटता है, लेकिन जमा में वृद्धि से यह बढ़ता है। संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "As per the notes, an increase in CRR reduces the money multiplier, but an increase in deposits increases it. The combined effect is uncertain."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में मंदी है और RBI CRR को 10% से 5% और SLR को 25% से 20% करता है, और बैंकों की जमा में 10% की वृद्धि होती है, तो बैंकों की ऋण देने की क्षमता और मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If the economy is in a recession and RBI reduces CRR from 10% to 5% and SLR from 25% to 20%, and bank deposits increase by 10%, what will be the effect on banks’ lending capacity and money multiplier?",
+        "options": ["दोनों बढ़ेंगे", "दोनों घटेंगे", "ऋण देने की क्षमता बढ़ेगी, मुद्रा गुणक घटेगा", "ऋण देने की क्षमता घटेगी, मुद्रा गुणक बढ़ेगा"],
+        "options_en": ["Both will increase", "Both will decrease", "Lending capacity will increase, money multiplier will decrease", "Lending capacity will decrease, money multiplier will increase"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में कमी (5% + 5%) और जमा में 10% की वृद्धि से बैंकों की ऋण देने की क्षमता और मुद्रा गुणक दोनों बढ़ेंगे।",
+        "explanation_en": "As per the notes, a reduction in CRR and SLR (5% + 5%) and a 10% increase in deposits will increase both banks’ lending capacity and the money multiplier."
+    },
+    {
+        "q": "यदि RBI CRR को 7% से 5% करता है, SLR को 20% से 22% करता है, और बैंकों की जमा में 5% की कमी आती है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces CRR from 7% to 5% and increases SLR from 20% to 22%, and bank deposits decrease by 5%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, CRR में 2% की कमी से ऋण देने की क्षमता बढ़ती है, लेकिन SLR में 2% की वृद्धि और जमा में 5% की कमी से यह प्रभावित हो सकती है। संयुक्त प्रभाव अनिश्चित है।",
+        "explanation_en": "As per the notes, a 2% reduction in CRR increases lending capacity, but a 2% increase in SLR and a 5% decrease in deposits may affect it. The combined effect is uncertain."
+    },
+    {
+        "q": "यदि RBI मुद्रा आपूर्ति को स्थिर रखना चाहता है, लेकिन मुद्रा गुणक को बढ़ाना चाहता है, तो उसे क्या करना चाहिए?",
+        "q_en": "If RBI wants to keep money supply stable but increase the money multiplier, what should it do?",
+        "options": ["CRR को कम करना और जमा को स्थिर रखना", "CRR को बढ़ाना और SLR को कम करना", "SLR को बढ़ाना और जमा को कम करना", "CRR और SLR दोनों को बढ़ाना"],
+        "options_en": ["Reduce CRR and keep deposits stable", "Increase CRR and reduce SLR", "Increase SLR and reduce deposits", "Increase both CRR and SLR"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR कम करने से मुद्रा गुणक बढ़ता है, और जमा को स्थिर रखने से मुद्रा आपूर्ति पर न्यूनतम प्रभाव पड़ता है।",
+        "explanation_en": "As per the notes, reducing CRR increases the money multiplier, and keeping deposits stable minimizes the impact on money supply."
+    },
+    {
+        "q": "यदि बैंकों की जमा में 25% की वृद्धि होती है, और RBI CRR को 5% से 8% और SLR को 20% से 18% करता है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If bank deposits increase by 25%, and RBI increases CRR from 5% to 8% and reduces SLR from 20% to 18%, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR में 3% की वृद्धि ऋण देने की क्षमता को कम करती है, लेकिन SLR में 2% की कमी और जमा में 25% की वृद्धि से कुल मिलाकर ऋण देने की क्षमता बढ़ेगी।",
+        "explanation_en": "As per the notes, a 3% increase in CRR reduces lending capacity, but a 2% reduction in SLR and a 25% increase in deposits will overall increase lending capacity."
+    },
+    {
+        "q": "यदि अर्थव्यवस्था में उच्च आर्थिक विकास और उच्च मुद्रास्फीति दोनों हैं, और RBI CRR को 6% से 8% और SLR को 22% से 20% करता है, तो इसका उपभोक्ता की क्रय शक्ति पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If the economy faces both high economic growth and high inflation, and RBI increases CRR from 6% to 8% and reduces SLR from 22% to 20%, what will be the effect on consumers’ purchasing power?",
+        "options": ["बढ़ेगी", "घटेगी", "स्थिर रहेगी", "अनिश्चित रहेगी"],
+        "options_en": ["Will increase", "Will decrease", "Will remain stable", "Will remain uncertain"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, CRR में 2% की वृद्धि से मुद्रा आपूर्ति कम होती है, जो उपभोक्ता की क्रय शक्ति को कम करती है, भले ही SLR में 2% की कमी हो।",
+        "explanation_en": "As per the notes, a 2% increase in CRR reduces money supply, decreasing consumers’ purchasing power, despite a 2% reduction in SLR."
+    },
+    {
+        "q": "यदि RBI CRR को 10% से 5% और SLR को 25% से 20% करता है, और बैंकों की जमा में 15% की कमी आती है, तो बैंकों की ऋण देने की क्षमता और मुद्रा गुणक पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces CRR from 10% to 5% and SLR from 25% to 20%, and bank deposits decrease by 15%, what will be the effect on banks’ lending capacity and money multiplier?",
+        "options": ["दोनों बढ़ेंगे", "दोनों घटेंगे", "ऋण देने की क्षमता बढ़ेगी, मुद्रा गुणक घटेगा", "ऋण देने की क्षमता घटेगी, मुद्रा गुणक बढ़ेगा"],
+        "options_en": ["Both will increase", "Both will decrease", "Lending capacity will increase, money multiplier will decrease", "Lending capacity will decrease, money multiplier will increase"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, CRR और SLR में कुल 10% की कमी (5% + 5%) से ऋण देने की क्षमता और मुद्रा गुणक बढ़ते हैं, भले ही जमा में 15% की कमी हो।",
+        "explanation_en": "As per the notes, a total 10% reduction in CRR and SLR (5% + 5%) increases lending capacity and the money multiplier, despite a 15% decrease in deposits."
     }
 
 ];
