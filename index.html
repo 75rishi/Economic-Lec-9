@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurangzeb Quiz Application</title>
+    <style>
+        /* General Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        /* First Page Styles */
+        #startPage {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+      .box {
+    background: linear-gradient(45deg, rgb(218, 0, 171), rgb(0, 255, 191), rgb(255, 221, 0), rgb(218, 0, 171));
+    background-size: 400% 400%;
+    padding: 8px 50px;
+    font-size: 2.1rem;
+    font-weight: 700;
+    font-family: 'Tangerine', cursive;
+    color: black;
+    box-shadow: 0 0 50px rgb(0, 255, 191);
+    outline: 4px solid black;
+    outline-offset: 5px;
+    cursor: pointer;
+    border-radius: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: gradientFlow 5s ease infinite, pulse 1s infinite;
+    transition: background 0.5s ease, box-shadow 0.3s ease;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.box:hover {
+    background: linear-gradient(45deg, rgb(0, 255, 255), rgb(255, 0, 255), rgb(255, 255, 0), rgb(0, 255, 255));
+    background-size: 400% 400%;
+    box-shadow: 0 0 50px rgb(255, 0, 255);
+}
+
+        .box:hover {
+            background-color: rgb(56, 255, 242);
+            box-shadow: 0 0 80px yellow;
+            outline-color: rgb(0, 255, 102);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 50px rgb(0, 255, 0); }
+            50% { box-shadow: 0 0 100px rgb(255, 0, 0); }
+            100% { box-shadow: 0 0 50px rgb(104, 61, 82); }
+        }
+
+        .loading-text {
+            position: relative;
+            font-family: 'Allura', cursive;
+            background: linear-gradient(90deg, rgb(255, 0, 0), #0ff, #00f) -1810% / 114%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font: 900 clamp(2em, 6vw, 4em) 'Allura', cursive;
+            animation: shimmer 2s linear infinite, glitch 2s infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 100%; }
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: none; opacity: 1; }
+            92% { transform: translateX(-1px) skew(0deg); opacity: 0.9; }
+            94% { transform: translateX(2px) skew(-2deg); opacity: 1; }
+            96% { transform: translateX(-1px) skew(1deg); opacity: 0.95; }
+            98% { transform: translateX(1px) skew(-1deg); opacity: 1; }
+        }
+
+        /* Quiz Page Styles */
+        #quizPage {
+            background: linear-gradient(135deg, #452c4753, #13a155);
+            color: #000000;
+            position: relative;
+            min-height: 100vh;
+            display: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+       .card {
+    background: linear-gradient(135deg, #91b9d8, #83b1a8, #b8afed);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(183, 56, 56);
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: transform 0.2s;
+}
+
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .question .en {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #000000;
+            margin-top: 5px;
+        }
+
+        .options button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px;
+            margin: 5px 0;
+            border: 3px solid #000;
+            border-radius: 8px;
+            background: #9cb7cf;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.4s ease, transform 0.1s, border-color 0.4s ease, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            color: #000;
+        }
+
+        .options button:hover {
+            background: #f4ff1f;
+            border-color: #9d00ff;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .options button.correct {
+            background: #6cff5e !important;
+            border-color: #ae00ff !important;
+            cursor: default;
+            color: #000 !important;
+             font-weight: bold;
+        }
+
+        .options button.wrong {
+            background: #b51010 !important;
+            border-color: #000 !important;
+            cursor: default;
+            color: #000 !important;
+        }
+
+        .options button.disabled {
+            pointer-events: none;
+            color: #000;
+        }
+
+        .options button::after {
+            content: '';
+            position: absolute;
+            background: rgb(212, 51, 51);
+            border-radius: 50%;
+            width: 0;
+            height: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .options button:active::after {
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            to { width: 300px; height: 300px; opacity: 0; }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4311e8, #ff00dd, #cbd6db, #4311e8);
+            background-size: 400% 400%;
+            animation: flowGradient 5s ease infinite;
+            transition: transform 0.3s ease, box-shadow 0.5s ease;
+            color: #000;
+        }
+
+        .controls button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+        }
+
+        @keyframes flowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background: #89b2f4;
+            border-left: 4px solid #000000;
+            font-size: 0.95rem;
+            animation: slideDown 0.4s ease;
+            opacity: 0;
+            transform: translateY(-10px);
+            font-weight: bold;
+        }
+
+        .explanation.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress {
+            height: 8px;
+            background: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #18ff03d6, #ff2802);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3e5a52;
+            position: absolute;
+            top: -16px;
+            right: -20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.8rem;
+            transform: scale(0);
+            animation: grow 0.5s ease forwards;
+        }
+
+        @keyframes grow {
+            to { transform: scale(1); }
+        }
+
+        #timerContainer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            color: #000;
+            z-index: 9999;
+            user-select: none;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        #timerContainer.hidden {
+            visibility: hidden;
+        }
+
+        #timerBar {
+            width: 100%;
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        #timerBarFill {
+            height: 100%;
+            background: #ff4444;
+            width: 100%;
+            transition: width 1s linear, background 1s ease;
+        }
+
+        /* Dashboard Page Styles */
+        #dashboardPage {
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb, #d4fc79);
+            background-size: 600% 400%;
+            animation: flow 5s ease-in-out infinite;
+            padding: 40px;
+            display: none;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: slideUpContainer 1.2s ease-in-out;
+        }
+
+        @keyframes slideUpContainer {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .dashboard-container h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounceIn 1s ease-in-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .dash-box {
+            border: 4px solid rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+            background-size: 800% 600%;
+            animation: waveFlow 6s ease-in-out infinite, floatUpDown 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes waveFlow {
+            0% { background-position: 0% 50%; filter: brightness(1) saturate(1); }
+            25% { background-position: 50% 55%; filter: brightness(1.3) saturate(1.3); }
+            50% { background-position: 100% 50%; filter: brightness(1.5) saturate(1.4); }
+            75% { background-position: 50% 45%; filter: brightness(1.3) saturate(1.2); }
+            100% { background-position: 0% 50%; filter: brightness(1) saturate(1); }
+        }
+
+        .dash-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(-45deg, rgba(112, 201, 239, 0.15), rgba(109, 184, 121, 0.181), rgb(0, 0, 0));
+            animation: waveLine 6s ease-in-out infinite;
+            transform: rotate(45deg);
+            z-index: 0;
+            filter: drop-shadow(0 0 6px rgba(35, 218, 185, 0.6));
+        }
+
+        @keyframes waveLine {
+            0% { transform: rotate(45deg) translateX(120%) scale(0.85); opacity: 0.35; }
+            25% { transform: rotate(45deg) translateX(60%) scale(1); opacity: 0.65; }
+            50% { transform: rotate(45deg) translateX(-60%) scale(1.25); opacity: 1; }
+            75% { transform: rotate(25deg) translateX(30%) scale(1); opacity: 0.7; }
+            100% { transform: rotate(45deg) translateX(120%) scale(0.85); opacity: 0.35; }
+        }
+
+        .dash-box h4, .dash-box p {
+            position: relative;
+            z-index: 1;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .dash-box:nth-child(1) { background: linear-gradient(45deg, #ff6b6b, #ff9f43, #feca57); animation-delay: 0s; }
+        .dash-box:nth-child(2) { background: linear-gradient(45deg, #1dd1a1, #00d2d3, #54a0ff); animation-delay: 0.2s; }
+        .dash-box:nth-child(3) { background: linear-gradient(45deg, #ff4d4d, #ff793f, #ffcc99); animation-delay: 0.4s; }
+        .dash-box:nth-child(4) { background: linear-gradient(45deg, #40f752, #706fd3, #9980fa); animation-delay: 0.6s; }
+        .dash-box:nth-child(5) { background: linear-gradient(45deg, #ff9ff3, #feca57, #1dd1a1); animation-delay: 0.8s; }
+        .dash-box:nth-child(6) { background: linear-gradient(45deg, #54a0ff, #00d2d3, #ff6b6b); animation-delay: 1s; }
+        .dash-box:nth-child(7) { background: linear-gradient(45deg, #ffcc99, #ff4d4d, #9980fa); animation-delay: 1.2s; }
+        .dash-box:nth-child(8) { background: linear-gradient(45deg, #706fd3, #ff9ff3, #ff793f); animation-delay: 1.4s; }
+        .dash-box:nth-child(9) { background: linear-gradient(45deg, #feca57, #4834d4, #54a0ff); animation-delay: 1.6s; }
+        .dash-box:nth-child(10) { background: linear-gradient(45deg, #00d2d3, #ff6b6b, #ffcc99); animation-delay: 1.8s; }
+        .dash-box:nth-child(11) { background: linear-gradient(45deg, #ff793f, #1dd1a1, #706fd3); animation-delay: 2s; }
+        .dash-box:nth-child(12) { background: linear-gradient(45deg, #9980fa, #ff6b6b, #feca57); animation-delay: 2.2s; }
+        .dash-box:nth-child(13) { background: linear-gradient(45deg, #54a0ff, #ffcc99, #ff4d4d); animation-delay: 2.4s; }
+        .dash-box:nth-child(14) { background: linear-gradient(45deg, #ff9ff3, #00d2d3, #4834d4); animation-delay: 2.6s; }
+        .dash-box:nth-child(15) { background: linear-gradient(45deg, #feca57, #ff793f, #1dd1a1); animation-delay: 2.8s; }
+        .dash-box:nth-child(16) { background: linear-gradient(45deg, #706fd3, #ff6b6b, #54a0ff); animation-delay: 3s; }
+        .dash-box:nth-child(17) { background: linear-gradient(45deg, #ff4d4d, #9980fa, #00d2d3); animation-delay: 3.2s; }
+        .dash-box:nth-child(18) { background: linear-gradient(45deg, #ffcc99, #ff9ff3, #4834d4); animation-delay: 3.4s; }
+        .dash-box:nth-child(19) { background: linear-gradient(45deg, #1dd1a1, #ff793f, #706fd3); animation-delay: 3.6s; }
+        .dash-box:nth-child(20) { background: linear-gradient(45deg, #54a0ff, #feca57, #ff6b6b); animation-delay: 3.8s; }
+        .dash-box:nth-child(21) { background: linear-gradient(45deg, #9980fa, #ff4d4d, #00d2d3); animation-delay: 4s; }
+        .dash-box:nth-child(22) { background: linear-gradient(45deg, #ff9ff3, #ffcc99, #ff793f); animation-delay: 4.2s; }
+        .dash-box:nth-child(23) { background: linear-gradient(45deg, #4834d4, #1dd1a1, #54a0ff); animation-delay: 4.4s; }
+        .dash-box:nth-child(24) { background: linear-gradient(45deg, #ff6b6b, #706fd3, #ff4d4d); animation-delay: 4.6s; }
+        .dash-box:nth-child(25) { background: linear-gradient(45deg, #00d2d3, #ff9ff3, #feca57); animation-delay: 4.8s; }
+        .dash-box:nth-child(26) { background: linear-gradient(45deg, #ffcc99, #54a0ff, #9980fa); animation-delay: 5s; }
+        .dash-box:nth-child(27) { background: linear-gradient(45deg, #ff793f, #ff6b6b, #1dd1a1); animation-delay: 5.2s; }
+        .dash-box:nth-child(28) { background: linear-gradient(45deg, #706fd3, #ff4d4d, #00d2d3); animation-delay: 5.4s; }
+        .dash-box:nth-child(29) { background: linear-gradient(45deg, #feca57, #9980fa, #ff9ff3); animation-delay: 5.6s; }
+        .dash-box:nth-child(30) { background: linear-gradient(45deg, #54a0ff, #ff793f, #ff6b6b); animation-delay: 5.8s; }
+
+        .dash-box:hover {
+            transform: scale(1.15) translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            filter: brightness(1.3);
+        }
+
+        .dash-box h4 {
+            margin: 0;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dash-box p {
+            font-size: 28px;
+            margin: 12px 0 0;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4311e8, #ff00dd, #cbd6db, #4311e8);
+            background-size: 400% 400%;
+            animation: flowGradient 5s ease infinite;
+            color: #000;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+        }
+
+        #restartModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid black;
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container, .dashboard-container {
+                padding: 20px;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 20px;
+            }
+            .dash-box p {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Start Page -->
+    <div id="startPage">
+        <div class="box" onclick="goToQuizPage()">Start</div>
+        <div class="loading-text">Lucky</div>
+    </div>
+
+    <!-- Quiz Page -->
+    <div id="quizPage">
+        <div id="timerContainer">
+            <div>Total Time: <span id="totalTime">00:00</span></div>
+            <div id="timerBar"><div id="timerBarFill"></div></div>
+        </div>
+        <div class="container" id="quizContainer">
+            <h1> Economic lec 10 </h1>
+            <div id="score"></div>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-circle" id="progressCircle">0%</div>
+            </div>
+            <div id="quiz"></div>
+            <div class="controls">
+                <button class="submit" onclick="submitQuiz()">Submit</button>
+                <button class="restart" onclick="openRestartModal()">Restart</button>
+                <button class="dashboard" onclick="goToDashboard()">Show Dashboard</button>
+            </div>
+            <select id="languageToggle" onchange="toggleLanguage()">
+                <option value="hi">हिन्दी</option>
+                <option value="en">English</option>
+                <option value="both">Both</option>
+            </select>
+            <div id="restartModal">
+                <h2>Select Questions to Restart</h2>
+                <div id="questionCheckboxes"></div>
+                <button onclick="applyRestart()">Apply</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage">
+        <div class="dashboard-container">
+            <h2>🎓 Quiz Result Dashboard</h2>
+            <div class="grid" id="dashboardGrid"></div>
+            <button class="back-button" onclick="goToQuizPage()">Back to Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+    {
+        "q": "बैंक दर क्या है?",
+        "q_en": "What is the Bank Rate?",
+        "options": ["वह दर जिस पर RBI बैंकों को ब्याज देता है", "वह दर जिस पर RBI बैंकों के बिल ऑफ एक्सचेंज को बट्टा करती है", "वह दर जिस पर बैंक ग्राहकों को ऋण देते हैं", "वह दर जिस पर RBI सरकार को ऋण देता है"],
+        "options_en": ["The rate at which RBI pays interest to banks", "The rate at which RBI discounts banks' bills of exchange", "The rate at which banks lend to customers", "The rate at which RBI lends to the government"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, बैंक दर वह बट्टा दर है जिस पर RBI बैंकों के बिल ऑफ एक्सचेंज और अन्य वाणिज्यिक पत्रों को बट्टा करती है।",
+        "explanation_en": "According to the notes, the Bank Rate is the discount rate at which RBI discounts banks' bills of exchange and other commercial papers."
+    },
+    {
+        "q": "बट्टा दर का क्या अर्थ है?",
+        "q_en": "What is the meaning of Discount Rate?",
+        "options": ["वह दर जिस पर बैंक ग्राहकों को ब्याज देता है", "वह दर जिस पर व्यापारी अंकित मूल्य पर छूट देता है", "वह दर जिस पर RBI ब्याज मुक्त ऋण देता है", "वह दर जिस पर बैंक अपने खातों को समायोजित करता है"],
+        "options_en": ["The rate at which banks pay interest to customers", "The rate at which a trader offers a discount on the marked price", "The rate at which RBI provides interest-free loans", "The rate at which banks adjust their accounts"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि बट्टा दर वह छूट है जो व्यापारी अंकित मूल्य या विक्रय मूल्य पर देता है, जिसे व्यापारिक बट्टा कहा जाता है।",
+        "explanation_en": "The notes state that the discount rate is the discount offered by a trader on the marked price or sale price, known as a trade discount."
+    },
+    {
+        "q": "रेपो दर क्या है?",
+        "q_en": "What is the Repo Rate?",
+        "options": ["वह दर जिस पर RBI बैंकों से ऋण लेता है", "वह दर जिस पर RBI बैंकों को प्रतिभूतियों के बदले ऋण देता है", "वह दर जिस पर बैंक ग्राहकों से ऋण लेते हैं", "वह दर जिस पर RBI ब्याज मुक्त ऋण देता है"],
+        "options_en": ["The price at which RBI borrows from banks", "The rate at which RBI lends to banks against securities", "The rate at which banks borrow from customers", "The rate at which RBI provides interest-free loans"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर वह ब्याज दर है जिस पर RBI बैंकों को सरकार द्वारा मान्यता प्राप्त प्रतिभूतियों के बदले ऋण देता है।",
+        "explanation_en": "According to the notes, the Repo Rate is the interest rate at which RBI lends to banks against government-approved securities."
+    },
+    {
+        "q": "रिवर्स रेपो दर का क्या कार्य है?",
+        "q_en": "What is the function of Reverse Repo Rate?",
+        "options": ["बैंकों को ऋण देने के लिए", "RBI द्वारा बैंकों से ऋण लेने के लिए", "ग्राहकों को ब्याज देने के लिए", "CRR को नियंत्रित करने के लिए"],
+        "options_en": ["To lend to banks", "For RBI to borrow from banks", "To pay interest to customers", "To control CRR"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर वह दर है जिस पर RBI बैंकों से ऋण लेता है और बदले में प्रतिभूतियां सौंपता है।",
+        "explanation_en": "The notes mention that the Reverse Repo Rate is the rate at which RBI borrows from banks and provides securities in return."
+    },
+    {
+        "q": "स्थायी जमा सुविधा (SDF) कब शुरू की गई?",
+        "q_en": "When was the Standing Deposit Facility (SDF) introduced?",
+        "options": ["अप्रैल 2020", "अप्रैल 2021", "अप्रैल 2022", "अप्रैल 2023"],
+        "options_en": ["April 2020", "April 2021", "April 2022", "April 2023"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, SDF की शुरुआत 8 अप्रैल, 2022 को की गई थी।",
+        "explanation_en": "According to the notes, the SDF was introduced on April 8, 2022."
+    },
+    {
+        "q": "बिल ऑफ एक्सचेंज का उपयोग किस लिए किया जाता है?",
+        "q_en": "What is the use of a Bill of Exchange?",
+        "options": ["ब्याज दर को नियंत्रित करने के लिए", "व्यापारिक लेन-देन में भुगतान के लिए", "RBI को ऋण देने के लिए", "ग्राहकों को ब्याज देने के लिए"],
+        "options_en": ["To control interest rates", "For payments in commercial transactions", "To lend to RBI", "To pay interest to customers"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि बिल ऑफ एक्सचेंज और अन्य वाणिज्यिक पत्रों का उपयोग व्यापारिक लेन-देन में भुगतान के लिए होता है।",
+        "explanation_en": "The notes state that bills of exchange and other commercial papers are used for payments in commercial transactions."
+    },
+    {
+        "q": "रेपो दर में वृद्धि का क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of an increase in Repo Rate?",
+        "options": ["मुद्रा आपूर्ति बढ़ती है", "मुद्रा आपूर्ति कम होती है", "ब्याज दर कम होती है", "मुद्रास्फीति बढ़ती है"],
+        "options_en": ["Money supply increases", "Money supply decreases", "Interest rate decreases", "Inflation increases"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे ऋण लेने की क्षमता कम होती है और मुद्रा आपूर्ति कम होती है।",
+        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, reducing borrowing capacity and decreasing money supply."
+    },
+    {
+        "q": "रेपो सुविधा की शुरुआत कब हुई?",
+        "q_en": "When was the Repo Facility introduced?",
+        "options": ["1998", "1999", "2000", "2001"],
+        "options_en": ["1998", "1999", "2000", "2001"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा को 1999 में पायलट आधार पर शुरू किया गया और 2000 से पूर्णरूप से लागू किया गया।",
+        "explanation_en": "The notes mention that the Repo Facility was introduced on a pilot basis in 1999 and fully implemented from 2000."
+    },
+    {
+        "q": "रेपो प्रक्रिया में कौन सी प्रतिभूतियां मान्य होती हैं?",
+        "q_en": "Which securities are valid in the Repo process?",
+        "options": ["केंद्र सरकार की प्रतिभूतियां", "राज्य सरकार की प्रतिभूतियां", "अंतरराष्ट्रीय प्रतिभूतियां", "उपरोक्त सभी"],
+        "options_en": ["Central government securities", "State government securities", "International securities", "All of the above"],
+        "answer": 3,
+        "explanation": "नोट्स के अनुसार, रेपो प्रक्रिया में केंद्र सरकार, राज्य सरकार, निगम, और अंतरराष्ट्रीय प्रतिभूतियां जो सरकार द्वारा मान्यता प्राप्त हैं, शामिल होती हैं।",
+        "explanation_en": "According to the notes, the Repo process includes central government, state government, corporate, and international securities approved by the government."
+    },
+    {
+        "q": "ओवरनाइट रेपो का उपयोग किस लिए किया जाता है?",
+        "q_en": "What is the use of Overnight Repo?",
+        "options": ["दीर्घकालिक ऋण के लिए", "CRR और SLR की मासिक औसत बनाए रखने के लिए", "मुद्रास्फीति बढ़ाने के लिए", "ब्याज दर को स्थिर करने के लिए"],
+        "options_en": ["For long-term loans", "To maintain the monthly average of CRR and SLR", "To increase inflation", "To stabilize interest rates"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि ओवरनाइट रेपो का उपयोग बैंकों द्वारा CRR और SLR की मासिक औसत बनाए रखने के लिए किया जाता है।",
+        "explanation_en": "The notes state that Overnight Repo is used by banks to maintain the monthly average of CRR and SLR."
+    },
+    {
+        "q": "बैंक दर का उपयोग वर्तमान में किस रूप में किया जाता है?",
+        "q_en": "How is the Bank Rate currently used?",
+        "options": ["मौद्रिक नीति के नियंत्रण के लिए", "संदर्भ दर (Reference Rate) के रूप में", "ब्याज दर को बढ़ाने के लिए", "मुद्रा आपूर्ति को कम करने के लिए"],
+        "options_en": ["To control monetary policy", "As a reference rate", "To increase interest rates", "To reduce money supply"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, वर्तमान में RBI बैंक दर का उपयोग मौद्रिक नीति में नहीं, बल्कि केवल संदर्भ दर के रूप में करता है।",
+        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate, not in monetary policy."
+    },
+    {
+        "q": "रेपो सुविधा की नीलामी कहाँ होती है?",
+        "q_en": "Where is the auction of the Repo Facility conducted?",
+        "options": ["RBI के ई-कुबेर प्लेटफॉर्म पर", "स्टॉक एक्सचेंज पर", "वाणिज्यिक बैंकों में", "सरकारी कार्यालयों में"],
+        "options_en": ["On RBI’s e-Kuber platform", "On the stock exchange", "In commercial banks", "In government offices"],
+        "answer": 0,
+        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा की नीलामी RBI के ई-कुबेर प्लेटफॉर्म पर होती है।",
+        "explanation_en": "The notes mention that the auction of the Repo Facility is conducted on RBI’s e-Kuber platform."
+    },
+    {
+        "q": "रिवर्स रेपो दर का उपयोग किसके नियंत्रण के लिए किया जाता है?",
+        "q_en": "What is the Reverse Repo Rate used to control?",
+        "options": ["मुद्रा आपूर्ति को बढ़ाने के लिए", "मुद्रास्फीति को नियंत्रित करने के लिए", "ब्याज दर को कम करने के लिए", "CRR को बढ़ाने के लिए"],
+        "options_en": ["To increase money supply", "To control inflation", "To reduce interest rates", "To increase CRR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रिवर्स रेपो दर का उपयोग RBI द्वारा मुद्रास्फीति को नियंत्रित करने के लिए किया जाता है।",
+        "explanation_en": "According to the notes, the Reverse Repo Rate is used by RBI to control inflation."
+    },
+    {
+        "q": "प्राथमिक डीलर कौन हो सकते हैं?",
+        "q_en": "Who can be Primary Dealers?",
+        "options": ["केवल वाणिज्यिक बैंक", "गैर-बैंकिंग वित्तीय संस्थाएँ, निवेश बैंक आदि", "केवल सरकारी संस्थाएँ", "केवल RBI कर्मचारी"],
+        "options_en": ["Only commercial banks", "Non-banking financial institutions, investment banks, etc.", "Only government institutions", "Only RBI employees"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि प्राथमिक डीलर में गैर-बैंकिंग वित्तीय संस्थाएँ, निवेश बैंक आदि शामिल हैं, जिनके पास सिडबी जनरल लेजर खाता और RBI में चालू खाता होता है।",
+        "explanation_en": "The notes state that Primary Dealers include non-banking financial institutions, investment banks, etc., which have a SIDBI general ledger account and a current account with RBI."
+    },
+    {
+        "q": "रेपो सुविधा की सिफारिश किस समिति ने की थी?",
+        "q_en": "Which committee recommended the Repo Facility?",
+        "options": ["ऊर्जित पटेल समिति", "नरसिम्हन समिति", "रघुराम राजन समिति", "बिमल जालान समिति"],
+        "options_en": ["Urjit Patel Committee", "Narasimhan Committee", "Raghuram Rajan Committee", "Bimal Jalan Committee"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो सुविधा की सिफारिश नरसिम्हन समिति (1998) ने की थी।",
+        "explanation_en": "According to the notes, the Repo Facility was recommended by the Narasimhan Committee (1998)."
+    },
+    {
+        "q": "SDF का पूर्ण रूप क्या है?",
+        "q_en": "What is the full form of SDF?",
+        "options": ["स्टैंडिंग डिपॉजिट फंड", "स्थायी जमा सुविधा", "स्टेट डेवलपमेंट फंड", "सिक्योर डिपॉजिट फंड"],
+        "options_en": ["Standing Deposit Fund", "Standing Deposit Facility", "State Development Fund", "Secure Deposit Fund"],
+        "answer": 1,
+        "explanation": "नोट्स में SDF को स्थायी जमा सुविधा के रूप में परिभाषित किया गया है।",
+        "explanation_en": "The notes define SDF as the Standing Deposit Facility."
+    },
+    {
+        "q": "रेपो दर को किसके रूप में परिभाषित किया गया है?",
+        "q_en": "How is the Repo Rate defined?",
+        "options": ["ब्याज दर", "बट्टा दर", "संदर्भ दर", "जमा दर"],
+        "options_en": ["Interest rate", "Discount rate", "Reference rate", "Deposit rate"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, रेपो दर एक ब्याज दर है।",
+        "explanation_en": "According to the notes, the Repo Rate is an interest rate."
+    },
+    {
+        "q": "वाणिज्यिक पत्रों का उपयोग भारत में कितना होता है?",
+        "q_en": "How much are commercial papers used in India?",
+        "options": ["बहुत अधिक", "बहुत कम", "मध्यम स्तर पर", "बिल्कुल नहीं"],
+        "options_en": ["Very high", "Very low", "Moderate level", "Not at all"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग बहुत कम होता है।",
+        "explanation_en": "The notes state that the use of commercial papers in the Indian market is very low."
+    },
+    {
+        "q": "रेपो सुविधा का उपयोग कौन कर सकता है?",
+        "q_en": "Who can avail of the Repo Facility?",
+        "options": ["केवल RBI", "बैंक और प्राथमिक डीलर", "केवल सरकारी संस्थाएँ", "केवल ग्राहक"],
+        "options_en": ["Only RBI", "Banks and Primary Dealers", "Only government institutions", "Only customers"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो सुविधा का लाभ बैंक और प्राथमिक डीलर ले सकते हैं।",
+        "explanation_en": "According to the notes, banks and Primary Dealers can avail of the Repo Facility."
+    },
+    {
+        "q": "रिवर्स रेपो दर की नीलामी कहाँ होती है?",
+        "q_en": "Where is the auction of the Reverse Repo Rate conducted?",
+        "options": ["स्टॉक एक्सचेंज पर", "RBI के ई-कुबेर प्लेटफॉर्म पर", "वाणिज्यिक बैंकों में", "सरकारी कार्यालयों में"],
+        "options_en": ["On the stock exchange", "On RBI’s e-Kuber platform", "In commercial banks", "In government offices"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर की नीलामी RBI के ई-कुबेर प्लेटफॉर्म पर होती है।",
+        "explanation_en": "The notes mention that the auction of the Reverse Repo Rate is conducted on RBI’s e-Kuber platform."
+    },
+    {
+        "q": "बैंक दर को दीर्घकालिक सुविधा क्यों कहा जाता है?",
+        "q_en": "Why is the Bank Rate called a long-term facility?",
+        "options": ["क्योंकि यह केवल एक वर्ष के लिए लागू होती है", "क्योंकि यह बिल ऑफ एक्सचेंज की परिपक्वता अवधि पर आधारित है", "क्योंकि यह केवल अल्पकालिक ऋणों के लिए है", "क्योंकि यह ग्राहकों को दी जाती है"],
+        "options_en": ["Because it is applicable only for one year", "Because it is based on the maturity period of bills of exchange", "Because it is only for short-term loans", "Because it is given to customers"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि बैंक दर दीर्घकालिक सुविधा है क्योंकि यह बिल ऑफ एक्सचेंज और वाणिज्यिक पत्रों की परिपक्वता अवधि के आधार पर काम करती है।",
+        "explanation_en": "The notes state that the Bank Rate is a long-term facility because it operates based on the maturity period of bills of exchange and commercial papers."
+    },
+    {
+        "q": "रेपो दर बढ़ने से क्या होता है?",
+        "q_en": "What happens when the Repo Rate increases?",
+        "options": ["ब्याज दर कम होती है", "मुद्रा आपूर्ति बढ़ती है", "माँग कम होती है", "मुद्रास्फीति बढ़ती है"],
+        "options_en": ["Interest rate decreases", "Money supply increases", "Demand decreases", "Inflation increases"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे ऋण लेने की क्षमता कम होती है, मुद्रा आपूर्ति कम होती है, और परिणामस्वरूप माँग कम होती है।",
+        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, reducing borrowing capacity, decreasing money supply, and consequently reducing demand."
+    },
+    {
+        "q": "रिवर्स रेपो दर बढ़ने का क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of an increase in Reverse Repo Rate?",
+        "options": ["बैंक RBI को कम धन जमा करते हैं", "मुद्रा आपूर्ति बढ़ती है", "मुद्रास्फीति नियंत्रित होती है", "ब्याज दर कम होती है"],
+        "options_en": ["Banks deposit less money with RBI", "Money supply increases", "Inflation is controlled", "Interest rate decreases"],
+        "answer": 2,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर बढ़ने से बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है और मुद्रास्फीति नियंत्रित होती है।",
+        "explanation_en": "The notes mention that an increase in the Reverse Repo Rate leads banks to deposit more money with RBI, reducing money supply and controlling inflation."
+    },
+    {
+        "q": "रेपो प्रक्रिया में प्रतिभूतियों को पुनर्खरीद करने का वादा कौन करता है?",
+        "q_en": "Who promises to repurchase securities in the Repo process?",
+        "options": ["RBI", "बैंक", "ग्राहक", "सरकार"],
+        "options_en": ["RBI", "Banks", "Customers", "Government"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो प्रक्रिया में बैंक प्रतिभूतियों को पुनर्खरीद करने का वादा करते हैं।",
+        "explanation_en": "According to the notes, in the Repo process, banks promise to repurchase securities."
+    },
+    {
+        "q": "SDF की शुरुआत क्यों की गई?",
+        "q_en": "Why was SDF introduced?",
+        "options": ["बैंकों को अधिक ब्याज देने के लिए", "प्रतिभूतियों की कमी को दूर करने के लिए", "CRR को कम करने के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
+        "options_en": ["To pay more interest to banks", "To address the shortage of securities", "To reduce CRR", "To increase money supply"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि कोविड के दौरान प्रतिभूतियों की कमी के कारण रिवर्स रेपो सुविधा प्रभावित हुई, इसलिए अप्रैल 2022 में SDF शुरू की गई।",
+        "explanation_en": "The notes state that due to a shortage of securities during COVID, the Reverse Repo facility was affected, so SDF was introduced in April 2022."
+    },
+    {
+        "q": "रेपो दर को तरलता समायोजन सुविधा (LAF) का हिस्सा क्यों माना जाता है?",
+        "q_en": "Why is the Repo Rate considered a part of the Liquidity Adjustment Facility (LAF)?",
+        "options": ["क्योंकि यह दीर्घकालिक ऋण देता है", "क्योंकि यह अल्पकालिक तरलता आवश्यकताओं को पूरा करता है", "क्योंकि यह ब्याज मुक्त ऋण देता है", "क्योंकि यह केवल सरकारी बैंकों के लिए है"],
+        "options_en": ["Because it provides long-term loans", "Because it meets short-term liquidity requirements", "Because it provides interest-free loans", "Because it is only for government banks"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा LAF के रूप में बैंकों की अल्पकालिक तरलता आवश्यकताओं को पूरा करती है।",
+        "explanation_en": "The notes mention that the Repo facility, as part of LAF, meets the short-term liquidity requirements of banks."
+    },
+    {
+        "q": "बैंक दर के अप्रभावी होने का मुख्य कारण क्या है?",
+        "q_en": "What is the main reason for the ineffectiveness of the Bank Rate?",
+        "options": ["ब्याज दर का अधिक होना", "वाणिज्यिक पत्रों का कम उपयोग", "RBI की नीतियों में बदलाव", "CRR और SLR की कमी"],
+        "options_en": ["High interest rates", "Low use of commercial papers", "Changes in RBI policies", "Shortage of CRR and SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग बहुत कम होने के कारण बैंक दर अप्रभावी रहता है।",
+        "explanation_en": "According to the notes, the Bank Rate remains ineffective due to the low use of commercial papers in the Indian market."
+    },
+    {
+        "q": "रेपो सुविधा की नीलामी के लिए RBI क्या करता है?",
+        "q_en": "What does RBI do for the auction of the Repo Facility?",
+        "options": ["पूर्व सूचना जारी करता है", "ब्याज दर को स्थिर करता है", "प्रतिभूतियों को बेचता है", "CRR को कम करता है"],
+        "options_en": ["Issues prior notice", "Stabilizes interest rates", "Sells securities", "Reduces CRR"],
+        "answer": 0,
+        "explanation": "नोट्स में कहा गया है कि RBI रेपो सुविधा की नीलामी के लिए पूर्व सूचना जारी करता है।",
+        "explanation_en": "The notes state that RBI issues prior notice for the auction of the Repo Facility."
+    },
+    {
+        "q": "रेपो दर कम करने का क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of reducing the Repo Rate?",
+        "options": ["ब्याज दर बढ़ती है", "मुद्रा आपूर्ति कम होती है", "ऋण सस्ते होते हैं", "मुद्रास्फीति नियंत्रित होती है"],
+        "options_en": ["Interest rate increases", "Money supply decreases", "Loans become cheaper", "Inflation is controlled"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण की आपूर्ति बढ़ती है, जिससे ऋण सस्ते होते हैं।",
+        "explanation_en": "According to the notes, reducing the Repo Rate increases loan supply, making loans cheaper."
+    },
+    {
+        "q": "रिवर्स रेपो दर को किसके विपरीत माना जाता है?",
+        "q_en": "What is the Reverse Repo Rate considered opposite to?",
+        "options": ["बैंक दर", "रेपो दर", "CRR", "SLR"],
+        "options_en": ["Bank Rate", "Repo Rate", "CRR", "SLR"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर रेपो दर के विपरीत काम करता है।",
+        "explanation_en": "The notes mention that the Reverse Repo Rate works opposite to the Repo Rate."
+    },
+    {
+        "q": "रेपो सुविधा का उपयोग बैंकों द्वारा किसके लिए किया जाता है?",
+        "q_en": "What is the Repo Facility used by banks for?",
+        "options": ["दीर्घकालिक निवेश के लिए", "अल्पकालिक तरलता आवश्यकताओं के लिए", "ब्याज दर को बढ़ाने के लिए", "मुद्रास्फीति को बढ़ाने के लिए"],
+        "options_en": ["For long-term investments", "For short-term liquidity requirements", "To increase interest rates", "To increase inflation"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, RBI वाणिज्यिक बैंकों को उनकी अल्पकालिक तरलता आवश्यकताओं के लिए रेपो सुविधा प्रदान करता है।",
+        "explanation_en": "According to the notes, RBI provides the Repo Facility to commercial banks for their short-term liquidity requirements."
+    },
+    {
+        "q": "SDF के तहत बैंक क्या कर सकते हैं?",
+        "q_en": "What can banks do under SDF?",
+        "options": ["RBI से ऋण ले सकते हैं", "RBI में अतिरिक्त राशि जमा कर सकते हैं", "प्रतिभूतियों को बेच सकते हैं", "CRR को कम कर सकते हैं"],
+        "options_en": ["Borrow from RBI", "Deposit excess funds with RBI", "Sell securities", "Reduce CRR"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं और उस पर ब्याज प्राप्त कर सकते हैं।",
+        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI and earn interest on them."
+    },
+    {
+        "q": "रेपो दर को मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण क्यों माना जाता है?",
+        "q_en": "Why is the Repo Rate considered the most important tool of monetary policy?",
+        "options": ["क्योंकि यह दीर्घकालिक ऋण देता है", "क्योंकि यह मुद्रास्फीति को नियंत्रित करता है", "क्योंकि यह CRR को प्रभावित करता है", "क्योंकि यह ब्याज मुक्त ऋण देता है"],
+        "options_en": ["Because it provides long-term loans", "Because it controls inflation", "Because it affects CRR", "Because it provides interest-free loans"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रेपो दर वर्तमान में मुद्रास्फीति के नियंत्रण के लिए मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण है।",
+        "explanation_en": "The notes mention that the Repo Rate is currently the most important tool of monetary policy for controlling inflation."
+    },
+    {
+        "q": "बैंक दर को दंडात्मक दर क्यों माना जाता है?",
+        "q_en": "Why is the Bank Rate considered a penal rate?",
+        "options": ["क्योंकि यह ब्याज मुक्त होती है", "क्योंकि RBI मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ग्राहकों पर लागू होती है"],
+        "options_en": ["Because it is interest-free", "Because RBI assumes banks are unable to maintain CRR and SLR", "Because it applies only to government banks", "Because it applies to customers"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, RBI यह मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं, इसलिए उन्हें बैंक दर पर उच्च दर से धन लेना पड़ता है।",
+        "explanation_en": "According to the notes, RBI assumes that banks are unable to maintain CRR and SNR, so they have to borrow at a higher rate under the Bank Rate."
+    },
+    {
+        "q": "रेपो सुविधा की शुरुआत किस समिति की सिफारिश पर हुई?",
+        "q_en": "Which committee’s recommendation led to the introduction of the Repo Facility?",
+        "options": ["ऊर्जित पटेल समिति", "नरसिम्हन समिति", "रघुराम राजन समिति", "बिमल जालान समिति"],
+        "options_en": ["Urjit Patel Committee", "Narasimhan Committee", "Raghuram Rajan Committee", "Bimal Jalan Committee"],
+        "answer": 1,
+        "explanation": "नोट्स में स्पष्ट है कि रेपो सुविधा की शुरुआत नरसिम्हन समिति (1998) की सिफारिश पर हुई थी।",
+        "explanation_en": "The notes clearly state that the Repo Facility was introduced based on the recommendation of the Narasimhan Committee (1998)."
+    },
+    {
+        "q": "रेपो दर में कमी से क्या होता है?",
+        "q_en": "What happens when the Repo Rate is reduced?",
+        "options": ["ब्याज दर बढ़ती है", "मुद्रा आपूर्ति बढ़ती है", "मुद्रास्फीति नियंत्रित होती है", "माँग कम होती है"],
+        "options_en": ["Interest rate increases", "Money supply increases", "Inflation is controlled", "Demand decreases"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, जिससे मुद्रा की आपूर्ति बढ़ती है।",
+        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increasing the money supply."
+    },
+    {
+        "q": "रिवर्स रेपो दर की नीलामी का उद्देश्य क्या है?",
+        "q_en": "What is the purpose of the Reverse Repo Rate auction?",
+        "options": ["बैंकों को अधिक ऋण देने के लिए", "मुद्रा आपूर्ति को कम करने के लिए", "CRR को बढ़ाने के लिए", "प्रतिभूतियों को खरीदने के लिए"],
+        "options_en": ["To lend more to banks", "To reduce money supply", "To increase CRR", "To purchase securities"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि रिवर्स रेपो दर की नीलामी से बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है।",
+        "explanation_en": "The notes state that the Reverse Repo Rate auction leads banks to deposit more money with RBI, reducing the money supply."
+    },
+    {
+        "q": "रेपो सुविधा में कौन सी अवधि सबसे अधिक प्रचलित है?",
+        "q_en": "Which duration is most prevalent in the Repo Facility?",
+        "options": ["7 दिन", "14 दिन", "ओवरनाइट", "28 दिन"],
+        "options_en": ["7 days", "14 days", "Overnight", "28 days"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, भारत में ज्यादातर ओवरनाइट रेपो का उपयोग किया जाता है।",
+        "explanation_en": "According to the notes, Overnight Repo is mostly used in India."
+    },
+    {
+        "q": "SDF के तहत बैंकों को क्या लाभ मिलता है?",
+        "q_en": "What benefit do banks get under SDF?",
+        "options": ["ब्याज मुक्त ऋण", "अतिरिक्त राशि पर ब्याज", "CRR में छूट", "दीर्घकालिक ऋण"],
+        "options_en": ["Interest-free loans", "Interest on excess funds", "Exemption from CRR", "Long-term loans"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं और उस पर ब्याज प्राप्त कर सकते हैं।",
+        "explanation_en": "The notes mention that under SDF, banks can deposit their excess funds with RBI and earn interest on them."
+    },
+    {
+        "q": "रेपो दर का उपयोग किस स्थिति में किया जाता है?",
+        "q_en": "In which situation is the Repo Rate used?",
+        "options": ["मुद्रास्फीति बढ़ाने के लिए", "अवस्फीति की स्थिति में", "CRR को कम करने के लिए", "SLR को बढ़ाने के लिए"],
+        "options_en": ["To increase inflation", "In a deflationary situation", "To reduce CRR", "To increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से मुद्रा आपूर्ति बढ़ती है, जो अवस्फीति की स्थिति में लागू होता है।",
+        "explanation_en": "According to the notes, reducing the Repo Rate increases money supply, which is applicable in a deflationary situation."
+    },
+    {
+        "q": "बैंक दर का उपयोग मौद्रिक नीति में क्यों नहीं किया जाता?",
+        "q_en": "Why is the Bank Rate not used in monetary policy?",
+        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि वाणिज्यिक पत्रों का उपयोग कम है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होता है", "क्योंकि यह दीर्घकालिक नहीं है"],
+        "options_en": ["Because it is interest-free", "Because the use of commercial papers is low", "Because it applies only to government banks", "Because it is not long-term"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग कम होने के कारण बैंक दर मौद्रिक नीति में प्रभावी नहीं है।",
+        "explanation_en": "The notes state that due to the low use of commercial papers in the Indian market, the Bank Rate is not effective in monetary policy."
+    },
+    {
+        "q": "रेपो दर का बैंकों के MCLR पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of Repo Rate on banks’ MCLR?",
+        "options": ["MCLR कम होता है", "MCLR बढ़ता है", "MCLR अपरिवर्तित रहता है", "MCLR समाप्त हो जाता है"],
+        "options_en": ["MCLR decreases", "MCLR increases", "MCLR remains unchanged", "MCLR is eliminated"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर में वृद्धि से बैंकों की ब्याज दर (MCLR) बढ़ती है।",
+        "explanation_en": "According to the notes, an increase in the Repo Rate increases banks’ interest rate (MCLR)."
+    },
+    {
+        "q": "रिवर्स रेपो दर का उपयोग किसके लिए किया जाता है?",
+        "q_en": "What is the Reverse Repo Rate used for?",
+        "options": ["बैंकों को ऋण देने के लिए", "मुद्रा आपूर्ति को कम करने के लिए", "CRR को बढ़ाने के लिए", "SLR को कम करने के लिए"],
+        "options_en": ["To lend to banks", "To reduce money supply", "To increase CRR", "To reduce SLR"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर का उपयोग मुद्रा आपूर्ति कम करने और मुद्रास्फीति को नियंत्रित करने के लिए किया जाता है।",
+        "explanation_en": "The notes mention that the Reverse Repo Rate is used to reduce money supply and control inflation."
+    },
+    {
+        "q": "रेपो सुविधा को पूर्णरूप से कब लागू किया गया?",
+        "q_en": "When was the Repo Facility fully implemented?",
+        "options": ["1998", "1999", "2000", "2001"],
+        "options_en": ["1998", "1999", "2000", "2001"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, रेपो सुविधा को 1999 में पायलट आधार पर शुरू किया गया और 2000 में पूर्णरूप से लागू किया गया।",
+        "explanation_en": "According to the notes, the Repo Facility was introduced on a pilot basis in 1999 and fully implemented in 2000."
+    },
+    {
+        "q": "SDF का उपयोग बैंकों द्वारा किसके लिए किया जाता है?",
+        "q_en": "What is SDF used for by banks?",
+        "options": ["दीर्घकालिक निवेश के लिए", "अतिरिक्त राशि जमा करने के लिए", "ब्याज मुक्त ऋण लेने के लिए", "CRR को बढ़ाने के लिए"],
+        "options_en": ["For long-term investments", "To deposit excess funds", "To borrow interest-free loans", "To increase CRR"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं।",
+        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI."
+    },
+    {
+        "q": "बैंक दर और रेपो दर में क्या अंतर है?",
+        "q_en": "What is the difference between Bank Rate and Repo Rate?",
+        "options": ["बैंक दर अल्पकालिक है, रेपो दर दीर्घकालिक", "बैंक दर बट्टा दर है, रेपो दर ब्याज दर है", "बैंक दर प्रतिभूतियों पर आधारित है, रेपो दर नहीं", "बैंक दर बैंकों से ऋण लेने के लिए है"],
+        "options_en": ["Bank Rate is short-term, Repo Rate is long-term", "Bank Rate is a discount rate, Repo Rate is an interest rate", "Bank Rate is based on securities, Repo Rate is not", "Bank Rate is for borrowing from banks"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, बैंक दर बिल ऑफ एक्सचेंज को बट्टा करने की दर (डिस्काउंट रेट) है, जबकि रेपो दर प्रतिभूतियों के बदले ऋण देने की ब्याज दर है।",
+        "explanation_en": "According to the notes, the Bank Rate is the discount rate for bills of exchange, while the Repo Rate is the interest rate for lending against securities."
+    },
+    {
+        "q": "रेपो दर और रिवर्स रेपो दर में कौन सी दर अधिक होती है?",
+        "q_en": "Which rate is higher: Repo Rate or Reverse Repo Rate?",
+        "options": ["रेपो दर", "रिवर्स रेपो दर", "दोनों बराबर होती हैं", "स्थिति पर निर्भर करता है"],
+        "options_en": ["Repo Rate", "Reverse Repo Rate", "Both are equal", "Depends on the situation"],
+        "answer": 0,
+        "explanation": "नोट्स में स्पष्ट नहीं है, लेकिन सामान्यतः रेपो दर रिवर्स रेपो दर से अधिक होती है क्योंकि RBI बैंकों को ऋण देने के लिए रेपो दर का उपयोग करता है, जबकि रिवर्स रेपो दर बैंकों से ऋण लेने के लिए है।",
+        "explanation_en": "The notes are not explicit, but generally, the Repo Rate is higher than the Reverse Repo Rate because RBI uses the Repo Rate to lend to banks, while the Reverse Repo Rate is for borrowing from banks."
+    },
+    {
+        "q": "रेपो सुविधा में प्रतिभूतियों का पुनर्खरीद कौन करता है?",
+        "q_en": "Who repurchases the securities in the Repo Facility?",
+        "options": ["RBI", "बैंक", "सरकार", "प्राथमिक डीलर"],
+        "options_en": ["RBI", "Banks", "Government", "Primary Dealers"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि रेपो प्रक्रिया में बैंक प्रतिभूतियों को पुनर्खरीद करने का वादा करते हैं, जो इसे रेपो (रिपर्चेसिंग ऑप्शन) बनाता है।",
+        "explanation_en": "The notes state that in the Repo process, banks promise to repurchase securities, which makes it a repurchase option (Repo)."
+    },
+    {
+        "q": "SDF और रिवर्स रेपो दर में मुख्य अंतर क्या है?",
+        "q_en": "What is the main difference between SDF and Reverse Repo Rate?",
+        "options": ["SDF में प्रतिभूतियों की आवश्यकता नहीं होती", "SDF दीर्घकालिक है", "SDF केवल सरकारी बैंकों के लिए है", "SDF ब्याज मुक्त है"],
+        "options_en": ["SDF does not require securities", "SDF is long-term", "SDF is only for government banks", "SDF is interest-free"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, SDF में बैंक अपनी अतिरिक्त राशि बिना प्रतिभूतियों के RBI में जमा कर सकते हैं, जबकि रिवर्स रेपो में प्रतिभूतियां सौंपनी पड़ती हैं।",
+        "explanation_en": "According to the notes, under SDF, banks can deposit their excess funds with RBI without securities, whereas Reverse Repo requires securities to be provided."
+    },
+    {
+        "q": "रेपो दर का उपयोग किस स्थिति में नहीं किया जाता?",
+        "q_en": "In which situation is the Repo Rate not used?",
+        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "अवस्फीति की स्थिति में", "बैंकों की दीर्घकालिक तरलता के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
+        "options_en": ["To control inflation", "In a deflationary situation", "For banks’ long-term liquidity", "To increase money supply"],
+        "answer": 2,
+        "explanation": "नोट्स में उल्लेख है कि रेपो दर का उपयोग बैंकों की अल्पकालिक तरलता आवश्यकताओं के लिए किया जाता है, न कि दीर्घकालिक तरलता के लिए।",
+        "explanation_en": "The notes mention that the Repo Rate is used for banks’ short-term liquidity requirements, not for long-term liquidity."
+    },
+    {
+        "q": "बैंक दर को संदर्भ दर क्यों कहा जाता है?",
+        "q_en": "Why is the Bank Rate called a reference rate?",
+        "options": ["क्योंकि यह मौद्रिक नीति का मुख्य उपकरण है", "क्योंकि यह वर्तमान में मौद्रिक नीति में उपयोग नहीं होती", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ब्याज मुक्त होती है"],
+        "options_en": ["Because it is the main tool of monetary policy", "Because it is not currently used in monetary policy", "Because it applies only to government banks", "Because it is interest-free"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, RBI वर्तमान में बैंक दर का उपयोग मौद्रिक नीति में नहीं करता, बल्कि इसे केवल संदर्भ दर के रूप में उपयोग करता है।",
+        "explanation_en": "According to the notes, RBI currently does not use the Bank Rate in monetary policy but uses it only as a reference rate."
+    },
+    {
+        "q": "रेपो सुविधा में ओवरनाइट रेपो का उपयोग क्यों किया जाता है?",
+        "q_en": "Why is Overnight Repo used in the Repo Facility?",
+        "options": ["दीर्घकालिक निवेश के लिए", "CRR और SLR की मासिक औसत बनाए रखने के लिए", "मुद्रास्फीति को बढ़ाने के लिए", "ब्याज दर को कम करने के लिए"],
+        "options_en": ["For long-term investments", "To maintain the monthly average of CRR and SLR", "To increase inflation", "To reduce interest rates"],
+        "answer": 1,
+        "explanation": "नोट्स में स्पष्ट है कि ओवरनाइट रेपो का उपयोग बैंकों द्वारा CRR और SLR की मासिक औसत बनाए रखने के लिए किया जाता है।",
+        "explanation_en": "The notes clearly state that Overnight Repo is used by banks to maintain the monthly average of CRR and SLR."
+    },
+    {
+        "q": "रिवर्स रेपो दर की जगह SDF का उपयोग क्यों शुरू किया गया?",
+        "q_en": "Why was SDF introduced in place of Reverse Repo Rate?",
+        "options": ["ब्याज दर को बढ़ाने के लिए", "प्रतिभूतियों की कमी के कारण", "CRR को कम करने के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
+        "options_en": ["To increase interest rates", "Due to a shortage of securities", "To reduce CRR", "To increase money supply"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि कोविड के दौरान प्रतिभूतियों की कमी के कारण रिवर्स रेपो सुविधा प्रभावित हुई, इसलिए SDF शुरू की गई।",
+        "explanation_en": "The notes mention that due to a shortage of securities during COVID, the Reverse Repo facility was affected, so SDF was introduced."
+    },
+    {
+        "q": "रेपो दर को ब्याज दर क्यों कहा जाता है?",
+        "q_en": "Why is the Repo Rate called an interest rate?",
+        "options": ["क्योंकि यह बट्टा दर है", "क्योंकि यह प्रतिभूतियों के बदले ऋण पर लागू होती है", "क्योंकि यह ब्याज मुक्त होती है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है"],
+        "options_en": ["Because it is a discount rate", "Because it applies to loans against securities", "Because it is interest-free", "Because it applies only to government banks"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर वह ब्याज दर है जिस पर RBI बैंकों को प्रतिभूतियों के बदले ऋण देता है।",
+        "explanation_en": "According to the notes, the Repo Rate is the interest rate at which RBI lends to banks against securities."
+    },
+    {
+        "q": "रेपो सुविधा का उपयोग कौन नहीं कर सकता?",
+        "q_en": "Who cannot use the Repo Facility?",
+        "options": ["वाणिज्यिक बैंक", "प्राथमिक डीलर", "सामान्य ग्राहक", "गैर-बैंकिंग वित्तीय संस्थाएँ"],
+        "options_en": ["Commercial banks", "Primary Dealers", "General customers", "Non-banking financial institutions"],
+        "answer": 2,
+        "explanation": "नोट्स में कहा गया है कि रेपो सुविधा का लाभ केवल बैंक और प्राथमिक डीलर ले सकते हैं, सामान्य ग्राहक नहीं।",
+        "explanation_en": "The notes state that only banks and Primary Dealers can avail of the Repo Facility, not general customers."
+    },
+    {
+        "q": "यदि रेपो दर बढ़ती है, तो बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If the Repo Rate increases, what will be the effect on banks’ lending capacity?",
+        "options": ["बढ़ेगी", "कम होगी", "अपरिवर्तित रहेगी", "पूरी तरह समाप्त हो जाएगी"],
+        "options_en": ["It will increase", "It will decrease", "It will remain unchanged", "It will be completely eliminated"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे बैंकों को RBI से ऋण लेना महंगा पड़ता है, और उनकी ऋण देने की क्षमता कम होती है।",
+        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, making borrowing from RBI more expensive for banks, reducing their lending capacity."
+    },
+    {
+        "q": "यदि रिवर्स रेपो दर बढ़ाई जाती है, तो बाजार में मुद्रा आपूर्ति पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If the Reverse Repo Rate is increased, what will be the effect on money supply in the market?",
+        "options": ["बढ़ेगी", "कम होगी", "अपरिवर्तित रहेगी", "दोगुनी हो जाएगी"],
+        "options_en": ["It will increase", "It will decrease", "It will remain unchanged", "It will double"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि रिवर्स रेपो दर बढ़ने से बैंक RBI को अधिक धन जमा करते हैं, जिससे बाजार में मुद्रा आपूर्ति कम होती है।",
+        "explanation_en": "The notes state that an increase in the Reverse Repo Rate leads banks to deposit more money with RBI, reducing the money supply in the market."
+    },
+    {
+        "q": "यदि RBI बैंक दर का उपयोग मौद्रिक नीति में नहीं करता, तो इसका उपयोग किस रूप में होता है?",
+        "q_en": "If RBI does not use the Bank Rate in monetary policy, how is it used?",
+        "options": ["ब्याज दर को नियंत्रित करने के लिए", "संदर्भ दर के रूप में", "CRR को बढ़ाने के लिए", "SLR को कम करने के लिए"],
+        "options_en": ["To control interest rates", "As a reference rate", "To increase CRR", "To reduce SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, RBI वर्तमान में बैंक दर का उपयोग केवल संदर्भ दर के रूप में करता है, न कि मौद्रिक नीति के लिए।",
+        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate, not for monetary policy."
+    },
+    {
+        "q": "यदि कोई व्यापारी बिल ऑफ एक्सचेंज को बैंक में जमा करता है, तो बैंक उसे कितना भुगतान करता है?",
+        "q_en": "If a trader deposits a Bill of Exchange in the bank, how much does the bank pay?",
+        "options": ["अंकित मूल्य", "अंकित मूल्य पर बट्टा दर घटाने के बाद", "ब्याज सहित अंकित मूल्य", "अंकित मूल्य का दोगुना"],
+        "options_en": ["Face value", "Face value after deducting the discount rate", "Face value with interest", "Double the face value"],
+        "answer": 1,
+        "explanation": "नोट्स में उदाहरण दिया गया है कि यदि व्यापारी बिल ऑफ एक्सचेंज जमा करता है, तो बैंक उसे बट्टा दर (उदाहरण: 10%) घटाकर भुगतान करता है, जैसे 1000 - 10% = 900।",
+        "explanation_en": "The notes provide an example that if a trader deposits a Bill of Exchange, the bank pays after deducting the discount rate (e.g., 10%), such as 1000 - 10% = 900."
+    },
+    {
+        "q": "यदि RBI रेपो दर को कम करता है, तो इसका अर्थव्यवस्था पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI reduces the Repo Rate, what will be the effect on the economy?",
+        "options": ["मुद्रास्फीति बढ़ेगी", "मुद्रास्फीति कम होगी", "ब्याज दर बढ़ेगी", "CRR कम होगा"],
+        "options_en": ["Inflation will increase", "Inflation will decrease", "Interest rate will increase", "CRR will decrease"],
+        "answer": 0,
+        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, मुद्रा आपूर्ति बढ़ती है, और माँग बढ़ने से मुद्रास्फीति बढ़ सकती है।",
+        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increases money supply, and increased demand may lead to higher inflation."
+    },
+    {
+        "q": "यदि कोई बैंक SDF का उपयोग करता है, तो उसे क्या करना होगा?",
+        "q_en": "If a bank uses SDF, what does it have to do?",
+        "options": ["प्रतिभूतियां जमा करनी होंगी", "अतिरिक्त राशि RBI में जमा करनी होगी", "CRR को बढ़ाना होगा", "SLR को कम करना होगा"],
+        "options_en": ["Deposit securities", "Deposit excess funds with RBI", "Increase CRR", "Reduce SLR"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं और उस पर ब्याज प्राप्त कर सकते हैं।",
+        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI and earn interest on them."
+    },
+    {
+        "q": "रेपो दर बढ़ने से बैंकों का MCLR क्यों बढ़ता है?",
+        "q_en": "Why does banks’ MCLR increase when the Repo Rate increases?",
+        "options": ["क्योंकि RBI ब्याज मुक्त ऋण देता है", "क्योंकि बैंकों को RBI से ऋण लेना महंगा पड़ता है", "क्योंकि CRR कम हो जाता है", "क्योंकि SLR बढ़ जाता है"],
+        "options_en": ["Because RBI provides interest-free loans", "Because borrowing from RBI becomes more expensive for banks", "Because CRR decreases", "Because SLR increases"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से बैंकों को RBI से ऋण लेना महंगा पड़ता है, जिसके कारण वे अपनी ब्याज दर (MCLR) बढ़ाते हैं।",
+        "explanation_en": "According to the notes, an increase in the Repo Rate makes borrowing from RBI more expensive for banks, causing them to increase their interest rate (MCLR)."
+    },
+    {
+        "q": "यदि RBI रिवर्स रेपो दर को बढ़ाता है, तो बैंकों का व्यवहार क्या होगा?",
+        "q_en": "If RBI increases the Reverse Repo Rate, what will be the behavior of banks?",
+        "options": ["वे अधिक ऋण देंगे", "वे RBI को अधिक धन जमा करेंगे", "वे CRR को कम करेंगे", "वे SLR को बढ़ाएंगे"],
+        "options_en": ["They will lend more", "They will deposit more money with RBI", "They will reduce CRR", "They will increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर बढ़ने पर बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है।",
+        "explanation_en": "The notes mention that when the Reverse Repo Rate increases, banks deposit more money with RBI, reducing the money supply."
+    },
+    {
+        "q": "रेपो सुविधा का उपयोग दीर्घकालिक तरलता के लिए क्यों नहीं किया जाता?",
+        "q_en": "Why is the Repo Facility not used for long-term liquidity?",
+        "options": ["क्योंकि यह केवल सरकारी बैंकों के लिए है", "क्योंकि यह अल्पकालिक तरलता के लिए डिज़ाइन किया गया है", "क्योंकि यह ब्याज मुक्त है", "क्योंकि यह CRR को प्रभावित करता है"],
+        "options_en": ["Because it is only for government banks", "Because it is designed for short-term liquidity", "Because it is interest-free", "Because it affects CRR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो सुविधा का उपयोग बैंकों की अल्पकालिक तरलता आवश्यकताओं के लिए किया जाता है।",
+        "explanation_en": "According to the notes, the Repo Facility is used for banks’ short-term liquidity requirements."
+    },
+    {
+        "q": "यदि RBI रेपो दर को स्थिर रखता है, तो मुद्रास्फीति पर क्या प्रभाव पड़ेगा?",
+        "q_en": "If RBI keeps the Repo Rate stable, what will be the effect on inflation?",
+        "options": ["बढ़ेगी", "कम होगी", "अपरिवर्तित रहेगी", "पूरी तरह समाप्त हो जाएगी"],
+        "options_en": ["It will increase", "It will decrease", "It will remain unchanged", "It will be completely eliminated"],
+        "answer": 2,
+        "explanation": "नोट्स के आधार पर, यदि रेपो दर स्थिर रहती है, तो ब्याज दर और मुद्रा आपूर्ति में कोई बदलाव नहीं होगा, जिससे मुद्रास्फीति अपरिवर्तित रहेगी।",
+        "explanation_en": "Based on the notes, if the Repo Rate remains stable, there will be no change in interest rates or money supply, so inflation will remain unchanged."
+    },
+    {
+        "q": "बैंक दर को दंडात्मक दर क्यों माना जाता है?",
+        "q_en": "Why is the Bank Rate considered a penal rate?",
+        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि यह CRR और SLR न बनाए रखने पर लागू होती है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ग्राहकों पर लागू होती है"],
+        "options_en": ["Because it is interest-free", "Because it applies when CRR and SLR are not maintained", "Because it applies only to government banks", "Because it applies to customers"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि RBI यह मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं, इसलिए उन्हें बैंक दर पर उच्च दर से धन लेना पड़ता है।",
+        "explanation_en": "The notes state that RBI assumes banks are unable to maintain CRR and SLR, so they have to borrow at a higher rate under the Bank Rate."
+    },
+    {
+        "q": "रेपो दर कम करने से अवस्फीति की स्थिति में क्या होगा?",
+        "q_en": "What will happen in a deflationary situation if the Repo Rate is reduced?",
+        "options": ["मुद्रा आपूर्ति कम होगी", "माँग बढ़ेगी", "ब्याज दर बढ़ेगी", "मुद्रास्फीति कम होगी"],
+        "options_en": ["Money supply will decrease", "Demand will increase", "Interest rate will increase", "Inflation will decrease"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, मुद्रा आपूर्ति बढ़ती है, और माँग बढ़ती है, जो अवस्फीति की स्थिति में उपयोगी है।",
+        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increases money supply, and boosts demand, which is useful in a deflationary situation."
+    },
+    {
+        "q": "यदि कोई बैंक SDF का उपयोग नहीं करता, तो उसे क्या करना होगा?",
+        "q_en": "If a bank does not use SDF, what will it have to do?",
+        "options": ["रिवर्स रेपो दर का उपयोग करना होगा", "CRR को बढ़ाना होगा", "SLR को कम करना होगा", "ब्याज दर को बढ़ाना होगा"],
+        "options_en": ["Use the Reverse Repo Rate", "Increase CRR", "Reduce SLR", "Increase interest rates"],
+        "answer": 0,
+        "explanation": "नोट्स में उल्लेख है कि SDF की शुरुआत रिवर्स रेपो दर की जगह हुई, लेकिन यदि बैंक SDF का उपयोग नहीं करता, तो वह रिवर्स रेपो दर का उपयोग कर सकता है।",
+        "explanation_en": "The notes mention that SDF was introduced in place of the Reverse Repo Rate, but if a bank does not use SDF, it can use the Reverse Repo Rate."
+    },
+    {
+        "q": "रेपो दर का बैंकों के स्वास्थ्य पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of the Repo Rate on the health of banks?",
+        "options": ["कोई प्रभाव नहीं पड़ता", "उच्च रेपो दर से बैंक कमजोर हो सकते हैं", "उच्च रेपो दर से बैंक मजबूत हो जाते हैं", "रेपो दर कम होने से बैंक कमजोर हो जाते हैं"],
+        "options_en": ["No effect", "High Repo Rate can weaken banks", "High Repo Rate strengthens banks", "Low Repo Rate weakens banks"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, उच्च रेपो दर से बैंकों को RBI से महंगा ऋण लेना पड़ता है, जिससे उनकी ऋण देने की क्षमता कम होती है और उनका स्वास्थ्य प्रभावित हो सकता है।",
+        "explanation_en": "According to the notes, a high Repo Rate makes borrowing from RBI more expensive for banks, reducing their lending capacity and potentially affecting their health."
+    },
+    {
+        "q": "यदि RBI रिवर्स रेपो दर को कम करता है, तो बैंकों का व्यवहार क्या होगा?",
+        "q_en": "If RBI reduces the Reverse Repo Rate, what will be the behavior of banks?",
+        "options": ["वे RBI को अधिक धन जमा करेंगे", "वे RBI को कम धन जमा करेंगे", "वे CRR को बढ़ाएंगे", "वे SLR को कम करेंगे"],
+        "options_en": ["They will deposit more money with RBI", "They will deposit less money with RBI", "They will increase CRR", "They will reduce SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के आधार पर, रिवर्स रेपो दर कम होने से बैंकों को RBI में धन जमा करने का प्रोत्साहन कम मिलता है, जिससे वे कम धन जमा करते हैं।",
+        "explanation_en": "Based on the notes, a reduction in the Reverse Repo Rate reduces the incentive for banks to deposit money with RBI, leading them to deposit less."
+    },
+    {
+        "q": "रेपो दर और बैंक दर में से कौन सी दर मौद्रिक नीति का मुख्य उपकरण है?",
+        "q_en": "Which rate is the main tool of monetary policy: Repo Rate or Bank Rate?",
+        "options": ["बैंक दर", "रेपो दर", "दोनों", "कोई नहीं"],
+        "options_en": ["Bank Rate", "Repo Rate", "Both", "None"],
+        "answer": 1,
+        "explanation": "नोट्स में स्पष्ट है कि वर्तमान में रेपो दर मुद्रास्फीति नियंत्रण के लिए मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण है, जबकि बैंक दर केवल संदर्भ दर के रूप में उपयोग होती है।",
+        "explanation_en": "The notes clearly state that the Repo Rate is currently the most important tool of monetary policy for controlling inflation, while the Bank Rate is used only as a reference rate."
+    },
+    {
+        "q": "SDF की शुरुआत से रिवर्स रेपो दर की सुविधा पर क्या प्रभाव पड़ा?",
+        "q_en": "What was the effect of introducing SDF on the Reverse Repo Rate facility?",
+        "options": ["रिवर्स रेपो दर समाप्त हो गई", "रिवर्स रेपो दर अक्रियाशील हो गई", "रिवर्स रेपो दर बढ़ गई", "रिवर्स रेपो दर कम हो गई"],
+        "options_en": ["Reverse Repo Rate was eliminated", "Reverse Repo Rate became inactive", "Reverse Repo Rate increased", "Reverse Repo Rate decreased"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि वर्तमान में रिवर्स रेपो दर सुविधा अक्रियाशील है और इसके स्थान पर SDF का उपयोग किया जा रहा है।",
+        "explanation_en": "The notes state that the Reverse Repo Rate facility is currently inactive, and SDF is being used in its place."
+    },
+    {
+        "q": "रेपो दर में वृद्धि से बैंकों की ब्याज दर (MCLR) पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of an increase in Repo Rate on banks’ interest rate (MCLR)?",
+        "options": ["MCLR कम हो जाता है", "MCLR बढ़ जाता है", "MCLR अपरिवर्तित रहता है", "MCLR समाप्त हो जाता है"],
+        "options_en": ["MCLR decreases", "MCLR increases", "MCLR remains unchanged", "MCLR is eliminated"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर में वृद्धि से बैंकों को RBI से ऋण लेना महंगा पड़ता है, जिसके कारण वे अपनी MCLR आधारित ब्याज दर बढ़ाते हैं।",
+        "explanation_en": "According to the notes, an increase in the Repo Rate makes borrowing from RBI more expensive for banks, causing them to increase their MCLR-based interest rates."
+    },
+    {
+        "q": "रेपो सुविधा में ओवरनाइट रेपो का उपयोग क्यों प्रचलित है?",
+        "q_en": "Why is the use of Overnight Repo prevalent in the Repo Facility?",
+        "options": ["क्योंकि यह दीर्घकालिक तरलता प्रदान करता है", "क्योंकि यह CRR और SLR की मासिक औसत बनाए रखने में मदद करता है", "क्योंकि यह ब्याज मुक्त है", "क्योंकि यह केवल सरकारी बैंकों के लिए है"],
+        "options_en": ["Because it provides long-term liquidity", "Because it helps maintain the monthly average of CRR and SLR", "Because it is interest-free", "Because it is only for government banks"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि ओवरनाइट रेपो का उपयोग बैंकों द्वारा CRR और SLR की मासिक औसत बनाए रखने के लिए किया जाता है।",
+        "explanation_en": "The notes mention that Overnight Repo is used by banks to maintain the monthly average of CRR and SLR."
+    },
+    {
+        "q": "बैंक दर के दंडात्मक होने का क्या कारण है?",
+        "q_en": "What is the reason for the Bank Rate being penal?",
+        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि यह CRR और SLR न बनाए रखने पर लागू होती है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह ग्राहकों पर लागू होती है"],
+        "options_en": ["Because it is interest-free", "Because it applies when CRR and SLR are not maintained", "Because it applies only to government banks", "Because it applies to customers"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, RBI यह मानती है कि बैंक CRR और SLR बनाए रखने में असमर्थ हैं, इसलिए उन्हें बैंक दर पर उच्च दर से धन लेना पड़ता है।",
+        "explanation_en": "According to the notes, RBI assumes banks are unable to maintain CRR and SLR, so they have to borrow at a higher rate under the Bank Rate."
+    },
+    {
+        "q": "रेपो सुविधा की शुरुआत का मुख्य कारण क्या था?",
+        "q_en": "What was the main reason for introducing the Repo Facility?",
+        "options": ["CRR और SLR को समाप्त करने के लिए", "मुद्रास्फीति को नियंत्रित करने के लिए प्रभावी उपकरण प्रदान करने के लिए", "बैंकों को ब्याज मुक्त ऋण देने के लिए", "वाणिज्यिक पत्रों को बढ़ावा देने के लिए"],
+        "options_en": ["To eliminate CRR and SLR", "To provide an effective tool to control inflation", "To provide interest-free loans to banks", "To promote commercial papers"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि CRR और SLR मुद्रास्फीति नियंत्रण में प्रभावी नहीं थे, इसलिए नरसिम्हन समिति ने LAF के रूप में रेपो सुविधा की सिफारिश की।",
+        "explanation_en": "The notes state that CRR and SLR were not effective in controlling inflation, so the Narasimhan Committee recommended the Repo Facility as part of LAF."
+    },
+    
+    
+    {
+        "q": "SDF की शुरुआत का मुख्य कारण क्या था?",
+        "q_en": "What was the main reason for introducing SDF?",
+        "options": ["बैंकों को ब्याज मुक्त ऋण देने के लिए", "प्रतिभूतियों की कमी को दूर करने के लिए", "CRR को समाप्त करने के लिए", "मुद्रा आपूर्ति को बढ़ाने के लिए"],
+        "options_en": ["To provide interest-free loans to banks", "To address the shortage of securities", "To eliminate CRR", "To increase money supply"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि कोविड के दौरान प्रतिभूतियों की कमी के कारण रिवर्स रेपो सुविधा प्रभावित हुई, इसलिए अप्रैल 2022 में SDF शुरू की गई।",
+        "explanation_en": "The notes state that due to a shortage of securities during COVID, the Reverse Repo facility was affected, so SDF was introduced in April 2022."
+    },
+    {
+        "q": "रेपो दर का उपयोग बैंकों की किस आवश्यकता के लिए किया जाता है?",
+        "q_en": "What requirement of banks is the Repo Rate used for?",
+        "options": ["दीर्घकालिक निवेश", "अल्पकालिक तरलता", "ब्याज मुक्त ऋण", "SLR को बढ़ाने के लिए"],
+        "options_en": ["Long-term investment", "Short-term liquidity", "Interest-free loans", "To increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर का उपयोग बैंकों की अल्पकालिक तरलता आवश्यकताओं को पूरा करने के लिए किया जाता है।",
+        "explanation_en": "According to the notes, the Repo Rate is used to meet the short-term liquidity requirements of banks."
+    },
+    {
+        "q": "रिवर्स रेपो दर को कम करने से बैंकों की जमा राशि पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of reducing the Reverse Repo Rate on banks’ deposits?",
+        "options": ["जमा राशि बढ़ती है", "जमा राशि कम होती है", "जमा राशि अपरिवर्तित रहती है", "जमा राशि दोगुनी हो जाती है"],
+        "options_en": ["Deposits increase", "Deposits decrease", "Deposits remain unchanged", "Deposits double"],
+        "answer": 1,
+        "explanation": "नोट्स के आधार पर, रिवर्स रेपो दर कम होने से बैंकों को RBI में धन जमा करने का प्रोत्साहन कम मिलता है, जिससे उनकी जमा राशि कम होती है।",
+        "explanation_en": "Based on the notes, a reduction in the Reverse Repo Rate reduces the incentive for banks to deposit money with RBI, leading to a decrease in their deposits."
+    },
+    {
+        "q": "बैंक दर का उपयोग किस स्थिति में किया जाता है?",
+        "q_en": "In which situation is the Bank Rate used?",
+        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "CRR और SLR न बनाए रखने की स्थिति में", "अवस्फीति को बढ़ाने के लिए", "ब्याज दर को कम करने के लिए"],
+        "options_en": ["To control inflation", "When CRR and SLR are not maintained", "To increase deflation", "To reduce interest rates"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, बैंक दर का उपयोग तब किया जाता है जब बैंक CRR और SLR बनाए रखने में असमर्थ होते हैं, और इसे दंडात्मक दर के रूप में लागू किया जाता है।",
+        "explanation_en": "According to the notes, the Bank Rate is used when banks are unable to maintain CRR and SLR, and it is applied as a penal rate."
+    },
+    {
+        "q": "रेपो सुविधा की नीलामी का समय क्या है?",
+        "q_en": "What is the timing of the Repo Facility auction?",
+        "options": ["प्रतिदिन सुबह", "प्रति सप्ताह", "प्रति माह", "वर्ष में एक बार"],
+        "options_en": ["Daily morning", "Weekly", "Monthly", "Once a year"],
+        "answer": 0,
+        "explanation": "नोट्स में उल्लेख है कि रेपो सुविधा की नीलामी प्रतिदिन सुबह RBI के ई-कुबेर प्लेटफॉर्म पर होती है।",
+        "explanation_en": "The notes mention that the Repo Facility auction is conducted daily in the morning on RBI’s e-Kuber platform."
+    },
+    {
+        "q": "रेपो दर और रिवर्स रेपो दर के बीच का अंतर कितना होता है?",
+        "q_en": "What is the difference between the Repo Rate and the Reverse Repo Rate?",
+        "options": ["0.25%", "0.50%", "1.00%", "स्थिति पर निर्भर करता है"],
+        "options_en": ["0.25%", "0.50%", "1.00%", "Depends on the situation"],
+        "answer": 3,
+        "explanation": "नोट्स में स्पष्ट नहीं है, लेकिन रेपो दर और रिवर्स रेपो दर के बीच का अंतर RBI की नीतियों और आर्थिक स्थिति पर निर्भर करता है।",
+        "explanation_en": "The notes are not explicit, but the difference between the Repo Rate and the Reverse Repo Rate depends on RBI’s policies and economic conditions."
+    },
+    {
+        "q": "SDF का उपयोग किस स्थिति में सबसे अधिक प्रभावी है?",
+        "q_en": "In which situation is SDF most effective?",
+        "options": ["मुद्रास्फीति बढ़ाने के लिए", "प्रतिभूतियों की कमी की स्थिति में", "CRR को कम करने के लिए", "दीर्घकालिक तरलता के लिए"],
+        "options_en": ["To increase inflation", "In a shortage of securities", "To reduce CRR", "For long-term liquidity"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, SDF की शुरुआत प्रतिभूतियों की कमी को दूर करने के लिए की गई थी, जो इसे ऐसी स्थिति में सबसे प्रभावी बनाता है।",
+        "explanation_en": "According to the notes, SDF was introduced to address the shortage of securities, making it most effective in such a situation."
+    },
+    {
+        "q": "रेपो सुविधा में प्रतिभूतियों की पुनर्खरीद की अवधि क्या होती है?",
+        "q_en": "What is the repurchase period of securities in the Repo Facility?",
+        "options": ["1 दिन से 14 दिन", "1 महीने से 1 वर्ष", "1 वर्ष से अधिक", "स्थिति पर निर्भर करता है"],
+        "options_en": ["1 day to 14 days", "1 month to 1 year", "More than 1 year", "Depends on the situation"],
+        "answer": 0,
+        "explanation": "नोट्स में कहा गया है कि रेपो सुविधा में प्रतिभूतियों की पुनर्खरीद की अवधि आमतौर पर 1 दिन (ओवरनाइट) से 14 दिन तक होती है।",
+        "explanation_en": "The notes state that the repurchase period of securities in the Repo Facility is typically from 1 day (overnight) to 14 days."
+    },
+    {
+        "q": "बैंक दर का उपयोग किसके लिए नहीं किया जाता?",
+        "q_en": "What is the Bank Rate not used for?",
+        "options": ["CRR और SLR न बनाए रखने पर दंड के लिए", "संदर्भ दर के रूप में", "मुद्रास्फीति को नियंत्रित करने के लिए", "बैंकों को ऋण देने के लिए"],
+        "options_en": ["As a penalty for not maintaining CRR and SLR", "As a reference rate", "To control inflation", "To lend to banks"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, बैंक दर का उपयोग वर्तमान में मौद्रिक नीति में मुद्रास्फीति को नियंत्रित करने के लिए नहीं किया जाता।",
+        "explanation_en": "According to the notes, the Bank Rate is not currently used in monetary policy to control inflation."
+    },
+    {
+        "q": "रेपो दर में कमी से बैंकों की ऋण देने की क्षमता पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of a decrease in Repo Rate on banks’ lending capacity?",
+        "options": ["कम होती है", "बढ़ती है", "अपरिवर्तित रहती है", "पूरी तरह समाप्त हो जाती है"],
+        "options_en": ["It decreases", "It increases", "It remains unchanged", "It is completely eliminated"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर कम होने से बैंकों को RBI से सस्ता ऋण मिलता है, जिससे उनकी ऋण देने की क्षमता बढ़ती है।",
+        "explanation_en": "According to the notes, a decrease in the Repo Rate allows banks to borrow from RBI at a lower cost, increasing their lending capacity."
+    },
+    {
+        "q": "रिवर्स रेपो दर का उपयोग बैंकों द्वारा किसके लिए किया जाता है?",
+        "q_en": "What is the Reverse Repo Rate used for by banks?",
+        "options": ["ऋण लेने के लिए", "अतिरिक्त राशि जमा करने के लिए", "CRR को कम करने के लिए", "SLR को बढ़ाने के लिए"],
+        "options_en": ["To borrow loans", "To deposit excess funds", "To reduce CRR", "To increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर का उपयोग बैंकों द्वारा अपनी अतिरिक्त राशि RBI में जमा करने और उस पर ब्याज प्राप्त करने के लिए किया जाता है।",
+        "explanation_en": "The notes mention that the Reverse Repo Rate is used by banks to deposit their excess funds with RBI and earn interest on them."
+    },
+    {
+        "q": "रेपो सुविधा का उपयोग किसके द्वारा नहीं किया जा सकता?",
+        "q_en": "Who cannot use the Repo Facility?",
+        "options": ["वाणिज्यिक बैंक", "प्राथमिक डीलर", "सामान्य ग्राहक", "गैर-बैंकिंग वित्तीय संस्थाएँ"],
+        "options_en": ["Commercial banks", "Primary Dealers", "General customers", "Non-banking financial institutions"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, रेपो सुविधा का उपयोग केवल बैंक और प्राथमिक डीलर कर सकते हैं, सामान्य ग्राहक नहीं।",
+        "explanation_en": "According to the notes, only banks and Primary Dealers can use the Repo Facility, not general customers."
+    },
+    {
+        "q": "SDF और रिवर्स रेपो दर में से कौन सी सुविधा प्रतिभूतियों की आवश्यकता नहीं रखती?",
+        "q_en": "Which facility does not require securities: SDF or Reverse Repo Rate?",
+        "options": ["रिवर्स रेपो दर", "SDF", "दोनों", "कोई नहीं"],
+        "options_en": ["Reverse Repo Rate", "SDF", "Both", "None"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि बिना प्रतिभूतियों के RBI में जमा कर सकते हैं, जबकि रिवर्स रेपो में प्रतिभूतियां सौंपनी पड़ती हैं।",
+        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI without securities, whereas Reverse Repo requires securities to be provided."
+    },
+    {
+        "q": "रेपो दर को मौद्रिक नीति का मुख्य उपकरण क्यों माना जाता है?",
+        "q_en": "Why is the Repo Rate considered the main tool of monetary policy?",
+        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि यह मुद्रास्फीति को नियंत्रित करता है", "क्योंकि यह CRR को समाप्त करता है", "क्योंकि यह दीर्घकालिक तरलता प्रदान करता है"],
+        "options_en": ["Because it is interest-free", "Because it controls inflation", "Because it eliminates CRR", "Because it provides long-term liquidity"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रेपो दर वर्तमान में मुद्रास्फीति के नियंत्रण के लिए मौद्रिक नीति का सबसे महत्वपूर्ण उपकरण है।",
+        "explanation_en": "The notes mention that the Repo Rate is currently the most important tool of monetary policy for controlling inflation."
+    },
+    {
+        "q": "बैंक दर का उपयोग वर्तमान में किसके लिए होता है?",
+        "q_en": "What is the Bank Rate currently used for?",
+        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "संदर्भ दर के रूप में", "CRR को बढ़ाने के लिए", "SLR को कम करने के लिए"],
+        "options_en": ["To control inflation", "As a reference rate", "To increase CRR", "To reduce SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, वर्तमान में RBI बैंक दर का उपयोग केवल संदर्भ दर के रूप में करता है, न कि मौद्रिक नीति के लिए।",
+        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate, not for monetary policy."
+    },
+    {
+        "q": "रेपो सुविधा की नीलामी में भाग लेने के लिए कौन पात्र है?",
+        "q_en": "Who is eligible to participate in the Repo Facility auction?",
+        "options": ["केवल RBI", "बैंक और प्राथमिक डीलर", "केवल सरकारी संस्थाएँ", "सामान्य ग्राहक"],
+        "options_en": ["Only RBI", "Banks and Primary Dealers", "Only government institutions", "General customers"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो सुविधा की नीलामी में बैंक और प्राथमिक डीलर भाग ले सकते हैं।",
+        "explanation_en": "According to the notes, banks and Primary Dealers can participate in the Repo Facility auction."
+    },
+    {
+        "q": "रिवर्स रेपो दर बढ़ने से बैंकों की जमा राशि पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of an increase in Reverse Repo Rate on banks’ deposits?",
+        "options": ["जमा राशि कम होती है", "जमा राशि बढ़ती है", "जमा राशि अपरिवर्तित रहती है", "जमा राशि समाप्त हो जाती है"],
+        "options_en": ["Deposits decrease", "Deposits increase", "Deposits remain unchanged", "Deposits are eliminated"],
+        "answer": 1,
+        "explanation": "नोट्स में उल्लेख है कि रिवर्स रेपो दर बढ़ने से बैंक RBI को अधिक धन जमा करते हैं, जिससे उनकी जमा राशि बढ़ती है।",
+        "explanation_en": "The notes mention that an increase in the Reverse Repo Rate leads banks to deposit more money with RBI, increasing their deposits."
+    },
+    {
+        "q": "रेपो दर को कम करने से अर्थव्यवस्था में माँग पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of reducing the Repo Rate on demand in the economy?",
+        "options": ["माँग कम होती है", "माँग बढ़ती है", "माँग अपरिवर्तित रहती है", "माँग समाप्त हो जाती है"],
+        "options_en": ["Demand decreases", "Demand increases", "Demand remains unchanged", "Demand is eliminated"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर कम करने से ऋण सस्ते होते हैं, जिससे मुद्रा आपूर्ति और माँग बढ़ती है।",
+        "explanation_en": "According to the notes, reducing the Repo Rate makes loans cheaper, increasing money supply and demand."
+    },
+    {
+        "q": "SDF का उपयोग बैंकों द्वारा किस प्रकार की राशि के लिए किया जाता है?",
+        "q_en": "What type of funds is SDF used for by banks?",
+        "options": ["दीर्घकालिक निवेश", "अतिरिक्त राशि", "ब्याज मुक्त ऋण", "CRR को पूरा करने के लिए"],
+        "options_en": ["Long-term investment", "Excess funds", "Interest-free loans", "To meet CRR"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि SDF के तहत बैंक अपनी अतिरिक्त राशि RBI में जमा कर सकते हैं।",
+        "explanation_en": "The notes state that under SDF, banks can deposit their excess funds with RBI."
+    },
+    {
+        "q": "रेपो दर का उपयोग किसके नियंत्रण के लिए नहीं किया जाता?",
+        "q_en": "What is the Repo Rate not used to control?",
+        "options": ["मुद्रास्फीति", "मुद्रा आपूर्ति", "CRR", "ब्याज दर"],
+        "options_en": ["Inflation", "Money supply", "CRR", "Interest rates"],
+        "answer": 2,
+        "explanation": "नोट्स के अनुसार, रेपो दर का उपयोग मुद्रास्फीति, मुद्रा आपूर्ति और ब्याज दर को नियंत्रित करने के लिए किया जाता है, लेकिन CRR को नियंत्रित करने के लिए नहीं।",
+        "explanation_en": "According to the notes, the Repo Rate is used to control inflation, money supply, and interest rates, but not CRR."
+    },
+    {
+        "q": "बैंक दर को अप्रभावी क्यों माना जाता है?",
+        "q_en": "Why is the Bank Rate considered ineffective?",
+        "options": ["क्योंकि यह ब्याज मुक्त है", "क्योंकि वाणिज्यिक पत्रों का उपयोग कम है", "क्योंकि यह केवल सरकारी बैंकों पर लागू होती है", "क्योंकि यह दीर्घकालिक है"],
+        "options_en": ["Because it is interest-free", "Because the use of commercial papers is low", "Because it applies only to government banks", "Because it is long-term"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, भारतीय बाजार में वाणिज्यिक पत्रों का उपयोग बहुत कम होने के कारण बैंक दर अप्रभावी रहता है।",
+        "explanation_en": "According to the notes, the Bank Rate remains ineffective due to the low use of commercial papers in the Indian market."
+    },
+    {
+        "q": "रेपो सुविधा में प्रतिभूतियों की पुनर्खरीद की जिम्मेदारी किसकी होती है?",
+        "q_en": "Who is responsible for repurchasing securities in the Repo Facility?",
+        "options": ["RBI", "बैंक", "सरकार", "प्राथमिक डीलर"],
+        "options_en": ["RBI", "Banks", "Government", "Primary Dealers"],
+        "answer": 1,
+        "explanation": "नोट्स में कहा गया है कि रेपो प्रक्रिया में बैंक प्रतिभूतियों को पुनर्खरीद करने का वादा करते हैं।",
+        "explanation_en": "The notes state that in the Repo process, banks promise to repurchase securities."
+    },
+    {
+        "q": "रिवर्स रेपो दर को बढ़ाने का मुख्य उद्देश्य क्या है?",
+        "q_en": "What is the main objective of increasing the Reverse Repo Rate?",
+        "options": ["मुद्रा आपूर्ति को बढ़ाना", "मुद्रास्फीति को नियंत्रित करना", "CRR को कम करना", "SLR को बढ़ाना"],
+        "options_en": ["To increase money supply", "To control inflation", "To reduce CRR", "To increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रिवर्स रेपो दर बढ़ाने से बैंक RBI को अधिक धन जमा करते हैं, जिससे मुद्रा आपूर्ति कम होती है और मुद्रास्फीति नियंत्रित होती है।",
+        "explanation_en": "According to the notes, increasing the Reverse Repo Rate leads banks to deposit more money with RBI, reducing money supply and controlling inflation."
+    },
+    {
+        "q": "रेपो दर में वृद्धि से अर्थव्यवस्था में माँग पर क्या प्रभाव पड़ता है?",
+        "q_en": "What is the effect of an increase in Repo Rate on demand in the economy?",
+        "options": ["माँग बढ़ती है", "माँग कम होती है", "माँग अपरिवर्तित रहती है", "माँग दोगुनी हो जाती है"],
+        "options_en": ["Demand increases", "Demand decreases", "Demand remains unchanged", "Demand doubles"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर बढ़ने से ब्याज दर बढ़ती है, जिससे ऋण लेने की क्षमता कम होती है और माँग कम होती है।",
+        "explanation_en": "According to the notes, an increase in the Repo Rate raises interest rates, reducing borrowing capacity and demand."
+    },
+    {
+        "q": "SDF की शुरुआत से पहले बैंकों को अतिरिक्त राशि जमा करने के लिए क्या करना पड़ता था?",
+        "q_en": "What did banks have to do to deposit excess funds before the introduction of SDF?",
+        "options": ["प्रतिभूतियां जमा करनी पड़ती थीं", "CRR को बढ़ाना पड़ता था", "SLR को कम करना पड़ता था", "ब्याज दर को बढ़ाना पड़ता था"],
+        "options_en": ["Deposit securities", "Increase CRR", "Reduce SLR", "Increase interest rates"],
+        "answer": 0,
+        "explanation": "नोट्स में उल्लेख है कि SDF से पहले बैंकों को अपनी अतिरिक्त राशि रिवर्स रेपो दर के तहत जमा करने के लिए प्रतिभूतियां सौंपनी पड़ती थीं।",
+        "explanation_en": "The notes mention that before SDF, banks had to provide securities to deposit their excess funds under the Reverse Repo Rate."
+    },
+    {
+        "q": "रेपो दर और रिवर्स रेपो दर का संबंध मौद्रिक नीति से कैसे है?",
+        "q_en": "How are the Repo Rate and Reverse Repo Rate related to monetary policy?",
+        "options": ["वे CRR और SLR को नियंत्रित करते हैं", "वे मुद्रास्फीति और तरलता को नियंत्रित करते हैं", "वे ब्याज मुक्त ऋण प्रदान करते हैं", "वे दीर्घकालिक निवेश को बढ़ावा देते हैं"],
+        "options_en": ["They control CRR and SLR", "They control inflation and liquidity", "They provide interest-free loans", "They promote long-term investment"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, रेपो दर और रिवर्स रेपो दर का उपयोग RBI द्वारा मुद्रास्फीति और तरलता को नियंत्रित करने के लिए किया जाता है।",
+        "explanation_en": "According to the notes, the Repo Rate and Reverse Repo Rate are used by RBI to control inflation and liquidity."
+    },
+    {
+        "q": "बैंक दर का उपयोग किसके लिए होता है जब यह मौद्रिक नीति का हिस्सा नहीं है?",
+        "q_en": "What is the Bank Rate used for when it is not part of monetary policy?",
+        "options": ["मुद्रास्फीति को नियंत्रित करने के लिए", "संदर्भ दर के रूप में", "CRR को कम करने के लिए", "SLR को बढ़ाने के लिए"],
+        "options_en": ["To control inflation", "As a reference rate", "To reduce CRR", "To increase SLR"],
+        "answer": 1,
+        "explanation": "नोट्स के अनुसार, वर्तमान में RBI बैंक दर का उपयोग केवल संदर्भ दर के रूप में करता है।",
+        "explanation_en": "According to the notes, RBI currently uses the Bank Rate only as a reference rate."
+    }
+
+];
+
+        let selectedAnswers = new Array(questions.length).fill(null);
+        let submitted = false;
+        let score = 0;
+        let totalSeconds = 0;
+        let language = 'hi';
+        let timerInterval;
+        let answerTimes = [];
+        let startTime;
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                document.getElementById('totalTime').innerText = formatTime(totalSeconds);
+                updateTimerBar();
+            }, 1000);
+        }
+
+        function updateTimerBar() {
+            const maxTime = 150;
+            const width = (1 - totalSeconds / maxTime) * 100;
+            let color;
+            if (totalSeconds <= 50) {
+                color = 'lightgreen';
+            } else if (totalSeconds <= 75) {
+                color = 'green';
+            } else if (totalSeconds <= 100) {
+                color = 'black';
+            } else {
+                color = 'red';
+            }
+            const fill = document.getElementById('timerBarFill');
+            fill.style.width = `${width}%`;
+            fill.style.background = color;
+            if (totalSeconds >= maxTime && !submitted) {
+                submitQuiz();
+            }
+        }
+
+        function loadQuestions() {
+            const quiz = document.getElementById('quiz');
+            const lang = document.getElementById('languageToggle').value;
+            const answered = selectedAnswers.filter(a => a !== null).length;
+            document.getElementById('progressBar').style.width = (answered / questions.length * 100) + '%';
+            document.getElementById('progressCircle').textContent = `${Math.round(answered / questions.length * 100)}%`;
+            document.getElementById('progressCircle').style.transform = 'scale(0)';
+            setTimeout(() => document.getElementById('progressCircle').style.transform = 'scale(1)', 10);
+
+            quiz.innerHTML = questions.map((q, index) => {
+                let cls = '';
+                if (selectedAnswers[index] !== null) {
+                    cls = 'answered';
+                }
+                return `
+                    <div class='card ${cls}'>
+                        <div class='question'>
+                            Q${index + 1}. ${lang === 'en' ? q.q_en : q.q}
+                            ${lang === 'both' ? `<div class='en'>Q${index + 1}. ${q.q_en}</div>` : ''}
+                        </div>
+                        <div class='options'>
+                            ${q.options.map((opt, i) => {
+                                let btnCls = '';
+                                if (selectedAnswers[index] !== null) {
+                                    if (i === q.answer) btnCls = 'correct disabled';
+                                    else if (selectedAnswers[index] === i) btnCls = 'wrong disabled';
+                                    else btnCls = 'disabled';
+                                }
+                                return `
+                                    <button class='${btnCls}' onclick='selectOption(${index}, ${i})' ${btnCls.includes('disabled') ? 'disabled' : ''}>
+                                        ${String.fromCharCode(65 + i)}) ${lang === 'en' ? q.options_en[i] : opt}
+                                        ${lang === 'both' ? `<div class='en'>${String.fromCharCode(65 + i)}) ${q.options_en[i]}</div>` : ''}
+                                    </button>`;
+                            }).join('')}
+                        </div>
+                        ${selectedAnswers[index] !== null ? `
+                            <div class='explanation ${selectedAnswers[index] !== null ? 'active' : ''}'>
+                                <b>Explanation:</b> ${lang === 'en' ? q.explanation_en : q.explanation}
+                                ${lang === 'both' ? `<div class='en'><b>Explanation:</b> ${q.explanation_en}</div>` : ''}
+                            </div>` : ''}
+                    </div>`;
+            }).join('');
+            document.getElementById('score').innerText = `Score: ${score} / ${questions.length}`;
+        }
+
+        function selectOption(qIndex, optIndex) {
+            if (submitted) return;
+            if (selectedAnswers[qIndex] !== null) return;
+
+            const endTime = Date.now();
+            const timeTaken = (endTime - startTime) / 1000; // Time in seconds
+            answerTimes[qIndex] = { time: timeTaken, correct: optIndex === questions[qIndex].answer };
+
+            selectedAnswers[qIndex] = optIndex;
+            if (optIndex === questions[qIndex].answer) {
+                score++;
+            }
+            document.getElementById('score').innerText = `Score: ${score} / ${questions.length}`;
+            loadQuestions();
+            startTime = Date.now(); // Reset start time for the next question
+        }
+
+        function submitQuiz() {
+            if (submitted) return;
+
+            selectedAnswers.forEach((answer, index) => {
+                if (answer === null) {
+                    selectedAnswers[index] = -1; // Mark unattempted
+                }
+            });
+
+            submitted = true;
+            document.getElementById('score').innerText = `Your Score: ${score} / ${questions.length} (Total Time: ${formatTime(totalSeconds)})`;
+            loadQuestions();
+            clearInterval(timerInterval);
+            setTimeout(goToDashboard, 2000);
+        }
+
+        function openRestartModal() {
+            if (submitted) {
+                alert('Cannot restart after submit');
+                return;
+            }
+            const checkboxes = document.getElementById('questionCheckboxes');
+            checkboxes.innerHTML = '';
+
+            const selectAllLabel = document.createElement('label');
+            const selectAll = document.createElement('input');
+            selectAll.type = 'checkbox';
+            selectAll.onclick = () => {
+                const cbs = document.querySelectorAll('#questionCheckboxes input[type="checkbox"]');
+                cbs.forEach(cb => {
+                    if (cb !== selectAll) cb.checked = selectAll.checked;
+                });
+            };
+            selectAllLabel.appendChild(selectAll);
+            selectAllLabel.appendChild(document.createTextNode('Select All'));
+            checkboxes.appendChild(selectAllLabel);
+            checkboxes.appendChild(document.createElement('br'));
+
+            questions.forEach((q, i) => {
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = i;
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(`Question ${i + 1}`));
+                checkboxes.appendChild(label);
+                checkboxes.appendChild(document.createElement('br'));
+            });
+
+            document.getElementById('restartModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('restartModal').style.display = 'none';
+        }
+
+        function applyRestart() {
+            const checkboxes = document.querySelectorAll('#questionCheckboxes input[type="checkbox"]:checked');
+            checkboxes.forEach(cb => {
+                if (cb.value !== undefined) {
+                    const idx = parseInt(cb.value);
+                    if (selectedAnswers[idx] === questions[idx].answer) {
+                        score--;
+                    }
+                    selectedAnswers[idx] = null;
+                    answerTimes[idx] = null; // Clear answer time
+                }
+            });
+
+            closeModal();
+            document.getElementById('score').innerText = `Score: ${score} / ${questions.length}`;
+            loadQuestions();
+        }
+
+        function goToQuizPage() {
+            document.getElementById('startPage').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'block';
+            document.getElementById('dashboardPage').style.display = 'none';
+            startTimer();
+            loadQuestions();
+            startTime = Date.now(); // Initialize start time for the first question
+        }
+
+        function goToDashboard() {
+            document.getElementById('startPage').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'none';
+            document.getElementById('dashboardPage').style.display = 'block';
+            loadDashboard();
+        }
+
+        function loadDashboard() {
+            const totalQuestions = questions.length;
+            const attempted = selectedAnswers.filter(a => a !== null && a !== -1).length;
+            const unattempted = totalQuestions - attempted;
+            const correct = score;
+            const wrong = attempted - correct;
+            const scorePercentage = (correct / totalQuestions * 100).toFixed(1) || 0;
+           const totalMarks = `${totalQuestions} / ${correct}`; // 1 mark per question
+
+            const totalTime = formatTime(totalSeconds);
+            const avgTimePerQuestion = (totalSeconds / attempted).toFixed(1) || 0;
+            const speed = (attempted / (totalSeconds / 60)).toFixed(1) || 0;
+            const accuracy = (correct / attempted * 100).toFixed(1) || 0;
+            const efficiency = accuracy > 80 ? 'High' : accuracy > 60 ? 'Medium' : 'Low';
+            const percentile = accuracy > 90 ? 'Top 15%' : accuracy > 70 ? 'Top 30%' : 'Top 50%';
+            const rank = Math.floor(Math.random() * 280) + 1; // Placeholder
+            let longestStreak = 0;
+            let currentStreak = 0;
+            selectedAnswers.forEach((answer, i) => {
+                if (answer === questions[i].answer) {
+                    currentStreak++;
+                    longestStreak = Math.max(longestStreak, currentStreak);
+                } else {
+                    currentStreak = 0;
+                }
+            });
+            const bestSection = 'History (100%)'; // Static as per quiz context
+            const weakSection = 'N/A'; // Placeholder
+            const improvement = accuracy > 80 ? '+5%' : '+2%'; // Placeholder
+            const performanceLevel = accuracy > 80 ? 'Advanced' : accuracy > 60 ? 'Intermediate' : 'Beginner';
+            const medals = accuracy > 80 ? 'Accuracy Master' : 'N/A'; // Placeholder
+            const efficiencyScore = (accuracy * 0.9).toFixed(0); // Placeholder
+            const predictedScore = (scorePercentage * 1.02).toFixed(1); // Placeholder
+            const fastestAnswer = answerTimes.filter(t => t).length ? Math.min(...answerTimes.filter(t => t).map(t => t.time)).toFixed(0) : 'N/A';
+            const slowestAnswer = answerTimes.filter(t => t).length ? Math.max(...answerTimes.filter(t => t).map(t => t.time)).toFixed(0) : 'N/A';
+            const avgTimeCorrect = answerTimes.filter(t => t && t.correct).length ? (answerTimes.filter(t => t && t.correct).reduce((sum, t) => sum + t.time, 0) / answerTimes.filter(t => t && t.correct).length).toFixed(1) : 'N/A';
+            const avgTimeWrong = answerTimes.filter(t => t && !t.correct).length ? (answerTimes.filter(t => t && !t.correct).reduce((sum, t) => sum + t.time, 0) / answerTimes.filter(t => t && !t.correct).length).toFixed(1) : 'N/A';
+            const timeEfficiency = (1 - totalSeconds / (totalQuestions * 30)).toFixed(2); // Placeholder
+            const guessRate = wrong > 0 ? ((wrong / attempted) * 100).toFixed(1) : 0;
+            const firstHalfAccuracy = selectedAnswers.slice(0, Math.ceil(totalQuestions / 2)).filter((a, i) => a === questions[i].answer).length / Math.ceil(totalQuestions / 2) * 100 || 0;
+
+            const dashboardGrid = document.getElementById('dashboardGrid');
+            dashboardGrid.innerHTML = `
+                <div class="dash-box"><h4>Total Questions</h4><p>${totalQuestions}</p></div>
+                <div class="dash-box"><h4>Attempted</h4><p>${attempted}</p></div>
+                <div class="dash-box"><h4>Unattempted</h4><p>${unattempted}</p></div>
+                <div class="dash-box"><h4>Correct</h4><p>${correct}</p></div>
+                <div class="dash-box"><h4>Wrong</h4><p>${wrong}</p></div>
+                <div class="dash-box"><h4>Score</h4><p>${scorePercentage}%</p></div>
+                <div class="dash-box"><h4>Total Marks</h4><p>${totalMarks}</p></div>
+                <div class="dash-box"><h4>Total Time</h4><p>${totalTime}</p></div>
+                <div class="dash-box"><h4>Avg Time/Q</h4><p>${avgTimePerQuestion} sec</p></div>
+                <div class="dash-box"><h4>Speed</h4><p>${speed} Q/min</p></div>
+                <div class="dash-box"><h4>Accuracy</h4><p>${accuracy}%</p></div>
+                <div class="dash-box"><h4>Efficiency</h4><p>${efficiency}</p></div>
+                <div class="dash-box"><h4>Percentile</h4><p>${percentile}</p></div>
+                <div class="dash-box"><h4>Rank</h4><p>${rank} / 1</p></div>
+                <div class="dash-box"><h4>Longest Streak</h4><p>${longestStreak} Qs</p></div>
+                <div class="dash-box"><h4>Best Section</h4><p>${bestSection}</p></div>
+                <div class="dash-box"><h4>Weak Section</h4><p>${weakSection}</p></div>
+                <div class="dash-box"><h4>Improvement</h4><p>${improvement}</p></div>
+                <div class="dash-box"><h4>Performance Level</h4><p>${performanceLevel}</p></div>
+                <div class="dash-box"><h4>Medals</h4><p>${medals}</p></div>
+                <div class="dash-box"><h4>Efficiency Score</h4><p>${efficiencyScore}</p></div>
+                <div class="dash-box"><h4>Predicted Score</h4><p>${predictedScore}%</p></div>
+                <div class="dash-box"><h4>Questions/Min</h4><p>${speed} Q/min</p></div>
+                <div class="dash-box"><h4>Fastest Answer</h4><p>${fastestAnswer} sec</p></div>
+                <div class="dash-box"><h4>Slowest Answer</h4><p>${slowestAnswer} sec</p></div>
+                <div class="dash-box"><h4>Avg Time Correct</h4><p>${avgTimeCorrect} sec</p></div>
+                <div class="dash-box"><h4>Avg Time Wrong</h4><p>${avgTimeWrong} sec</p></div>
+                <div class="dash-box"><h4>Time Efficiency</h4><p>${timeEfficiency}</p></div>
+                <div class="dash-box"><h4>Guess Rate</h4><p>${guessRate}%</p></div>
+                <div class="dash-box"><h4>First-Half Accuracy</h4><p>${firstHalfAccuracy.toFixed(1)}%</p></div>
+            `;
+        }
+
+        // Initialize
+        document.getElementById('timerContainer').addEventListener('dblclick', function() {
+            this.classList.toggle('hidden');
+        });
+
+        // Load Google Fonts
+        const link = document.createElement('link');
+        link.href = 'https://fonts.googleapis.com/css2?family=Tangerine&family=Allura&family=Poppins:wght@400;600&display=swap';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+    </script>
+</body>
+</html>
